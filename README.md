@@ -1,4 +1,4 @@
 jConsoleApp
 ===========
 
-Java Console Application
+Java Console Application - video game
