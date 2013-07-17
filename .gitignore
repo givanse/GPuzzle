@@ -4,3 +4,9 @@
 *.jar
 *.war
 *.ear
+/JavaConsoleApplication/nbproject/private/
+/JavaConsoleApplication/build/
+/JavaConsoleApplication/dist/
+/dist/
+/build/
+/nbproject/private/
