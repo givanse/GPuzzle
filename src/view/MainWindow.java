@@ -25,7 +25,7 @@ public class MainWindow extends javax.swing.JFrame {
         panelGameData = new javax.swing.JPanel();
         buttonNewGame = new javax.swing.JButton();
         toggleButtonPause = new javax.swing.JToggleButton();
-        gameBoard = new view.Board();
+        gameBoard = new view.BoardPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Java Video Game");
@@ -133,7 +133,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonNewGame;
-    private view.Board gameBoard;
+    private view.BoardPanel gameBoard;
     private javax.swing.JPanel panelGameData;
     private javax.swing.JToggleButton toggleButtonPause;
     // End of variables declaration//GEN-END:variables

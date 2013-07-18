@@ -1,23 +1,28 @@
 package view;
 
 import game.GameService;
+import game.pieces.Square;
+import game.pieces.Square.SquareType;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.EnumSet;
 import javax.swing.JPanel;
 
 /**
  *
  * @author givanse
  */
-public class Board extends JPanel {
+public class BoardPanel extends JPanel {
+    
+    private static Color BACKGROUND_COLOR = Color.DARK_GRAY;
     
     private Image offScreenImage;
     private Graphics offScreenGraphics;
     private GameService gameService;
     
-    public Board() { 
+    public BoardPanel() {
         this.gameService = new GameService(this);
     }
     
@@ -46,14 +51,18 @@ public class Board extends JPanel {
                 this.offScreenGraphics = this.offScreenImage.getGraphics();
             }
         }
-        this.offScreenGraphics.setColor(Color.BLUE);
+        this.offScreenGraphics.setColor(BoardPanel.BACKGROUND_COLOR);
         /* clear the canvas */
         this.offScreenGraphics.fillRect(0, 0, game.pieces.Board.WIDTH, 
                                               game.pieces.Board.HEIGHT);
         /* just some provitional random drawings */
-        this.offScreenGraphics.setColor(Color.PINK);
-        this.offScreenGraphics.drawOval(50, 50, 50, 50);
-        this.offScreenGraphics.drawRect(100, 100, 50, 50);
+        int x = 0, y = 0;
+        for(SquareType st : EnumSet.allOf(SquareType.class)) {
+            Image square = st.getImage();
+            this.offScreenGraphics.drawImage(square, x, y, this);
+            x += Square.SIZE;
+            y += Square.SIZE;
+        }
     }
     
     /* Public methods */

@@ -1,5 +1,8 @@
 package game;
 
+import game.pieces.Board;
+import view.BoardPanel;
+
 /**
  *
  * @author givanse
@@ -12,16 +15,17 @@ public class GameService implements Runnable {
     
     private Thread gameThread;
     
-    private view.Board viewBoard;
+    private BoardPanel boardPanel;
     
-    private game.pieces.Board gameBoard;
+    private Board board;
         
-    public GameService(view.Board gameBoard) {
-        this.viewBoard = gameBoard;
+    public GameService(BoardPanel boardPanel) {
+        this.boardPanel = boardPanel;
+        this.board = new Board();
     }
     
     private void updateObjects() {
-        this.gameBoard.update();
+        this.board.update();
     }
         
     /* Public methods */
@@ -45,7 +49,7 @@ public class GameService implements Runnable {
             if(false) // if(gamePaused || gameOver)
               continue;
             else
-              this.viewBoard.drawObjects();
+              this.boardPanel.drawObjects();
             int nano = 1000000;
             int totalElapsedTime = 
                                  (int) (System.nanoTime() - initialTime) / nano;

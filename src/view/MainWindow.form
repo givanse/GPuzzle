@@ -97,7 +97,7 @@
         <Property name="text" type="java.lang.String" value="Pause"/>
       </Properties>
     </Component>
-    <Container class="view.Board" name="gameBoard">
+    <Container class="view.BoardPanel" name="gameBoard">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
