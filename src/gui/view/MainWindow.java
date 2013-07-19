@@ -1,5 +1,7 @@
 package gui.view;
 
+import java.awt.Color;
+
 /**
  *
  * @author givanse
@@ -13,7 +15,6 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         this.boardMouseListener = new BoardMouseListener(this.textAreaLog);
         this.panelBoard.addMouseListener(this.boardMouseListener);
-        this.panelNextPair.setBackground(BoardPanel.BACKGROUND_COLOR);
     }
 
     /**
@@ -26,7 +27,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonNewGame = new javax.swing.JButton();
-        toggleButtonPause = new javax.swing.JToggleButton();
+        buttonPause = new javax.swing.JToggleButton();
         panelBoard = new gui.view.BoardPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         textAreaLog = new javax.swing.JTextArea();
@@ -37,13 +38,26 @@ public class MainWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Java Video Game");
         setName("Java Game"); // NOI18N
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                handleKeyTyped(evt);
+            }
+        });
 
+        buttonNewGame.setFocusable(false);
         buttonNewGame.setLabel("<N>ew");
 
-        toggleButtonPause.setText("<P>ause");
+        buttonPause.setText("<P>ause");
+        buttonPause.setFocusable(false);
+        buttonPause.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                handleButtonPauseStateChanged(evt);
+            }
+        });
 
         panelBoard.setBackground(new java.awt.Color(255, 255, 255));
         panelBoard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        panelBoard.setFocusable(false);
         panelBoard.setPreferredSize(new java.awt.Dimension(400, 600));
 
         javax.swing.GroupLayout panelBoardLayout = new javax.swing.GroupLayout(panelBoard);
@@ -61,19 +75,24 @@ public class MainWindow extends javax.swing.JFrame {
         textAreaLog.setColumns(5);
         textAreaLog.setRows(8);
         textAreaLog.setBorder(javax.swing.BorderFactory.createTitledBorder("Log"));
+        textAreaLog.setFocusable(false);
         jScrollPane1.setViewportView(textAreaLog);
 
         scoreField.setEditable(false);
         scoreField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         scoreField.setText("000000000");
         scoreField.setBorder(javax.swing.BorderFactory.createTitledBorder("Score"));
+        scoreField.setFocusable(false);
 
         speedField.setEditable(false);
         speedField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         speedField.setText("000");
         speedField.setBorder(javax.swing.BorderFactory.createTitledBorder("Speed"));
+        speedField.setFocusable(false);
 
-        panelNextPair.setBorder(javax.swing.BorderFactory.createTitledBorder("Next"));
+        panelNextPair.setBackground(BoardPanel.BACKGROUND_COLOR);
+        panelNextPair.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Next pair", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, Color.LIGHT_GRAY));
+        panelNextPair.setFocusable(false);
 
         javax.swing.GroupLayout panelNextPairLayout = new javax.swing.GroupLayout(panelNextPair);
         panelNextPair.setLayout(panelNextPairLayout);
@@ -83,7 +102,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
         panelNextPairLayout.setVerticalGroup(
             panelNextPairLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 49, Short.MAX_VALUE)
+            .addGap(0, 51, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -100,7 +119,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(scoreField, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                         .addComponent(panelNextPair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonNewGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(toggleButtonPause, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(buttonPause, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -116,7 +135,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(scoreField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(toggleButtonPause)
+                        .addComponent(buttonPause)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonNewGame)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -129,6 +148,24 @@ public class MainWindow extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void handleButtonPauseStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_handleButtonPauseStateChanged
+        this.handleEventPauseGame();
+    }//GEN-LAST:event_handleButtonPauseStateChanged
+
+    private void handleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_handleKeyTyped
+        char keyTyped = evt.getKeyChar();
+        if(keyTyped ==  'p' || keyTyped ==  'P')
+            this.buttonPause.setSelected(!this.buttonPause.isSelected());
+    }//GEN-LAST:event_handleKeyTyped
+
+    private void handleEventPauseGame() {
+        boolean isPaused = this.buttonPause.isSelected();
+        if(isPaused)
+            this.textAreaLog.append("game paused\n");
+        else
+            this.textAreaLog.append("game resumed\n");
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -163,13 +200,13 @@ public class MainWindow extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonNewGame;
+    private javax.swing.JToggleButton buttonPause;
     private javax.swing.JScrollPane jScrollPane1;
     private gui.view.BoardPanel panelBoard;
     private javax.swing.JPanel panelNextPair;
     private javax.swing.JTextField scoreField;
     private javax.swing.JTextField speedField;
     private javax.swing.JTextArea textAreaLog;
-    private javax.swing.JToggleButton toggleButtonPause;
     // End of variables declaration//GEN-END:variables
     private BoardMouseListener boardMouseListener;
 }
