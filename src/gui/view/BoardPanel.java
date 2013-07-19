@@ -1,15 +1,14 @@
 package gui.view;
 
 import game.GameService;
+import game.pieces.Board;
 import game.pieces.Square;
-import game.pieces.Square.SquareType;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.util.EnumSet;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -18,15 +17,25 @@ import javax.swing.JPanel;
  * @author givanse
  */
 public class BoardPanel extends JPanel {
-    
+   
     protected static Color BACKGROUND_COLOR = Color.DARK_GRAY;
+    protected static Color BACKGROUND_GRID_COLOR = Color.LIGHT_GRAY;
     
     private Image offScreenImage;
     private Graphics offScreenGraphics;
     private GameService gameService;
+    private final int drawableWidth;
+    private final int drawableHeight;
     
+    protected static int BORDER_WIDTH = 2;
+    public static int WIDTH = (Square.SIZE * Board.WIDTH);          /* pixels */
+    public static int HEIGHT = (Square.SIZE * Board.HEIGHT);       /* pixels */
+                                    
     public BoardPanel() {
         this.gameService = new GameService(this);
+        int borderSpace = BoardPanel.BORDER_WIDTH * 2;
+        this.drawableWidth = BoardPanel.WIDTH - borderSpace;
+        this.drawableHeight = BoardPanel.HEIGHT - borderSpace;
         /* add custom cursor */
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image cursorImage = new ImageIcon(
@@ -44,7 +53,9 @@ public class BoardPanel extends JPanel {
         try {
             panelGraphics = this.getGraphics();
             if(panelGraphics != null && this.offScreenImage != null) {
-                panelGraphics.drawImage(this.offScreenImage, 0, 0, null);
+                panelGraphics.drawImage(this.offScreenImage, 
+                                        BoardPanel.BORDER_WIDTH, 
+                                        BoardPanel.BORDER_WIDTH, null);
                 Toolkit.getDefaultToolkit().sync(); // Re-draw
                 panelGraphics.dispose();
             }
@@ -55,8 +66,8 @@ public class BoardPanel extends JPanel {
     
     private void drawObjectsInMemory() {
         if(this.offScreenImage == null) {
-            this.offScreenImage = this.createImage(game.pieces.Board.WIDTH, 
-                                                   game.pieces.Board.HEIGHT);
+            this.offScreenImage = this.createImage(this.drawableWidth, 
+                                                   this.drawableHeight);
             if(this.offScreenImage == null) {
                 System.out.println("An off screen image couldn't be created.");
                 return;
@@ -66,18 +77,28 @@ public class BoardPanel extends JPanel {
         }
         this.offScreenGraphics.setColor(BoardPanel.BACKGROUND_COLOR);
         /* clear the canvas */
-        this.offScreenGraphics.fillRect(0, 0, game.pieces.Board.WIDTH, 
-                                              game.pieces.Board.HEIGHT);
-        /* just some provitional random drawings */
-        int x = 0, y = 0;
-        for(SquareType st : EnumSet.allOf(SquareType.class)) {
-            Image square = st.getImage();
-            this.offScreenGraphics.drawImage(square, x, y, this);
-            x += Square.SIZE;
-            y += Square.SIZE;
-        }
+        this.offScreenGraphics.fillRect(0, 0, this.drawableWidth, 
+                                              this.drawableHeight);
+        this.drawBackgroundGrid();
+        this.gameService.drawObjects(this.offScreenGraphics);
     }
       
+    private void drawBackgroundGrid() {
+        this.offScreenGraphics.setColor(BoardPanel.BACKGROUND_GRID_COLOR);
+        /* Draw vertical lines */
+        int yStart = 0, yEnd = BoardPanel.HEIGHT - BoardPanel.BORDER_WIDTH;
+        for(int i = Square.SIZE; i < BoardPanel.WIDTH; i += Square.SIZE) {
+            int xStart = i, xEnd = i;
+            this.offScreenGraphics.drawLine(xStart, yStart, xEnd, yEnd);
+        }
+        /* Draw horizontal lines */
+        int xStart = 0, xEnd = BoardPanel.WIDTH - BoardPanel.BORDER_WIDTH;
+        for(int i = Square.SIZE; i < BoardPanel.HEIGHT; i += Square.SIZE) {
+            yStart = i; yEnd = i;
+            this.offScreenGraphics.drawLine(xStart, yStart, xEnd, yEnd);
+        }
+    }
+    
     /* Public methods */
       
     @Override
@@ -87,8 +108,8 @@ public class BoardPanel extends JPanel {
     }
     
     public void drawObjects() {
-     this.drawObjectsInMemory();
-     this.drawObjectsOnScreen();
+        this.drawObjectsInMemory();
+        this.drawObjectsOnScreen();
     }
     
 }
