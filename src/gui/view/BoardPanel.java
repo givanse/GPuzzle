@@ -1,13 +1,16 @@
-package view;
+package gui.view;
 
 import game.GameService;
 import game.pieces.Square;
 import game.pieces.Square.SquareType;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.util.EnumSet;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
@@ -16,7 +19,7 @@ import javax.swing.JPanel;
  */
 public class BoardPanel extends JPanel {
     
-    private static Color BACKGROUND_COLOR = Color.DARK_GRAY;
+    protected static Color BACKGROUND_COLOR = Color.DARK_GRAY;
     
     private Image offScreenImage;
     private Graphics offScreenGraphics;
@@ -24,6 +27,16 @@ public class BoardPanel extends JPanel {
     
     public BoardPanel() {
         this.gameService = new GameService(this);
+        /* add custom cursor */
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Image cursorImage = new ImageIcon(
+                           getClass().getResource("img/cursor.png")).getImage();
+        int x = cursorImage.getWidth(this) / 2; 
+        int y = x;
+        Point cursorHotSpot = new Point(x, y);
+        Cursor cursor = toolkit.createCustomCursor(
+                                          cursorImage, cursorHotSpot, "Cursor");
+        this.setCursor(cursor);
     }
     
     private void drawObjectsOnScreen() {    
@@ -64,9 +77,9 @@ public class BoardPanel extends JPanel {
             y += Square.SIZE;
         }
     }
-    
+      
     /* Public methods */
-    
+      
     @Override
     public void addNotify() {
         super.addNotify();
@@ -74,8 +87,8 @@ public class BoardPanel extends JPanel {
     }
     
     public void drawObjects() {
-        this.drawObjectsInMemory();
-        this.drawObjectsOnScreen();
+     this.drawObjectsInMemory();
+     this.drawObjectsOnScreen();
     }
     
 }
