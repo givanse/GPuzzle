@@ -1,12 +1,10 @@
 package game.pieces;
 
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
+import game.pieces.Square.SquareType;
 import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -15,19 +13,59 @@ import org.junit.runners.Suite;
 public class SquareTest {
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
+    public static void setUpClass() {
+        int expected = 32;
+        int actual = Square.SIZE;
+        assertEquals(expected, actual);
+        
+        SquareType squareTypes[] = SquareType.values();
+        expected = 5;
+        actual = squareTypes.length;
+        assertEquals(expected, actual);
     }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
+        
+    @Test
+    public void getXTest() {
+        Square square = new Square(Square.SquareType.BLUE);
+        int expected = 0;
+        int actual = square.getX();
+        assertEquals(expected, actual);
     }
-
-    @Before
-    public void setUp() throws Exception {
+    
+    @Test
+    public void getYTest() {
+        Square square = new Square(Square.SquareType.GREEN);
+        int expected = 0;
+        int actual = square.getY();
+        assertEquals(expected, actual);
     }
-
-    @After
-    public void tearDown() throws Exception {
+    
+    @Test
+    public void setXTest() {
+        Square square = new Square(Square.SquareType.PINK);
+        square.setX(10);
+        int expected = 10;
+        int actual = square.getX();
+        assertEquals(expected, actual);
+        // less than zero
+        square.setX(-10);
+        expected = 0;
+        actual = square.getX();
+        assertEquals(expected, actual);
+    }
+    
+    @Test
+    public void setYTest() {
+        Square square = new Square(Square.SquareType.RED);
+        square.setY(6);
+        int expected = 6;
+        int actual = square.getY();
+        assertEquals(expected, actual);
+        // less than zero
+        square.setY(-6);
+        expected = 0;
+        actual = square.getY();
+        assertEquals(expected, actual);
     }
     
 }
