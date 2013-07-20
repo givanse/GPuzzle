@@ -60,7 +60,7 @@ public class MainWindow extends javax.swing.JFrame {
         panelBoard.setBackground(new java.awt.Color(255, 255, 255));
         panelBoard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         panelBoard.setFocusable(false);
-        panelBoard.setPreferredSize(new java.awt.Dimension(BoardPanel.WIDTH, BoardPanel.HEIGHT));
+        panelBoard.setPreferredSize(new java.awt.Dimension(BoardPanel.CANVAS_WIDTH, BoardPanel.CANVAS_HEIGHT));
 
         javax.swing.GroupLayout panelBoardLayout = new javax.swing.GroupLayout(panelBoard);
         panelBoard.setLayout(panelBoardLayout);
@@ -104,7 +104,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
         panelNextPairLayout.setVerticalGroup(
             panelNextPairLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 55, Short.MAX_VALUE)
+            .addGap(0, 57, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

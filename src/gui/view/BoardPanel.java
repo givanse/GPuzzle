@@ -27,15 +27,20 @@ public class BoardPanel extends JPanel {
     private final int drawableWidth;
     private final int drawableHeight;
     
+    /* The units for the next variables are pixels. */
     protected static int BORDER_WIDTH = 2;
-    public static int WIDTH = (Square.SIZE * Board.WIDTH);          /* pixels */
-    public static int HEIGHT = (Square.SIZE * Board.HEIGHT);       /* pixels */
+    private static int SPACE_FILLED_BY_BORDERS = BoardPanel.BORDER_WIDTH * 2;    
+    public static int CANVAS_WIDTH  = (Square.SIZE * Board.WIDTH_IN_SQUARES) + 
+                                       BoardPanel.SPACE_FILLED_BY_BORDERS; 
+    public static int CANVAS_HEIGHT = (Square.SIZE * Board.HEIGHT_IN_SQUARES) + 
+                                       BoardPanel.SPACE_FILLED_BY_BORDERS; 
                                     
     public BoardPanel() {
         this.gameService = new GameService(this);
-        int borderSpace = BoardPanel.BORDER_WIDTH * 2;
-        this.drawableWidth = BoardPanel.WIDTH - borderSpace;
-        this.drawableHeight = BoardPanel.HEIGHT - borderSpace;
+        this.drawableWidth  = BoardPanel.CANVAS_WIDTH - 
+                              BoardPanel.SPACE_FILLED_BY_BORDERS;
+        this.drawableHeight = BoardPanel.CANVAS_HEIGHT - 
+                              BoardPanel.SPACE_FILLED_BY_BORDERS;
         /* add custom cursor */
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image cursorImage = new ImageIcon(
@@ -86,15 +91,21 @@ public class BoardPanel extends JPanel {
     private void drawBackgroundGrid() {
         this.offScreenGraphics.setColor(BoardPanel.BACKGROUND_GRID_COLOR);
         /* Draw vertical lines */
-        int yStart = 0, yEnd = BoardPanel.HEIGHT - BoardPanel.BORDER_WIDTH;
-        for(int i = Square.SIZE; i < BoardPanel.WIDTH; i += Square.SIZE) {
-            int xStart = i, xEnd = i;
+        int yStart = 0;
+        int yEnd = BoardPanel.CANVAS_HEIGHT - BoardPanel.BORDER_WIDTH;
+        int i = Square.SIZE;      /* left outside just for formatting reasons */
+        for( ; i < BoardPanel.CANVAS_WIDTH; i += Square.SIZE) {
+            int xStart = i;
+            int xEnd = i;
             this.offScreenGraphics.drawLine(xStart, yStart, xEnd, yEnd);
         }
         /* Draw horizontal lines */
-        int xStart = 0, xEnd = BoardPanel.WIDTH - BoardPanel.BORDER_WIDTH;
-        for(int i = Square.SIZE; i < BoardPanel.HEIGHT; i += Square.SIZE) {
-            yStart = i; yEnd = i;
+        int xStart = 0;
+        int xEnd = BoardPanel.CANVAS_WIDTH - BoardPanel.BORDER_WIDTH;
+        i = Square.SIZE;          /* left outside just for formatting reasons */
+        for( ; i < BoardPanel.CANVAS_HEIGHT; i += Square.SIZE) {
+            yStart = i; 
+            yEnd = i;
             this.offScreenGraphics.drawLine(xStart, yStart, xEnd, yEnd);
         }
     }

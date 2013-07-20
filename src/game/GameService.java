@@ -1,7 +1,12 @@
 package game;
 
 import game.pieces.Board;
-import view.BoardPanel;
+import game.pieces.Square;
+import game.pieces.Square.SquareType;
+import gui.view.BoardPanel;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.util.EnumSet;
 
 /**
  *
@@ -29,13 +34,6 @@ public class GameService implements Runnable {
     }
         
     /* Public methods */
-        
-    public void start() {
-        if (this.gameThread == null || this.gameState == State.OVER ) {
-            this.gameThread = new Thread(this);
-            this.gameThread.start();
-        }
-    }
     
     @Override
     public void run() {
@@ -59,5 +57,28 @@ public class GameService implements Runnable {
             } catch (Exception e) { }
         }
         System.exit(0);
+    }
+    
+    public void start() {
+        if (this.gameThread == null || this.gameState == State.OVER ) {
+            this.gameThread = new Thread(this);
+            this.gameThread.start();
+        }
+    }
+    
+    public void drawObjects(Graphics graphics) {
+        /* just some provitional random drawings */
+        SquareType squareTypes[] = SquareType.values();
+        int squareTypesIndex = 0;
+        int lastX = BoardPanel.CANVAS_WIDTH - 64;
+        int lastY = BoardPanel.CANVAS_HEIGHT - 64;
+        for(int x = 0; x < lastX; x += Square.SIZE)
+            for(int y = 0; y < lastY; y += Square.SIZE) {
+                SquareType st = squareTypes[squareTypesIndex++];
+                squareTypesIndex = (squareTypesIndex == squareTypes.length) ?
+                                    0 : squareTypesIndex;
+                Image square = st.getImage();
+                graphics.drawImage(square, x, y, this.boardPanel);
+            }
     }
 }
