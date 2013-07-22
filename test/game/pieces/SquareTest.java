@@ -68,4 +68,20 @@ public class SquareTest {
         assertEquals(expected, actual);
     }
     
+    @Test
+    public void isMovingTest() {
+        Square square = new Square(Square.SquareType.YELLOW);
+        boolean expected = false;
+        boolean actual = square.isMoving();
+        assertEquals(expected, actual);
+    }
+    
+    @Test
+    public void setMovingTest() {
+        Square square = new Square(Square.SquareType.YELLOW);
+        square.setMoving(true);
+        boolean expected = true;
+        boolean actual = square.isMoving();
+        assertEquals(expected, actual);
+    }
 }
