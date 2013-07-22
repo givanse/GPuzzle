@@ -32,7 +32,7 @@ public class BoardTest {
     @BeforeClass
     public static void setUpClass() {
         int expected = 15;
-        int actual = Tetris.Shape.values().length;
+        int actual = Tetris.TetrisShape.values().length;
         assertEquals(expected, actual);
     }
     
@@ -56,6 +56,21 @@ public class BoardTest {
         
         actual = boardDefault.getSquares();
         assertArrayEquals(expected, actual);
+    }
+    
+    @Test
+    public void getFallingSquaresTest() {
+        int expected = 2;
+        int actual = boardDefault.getFallingSquares().size();
+        assertEquals(expected, actual);
+        
+        expected = 2;
+        actual = board3x3Empty.getFallingSquares().size();
+        assertEquals(expected, actual);
+        
+        expected = 2;
+        actual = boardCross.getFallingSquares().size();
+        assertEquals(expected, actual);
     }
     
     @Test
@@ -149,12 +164,84 @@ public class BoardTest {
     }
     
     @Test 
+    public void moveDownLooseRowsTest() {
+        /**
+         * [+][+]
+         * [ ][ ]
+         */
+        Board board = new Board(new Square[][]{
+                {new Square(SquareType.RED), new Square(SquareType.RED)},
+                {null, null}});
+        /**
+         * [ ][ ]
+         * [+][+]
+         */
+        Square expecteds[][] = new Square[][]{
+                {null, null},
+                {new Square(SquareType.RED), new Square(SquareType.RED)}};
+        board.moveDownLooseRows();
+        Square actuals[][] = board.getSquares();
+        assertArrayEquals(expecteds, actuals);
+        
+        /**
+         * [ ][+]
+         * [+][ ]
+         */
+        board = new Board(new Square[][]{
+                {null, new Square(SquareType.RED)},
+                {new Square(SquareType.RED), null}});
+        board.moveDownLooseRows();
+        actuals = board.getSquares();
+        assertArrayEquals(expecteds, actuals);
+        
+        /**
+         * [+][+]
+         * [ ][+]
+         */
+        board = new Board(new Square[][]{
+                {new Square(SquareType.RED), new Square(SquareType.RED)},
+                {null, new Square(SquareType.RED)}});
+        /**
+         * [ ][+]
+         * [+][+]
+         */
+        expecteds = new Square[][]{
+                {null, new Square(SquareType.RED)},
+                {new Square(SquareType.RED), new Square(SquareType.RED)}};
+        board.moveDownLooseRows();
+        actuals = board.getSquares();
+        assertArrayEquals(expecteds, actuals);
+        
+        /**
+         * [+][+]
+         * [ ][ ]
+         * [+][+]
+         * [ ][ ]
+         */
+        board = new Board(new Square[][]{
+                {new Square(SquareType.BLUE), new Square(SquareType.BLUE)},
+                {null, null},
+                {new Square(SquareType.BLUE), new Square(SquareType.BLUE)},
+                {null, null}});
+        /**
+         * [ ][ ]
+         * [ ][ ]
+         * [+][+]
+         * [+][+]
+         */
+        expecteds = new Square[][]{
+                {null, null},
+                {null, null},
+                {new Square(SquareType.BLUE), new Square(SquareType.BLUE)},
+                {new Square(SquareType.BLUE), new Square(SquareType.BLUE)}};
+        board.moveDownLooseRows();
+        actuals = board.getSquares();
+        assertArrayEquals(expecteds, actuals);
+    }
+    
+    @Test
     public void deleteCompletedTetrisShapesTest() {
         board3x3Empty.deleteCompletedTetrisShapes();
     }
     
-    @Test 
-    public void moveDownLooseRowsTest() {
-        board3x3Empty.moveDownLooseRows();
-    }
 }
