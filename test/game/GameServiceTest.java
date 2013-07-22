@@ -4,6 +4,8 @@ package game;
  *
  * @author givanse
  */
-public class GameService {
+public class GameServiceTest {
+
+    
     
 }

@@ -71,17 +71,17 @@ public class SquareTest {
     @Test
     public void isMovingTest() {
         Square square = new Square(Square.SquareType.YELLOW);
-        boolean expected = false;
-        boolean actual = square.isMoving();
+        boolean expected = true;
+        boolean actual = square.isFalling();
         assertEquals(expected, actual);
     }
     
     @Test
-    public void setMovingTest() {
+    public void stopFallingTest() {
         Square square = new Square(Square.SquareType.YELLOW);
-        square.setMoving(true);
-        boolean expected = true;
-        boolean actual = square.isMoving();
+        square.stopFalling();
+        boolean expected = false;
+        boolean actual = square.isFalling();
         assertEquals(expected, actual);
     }
 }

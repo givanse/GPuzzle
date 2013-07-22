@@ -9,9 +9,9 @@ import javax.swing.ImageIcon;
  */
 public class Square {
     
-    private int x;
-    private int y;
-    private boolean isMoving; // defaults to false
+    private int x; /* position in a board, not pixels */
+    private int y; /* position in a board, not pixels */
+    private boolean isFalling; // defaults to false
     private SquareType squareType;
     
     public enum SquareType {
@@ -33,8 +33,14 @@ public class Square {
     public static int SIZE = 32; // pixels
 
     Square(SquareType squareType) {
+        this(0, 0, squareType);
+    }
+    
+    Square(int x, int y, SquareType squareType) {
+        this.x = x;
+        this.y = y;
         this.squareType = squareType;
-        this.isMoving = false;
+        this.isFalling = true;
     }
 
     public int getX() {
@@ -59,12 +65,12 @@ public class Square {
         return squareType;
     }
 
-    public boolean isMoving() {
-        return this.isMoving;
+    public boolean isFalling() {
+        return this.isFalling;
     }
 
-    public void setMoving(boolean isMoving) {
-        this.isMoving = isMoving;
+    public void stopFalling() {
+        this.isFalling = false;
     }
     
 }
