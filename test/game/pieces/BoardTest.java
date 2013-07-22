@@ -226,7 +226,44 @@ public class BoardTest {
     
     @Test
     public void deleteCompletedTetrisShapesTest() {
-        board3x3Empty.deleteCompletedTetrisShapes();
+        /**
+         * [+][+]
+         * [+][+]
+         */
+        Board board = new Board(new Square[][]{
+            {new Square(SquareType.YELLOW), new Square(SquareType.YELLOW)},
+            {new Square(SquareType.YELLOW), new Square(SquareType.YELLOW)}});
+        /**
+         * [ ][ ]
+         * [ ][ ]
+         */
+        Square expecteds[][] = new Square[][]{{null, null},
+                                              {null, null}};
+        board.deleteCompletedTetrisShapes();
+        Square actuals[][] = board.getSquares();
+        assertArrayEquals(expecteds, actuals);
+        
+        /**
+         * Nothing will be removed because we have different colors, although
+         * we have a valid shape.
+         */
+        /**
+         * [+][+]
+         * [+][+]
+         */
+        board = new Board(new Square[][]{
+            {new Square(SquareType.YELLOW), new Square(SquareType.YELLOW)},
+            {new Square(SquareType.YELLOW), new Square(SquareType.RED)}});
+        /**
+         * [+][+]
+         * [+][+]
+         */
+        expecteds = new Square[][]{
+            {new Square(SquareType.YELLOW), new Square(SquareType.YELLOW)},
+            {new Square(SquareType.YELLOW), new Square(SquareType.RED)}};
+        board.deleteCompletedTetrisShapes();
+        actuals = board.getSquares();
+        assertArrayEquals(expecteds, actuals);
     }
     
 }
