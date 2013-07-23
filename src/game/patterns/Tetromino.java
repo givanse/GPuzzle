@@ -16,8 +16,8 @@ public abstract class Tetromino {
     
     protected enum LPosition {REGULAR, FLIPPED};
     
-    protected abstract 
-              boolean findPatternMatch(int x, int y, SquaresMatrix squares);
+    protected abstract boolean findPatternMatch(int x, int y, 
+                                  SquareType squareType, SquaresMatrix squares);
     
     /**
      * 
@@ -50,7 +50,8 @@ public abstract class Tetromino {
     public boolean isPatternFound(int x, int y, SquaresMatrix squares) {
         if(squares.isPositionAvailable(x, y) == false)
             return false;
-        return this.findPatternMatch(x, y, squares);
+        SquareType squareType = squares.getSquare(x, y).getSquareType();
+        return this.findPatternMatch(x, y, squareType, squares);
     }
 
 }

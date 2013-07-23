@@ -1,6 +1,5 @@
 package game.patterns;
 
-import game.patterns.Tetromino;
 import game.pieces.Square.SquareType;
 import game.pieces.SquaresMatrix;
 
@@ -18,8 +17,8 @@ public class TSquare extends Tetromino {
      * @return 
      */
     @Override
-    protected boolean findPatternMatch(int x, int y, SquaresMatrix squares) {
-        SquareType squareType = squares.getSquare(x, y).getSquareType();
+    protected boolean findPatternMatch(int x, int y, SquareType squareType,
+                                                     SquaresMatrix squares) {
         boolean isMatch = true;
         upwardLeft:
         for(int i = x; i > x-2; i--)
@@ -28,8 +27,9 @@ public class TSquare extends Tetromino {
                     isMatch =  false;
                     break upwardLeft;
                 }
-        if(isMatch) return true; else isMatch = true;
-
+        if(isMatch) return true;
+        
+        isMatch = true;
         upwardRight:
         for(int i = x; i < x+2; i++)
             for(int j = y; j > y-2; j--)
@@ -37,8 +37,9 @@ public class TSquare extends Tetromino {
                     isMatch = false;
                     break upwardRight;
                 }
-        if(isMatch) return true; else isMatch = true;
-
+        if(isMatch) return true;
+        
+        isMatch = true;
         downwardLeft:
         for(int i = x; i > x-2; i--)
             for(int j = y; j < y+2; j++)

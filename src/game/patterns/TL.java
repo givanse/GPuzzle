@@ -1,6 +1,6 @@
 package game.patterns;
 
-import game.patterns.Tetromino;
+import game.pieces.Square.SquareType;
 import game.pieces.SquaresMatrix;
 
 /**
@@ -21,7 +21,8 @@ public class TL extends Tetromino {
     }
     
     @Override
-    protected boolean findPatternMatch(int x, int y, SquaresMatrix squares) {
+    protected boolean findPatternMatch(int x, int y, SquareType squareType,
+                                                     SquaresMatrix squares) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
