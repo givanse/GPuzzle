@@ -1,6 +1,6 @@
 package game.patterns;
 
-import game.pieces.Square;
+import game.patterns.Tetromino;
 import game.pieces.Square.SquareType;
 import game.pieces.SquaresMatrix;
 
@@ -8,7 +8,7 @@ import game.pieces.SquaresMatrix;
  *
  * @author givanse
  */
-public class SSquare extends Shape {
+public class TSquare extends Tetromino {
     
     /**
      * 
@@ -18,7 +18,7 @@ public class SSquare extends Shape {
      * @return 
      */
     @Override
-    boolean findPatternMatch(int x, int y, SquaresMatrix squares) {
+    protected boolean findPatternMatch(int x, int y, SquaresMatrix squares) {
         SquareType squareType = squares.getSquare(x, y).getSquareType();
         boolean isMatch = true;
         upwardLeft:

@@ -32,36 +32,36 @@ public class ShapeTest {
         for(x = 0; x < 4; x++) {
             y = 0;
             message = "SQUARE (" + x + ", " + y + ")";
-            actual = TetrisShape.SQUARE.isShapeFound(x, y, squares);
+            actual = TetrominoType.SQUARE.isPatternFound(x, y, squares);
             assertEquals(message, expected, actual);
             message = "SQUARE (" + x + ", " + y + ")";
             y = 3;
-            actual = TetrisShape.SQUARE.isShapeFound(x, y, squares);
+            actual = TetrominoType.SQUARE.isPatternFound(x, y, squares);
             assertEquals(message, expected, actual);
         }
         
         x = 0; y = 1;
         message = "SQUARE (" + x + ", " + y + ")";
-        actual = TetrisShape.SQUARE.isShapeFound(x, y, squares);
+        actual = TetrominoType.SQUARE.isPatternFound(x, y, squares);
         assertEquals(message, expected, actual);
         x = 0; y = 2;
         message = "SQUARE (" + x + ", " + y + ")";
-        actual = TetrisShape.SQUARE.isShapeFound(x, y, squares);
+        actual = TetrominoType.SQUARE.isPatternFound(x, y, squares);
         assertEquals(message, expected, actual);
         
         x = 3; y = 1;
         message = "SQUARE (" + x + ", " + y + ")";
-        actual = TetrisShape.SQUARE.isShapeFound(x, y, squares);
+        actual = TetrominoType.SQUARE.isPatternFound(x, y, squares);
         assertEquals(message, expected, actual);
         x = 3; y = 2;
         message = "SQUARE (" + x + ", " + y + ")";
-        actual = TetrisShape.SQUARE.isShapeFound(x, y, squares);
+        actual = TetrominoType.SQUARE.isPatternFound(x, y, squares);
         assertEquals(message, expected, actual);
         
         expected = true;
         for(x = 1; x <= 2; x++)
             for(y = 1; y <= 2; y++) {
-                actual = TetrisShape.SQUARE.isShapeFound(x, y, squares);
+                actual = TetrominoType.SQUARE.isPatternFound(x, y, squares);
                 message = "SQUARE (" + x + ", " + y + ")";
                 assertEquals(message, expected, actual);
             }
@@ -70,7 +70,7 @@ public class ShapeTest {
         squares.setSquare(2, 2, Square.SquareType.RED);
         for(x = 1; x <= 2; x++)
             for(y = 1; y <= 2; y++) {
-                actual = TetrisShape.SQUARE.isShapeFound(x, y, squares);
+                actual = TetrominoType.SQUARE.isPatternFound(x, y, squares);
                 message = "SQUARE (" + x + ", " + y + ")";
                 assertEquals(message, expected, actual);
             }
@@ -96,56 +96,56 @@ public class ShapeTest {
         int x, y;
         for(x = 0; x < squares.getWidth(); x++) {
             y = 0;
-            actual = TetrisShape.S_RIGHT_H.isShapeFound(x, y, squares);
+            actual = TetrominoType.S_RIGHT_H.isPatternFound(x, y, squares);
             message = "S_RIGHT_H (" + x + ", " + y + ")";
             assertEquals(message, expected, actual);
             y = 4;
-            actual = TetrisShape.S_RIGHT_H.isShapeFound(x, y, squares);
+            actual = TetrominoType.S_RIGHT_H.isPatternFound(x, y, squares);
             message = "S_RIGHT_H (" + x + ", " + y + ")";
             assertEquals(message, expected, actual);
         }
         
         x = 0; y = 1;
-        actual = TetrisShape.S_RIGHT_H.isShapeFound(x, y, squares);
+        actual = TetrominoType.S_RIGHT_H.isPatternFound(x, y, squares);
         message = "S_RIGHT_H (" + x + ", " + y + ")";
         assertEquals(message, expected, actual);
         x = 0; y = 2;
-        actual = TetrisShape.S_RIGHT_H.isShapeFound(x, y, squares);
+        actual = TetrominoType.S_RIGHT_H.isPatternFound(x, y, squares);
         message = "S_RIGHT_H (" + x + ", " + y + ")";
         assertEquals(message, expected, actual);
         x = 1; y = 1;
-        actual = TetrisShape.S_RIGHT_H.isShapeFound(x, y, squares);
+        actual = TetrominoType.S_RIGHT_H.isPatternFound(x, y, squares);
         message = "S_RIGHT_H (" + x + ", " + y + ")";
         assertEquals(message, expected, actual);
         
         x = 3; y = 2;
-        actual = TetrisShape.S_RIGHT_H.isShapeFound(x, y, squares);
+        actual = TetrominoType.S_RIGHT_H.isPatternFound(x, y, squares);
         message = "S_RIGHT_H (" + x + ", " + y + ")";
         assertEquals(message, expected, actual);
         x = 4; y = 1;
-        actual = TetrisShape.S_RIGHT_H.isShapeFound(x, y, squares);
+        actual = TetrominoType.S_RIGHT_H.isPatternFound(x, y, squares);
         message = "S_RIGHT_H (" + x + ", " + y + ")";
         assertEquals(message, expected, actual);
         x = 4; y = 2;
-        actual = TetrisShape.S_RIGHT_H.isShapeFound(x, y, squares);
+        actual = TetrominoType.S_RIGHT_H.isPatternFound(x, y, squares);
         message = "S_RIGHT_H (" + x + ", " + y + ")";
         assertEquals(message, expected, actual);
         
         expected = true;
         x = 1; y = 2;
-        actual = TetrisShape.S_RIGHT_H.isShapeFound(x, y, squares);
+        actual = TetrominoType.S_RIGHT_H.isPatternFound(x, y, squares);
         message = "S_RIGHT_H (" + x + ", " + y + ")";
         assertEquals(message, expected, actual);
         x = 2; y = 1;
-        actual = TetrisShape.S_RIGHT_H.isShapeFound(x, y, squares);
+        actual = TetrominoType.S_RIGHT_H.isPatternFound(x, y, squares);
         message = "S_RIGHT_H (" + x + ", " + y + ")";
         assertEquals(message, expected, actual);
         x = 2; y = 2;
-        actual = TetrisShape.S_RIGHT_H.isShapeFound(x, y, squares);
+        actual = TetrominoType.S_RIGHT_H.isPatternFound(x, y, squares);
         message = "S_RIGHT_H (" + x + ", " + y + ")";
         assertEquals(message, expected, actual);
         x = 3; y = 1;
-        actual = TetrisShape.S_RIGHT_H.isShapeFound(x, y, squares);
+        actual = TetrominoType.S_RIGHT_H.isPatternFound(x, y, squares);
         message = "S_RIGHT_H (" + x + ", " + y + ")";
         assertEquals(message, expected, actual);
     }

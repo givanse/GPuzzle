@@ -8,9 +8,16 @@ import game.pieces.SquaresMatrix;
  * 
  * @author givanse
  */
-public abstract class Shape {
-        
-    abstract boolean findPatternMatch(int x, int y, SquaresMatrix squares);
+public abstract class Tetromino {
+    
+    protected enum Direction{HORIZONTAL, VERTICAL};
+    
+    protected enum PointingDirection {RIGHT, LEFT};
+    
+    protected enum LPosition {REGULAR, FLIPPED};
+    
+    protected abstract 
+              boolean findPatternMatch(int x, int y, SquaresMatrix squares);
     
     /**
      * 
@@ -22,7 +29,7 @@ public abstract class Shape {
      *         False otherwise
      */
     protected boolean isMatchingSquare(int x, int y, SquareType squareType, 
-                                                   SquaresMatrix squares) {
+                                                     SquaresMatrix squares) {
         if(squares.isPositionAvailable(x, y) == false)
             return false;
         if(squares.getSquare(x, y).getSquareType() != squareType)
@@ -40,7 +47,7 @@ public abstract class Shape {
      * @return true if a match was found, false otherwise
      * @throws Exception if this method is not override.
      */
-    public boolean isShapeFound(int x, int y, SquaresMatrix squares) {
+    public boolean isPatternFound(int x, int y, SquaresMatrix squares) {
         if(squares.isPositionAvailable(x, y) == false)
             return false;
         return this.findPatternMatch(x, y, squares);
