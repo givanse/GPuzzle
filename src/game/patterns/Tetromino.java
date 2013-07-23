@@ -19,6 +19,34 @@ public abstract class Tetromino {
     protected abstract boolean findPatternMatch(int x, int y, 
                                   SquareType squareType, SquaresMatrix squares);
     
+    protected final boolean testHorizontalLine(
+                                 int nBackward, int nForward, int x, int y,
+                                 SquareType squareType, SquaresMatrix squares) {
+        /* Backward */
+        for(int i = x; i > x - nBackward; i--)
+            if(!this.isMatchingSquare(i, y, squareType, squares))
+                return false;
+        /* Forward */
+        for(int i = x; i < x + nForward; i++)
+            if(!this.isMatchingSquare(i, y, squareType, squares))
+                return false;
+        return true;
+    }
+    
+    protected final boolean testVerticalLine(
+                                 int nBackward, int nForward, int x, int y,
+                                 SquareType squareType, SquaresMatrix squares) {
+        /* Backward */
+        for(int i = y; i > y - nBackward; i--)
+            if(!this.isMatchingSquare(x, i, squareType, squares))
+                return false;
+        /* Forward */
+        for(int i = y; i < y + nForward; i++)
+            if(!this.isMatchingSquare(x, i, squareType, squares))
+                return false;
+        return true;
+    }
+    
     /**
      * 
      * @param x
@@ -28,7 +56,7 @@ public abstract class Tetromino {
      * @return True  if the position holds a Square that has the same SquareType
      *         False otherwise
      */
-    protected boolean isMatchingSquare(int x, int y, SquareType squareType, 
+    protected final boolean isMatchingSquare(int x, int y, SquareType squareType, 
                                                      SquaresMatrix squares) {
         if(squares.isPositionAvailable(x, y) == false)
             return false;
