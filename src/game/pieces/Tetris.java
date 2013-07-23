@@ -29,7 +29,46 @@ public class Tetris {
         
         SQUARE(new boolean[][]{
             {true, true}, 
-            {true, true}}),
+            {true, true}}) {
+                @Override
+                protected boolean findPatternMatch(int x, int y, 
+                                                   boolean matrix[][]) {
+                    boolean isMatch = true;
+                    upwardLeft:
+                    for(int i = x; i > x-2; i--)
+                        for(int j = y; j > y-2; j--)
+                            if(matrix[i][j] == false) {
+                                isMatch =  false;
+                                break upwardLeft;
+                            }
+                    if(isMatch) return true; else isMatch = true;
+                    
+                    upwardRight:
+                    for(int i = x; i < x+2; i++)
+                        for(int j = y; j > y-2; j--)
+                            if(matrix[i][j] == false) {
+                                isMatch = false;
+                                break upwardRight;
+                            }
+                    if(isMatch) return true; else isMatch = true;
+                    
+                    downwardLeft:
+                    for(int i = x; i > x-2; i--)
+                        for(int j = y; j < y+2; j++)
+                            if(matrix[i][j] == false) {
+                                isMatch = false;
+                                break downwardLeft;
+                            }
+                    if(isMatch) return true; else isMatch = true;
+                    
+                    /*  last chance */
+                    for(int i = x; i < x+2; i++)
+                        for(int j = y; j < y+2; j++)
+                            if(matrix[i][j] == false)
+                                return false;
+                    return true;
+                }
+            },
         STRAIGHT_H(new boolean[][]{
             {true, true, true, true}}), 
         STRAIGHT_V(new boolean[][]{
@@ -41,7 +80,13 @@ public class Tetris {
         /* S shapes */
         S_RIGHT_H(new boolean[][]{
             {false, true, true }, 
-            {true , true, false}}), 
+            {true , true, false}}) {
+                @Override
+                protected boolean findPatternMatch(int x, int y, 
+                                                   boolean matrix[][]) {
+                    return false;
+                }
+        }, 
         S_RIGHT_V(new boolean[][]{
             {true , false}, 
             {true , true }, 
@@ -97,8 +142,24 @@ public class Tetris {
             this.shapeCutter = shapeCutter;
         }
         
+        protected boolean findPatternMatch(int x, int y, boolean matrix[][]) {
+            throw new Error("You need to override this method.");
+        }
+        
+        /* Public methods */
+        
+        /**
+         *
+         * @param x
+         * @param y
+         * @param matrix
+         * @return true if a match was found, false otherwise
+         * @throws Exception if this method is not override.
+         */
         public boolean isShapeFound(int x, int y, boolean matrix[][]) {
-            return false;
+            if(matrix[x][y] == false)
+                return false;
+            return this.findPatternMatch(x, y, matrix);
         }
         
         public boolean[][] getShapeCutter() {
