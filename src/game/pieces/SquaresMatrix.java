@@ -17,11 +17,11 @@ public class SquaresMatrix {
         this.squares = new Square[width][height];
     }
     
-    private Square getSquare(int x, int y) {
+    /* Public methods */
+    
+    public Square getSquare(int x, int y) {
         return this.squares[x][y];
     }
-    
-    /* Public methods */
     
     /**
      * 
@@ -29,7 +29,7 @@ public class SquaresMatrix {
      * @param y
      * @param square 
      */
-    public SquaresMatrix insert(int x, int y, SquareType squareType) {
+    public SquaresMatrix setSquare(int x, int y, SquareType squareType) {
         this.squares[x][y] = new Square(x, y, squareType);
         return this;
     }

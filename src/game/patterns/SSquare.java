@@ -1,5 +1,7 @@
 package game.patterns;
 
+import game.pieces.Square;
+import game.pieces.Square.SquareType;
 import game.pieces.SquaresMatrix;
 
 /**
@@ -17,11 +19,12 @@ public class SSquare extends Shape {
      */
     @Override
     boolean findPatternMatch(int x, int y, SquaresMatrix squares) {
+        SquareType squareType = squares.getSquare(x, y).getSquareType();
         boolean isMatch = true;
         upwardLeft:
         for(int i = x; i > x-2; i--)
             for(int j = y; j > y-2; j--)
-                if(squares.isPositionAvailable(i, j) == false) {
+                if(!super.isMatchingSquare(i, j, squareType, squares)) {
                     isMatch =  false;
                     break upwardLeft;
                 }
@@ -30,7 +33,7 @@ public class SSquare extends Shape {
         upwardRight:
         for(int i = x; i < x+2; i++)
             for(int j = y; j > y-2; j--)
-                if(squares.isPositionAvailable(i, j) == false) {
+                if(!super.isMatchingSquare(i, j, squareType, squares)) {
                     isMatch = false;
                     break upwardRight;
                 }
@@ -39,7 +42,7 @@ public class SSquare extends Shape {
         downwardLeft:
         for(int i = x; i > x-2; i--)
             for(int j = y; j < y+2; j++)
-                if(squares.isPositionAvailable(i, j) == false) {
+                if(!super.isMatchingSquare(i, j, squareType, squares)) {
                     isMatch = false;
                     break downwardLeft;
                 }
@@ -48,7 +51,7 @@ public class SSquare extends Shape {
         /*  last chance */
         for(int i = x; i < x+2; i++)
             for(int j = y; j < y+2; j++)
-                if(squares.isPositionAvailable(i, j) == false)
+                if(!super.isMatchingSquare(i, j, squareType, squares))
                     return false;
         return true;
     }

@@ -20,10 +20,10 @@ public class ShapeTest {
          * oooo
          */
         SquaresMatrix squares = new SquaresMatrix(4, 4)
-                .insert(1, 1, Square.SquareType.BLUE)
-                .insert(1, 2, Square.SquareType.BLUE)
-                .insert(2, 1, Square.SquareType.BLUE)
-                .insert(2, 2, Square.SquareType.BLUE);
+                .setSquare(1, 1, Square.SquareType.BLUE)
+                .setSquare(1, 2, Square.SquareType.BLUE)
+                .setSquare(2, 1, Square.SquareType.BLUE)
+                .setSquare(2, 2, Square.SquareType.BLUE);
         /* pattern match a square shape */
         int x = -1, y = -1;
         String message;
@@ -65,6 +65,15 @@ public class ShapeTest {
                 message = "SQUARE (" + x + ", " + y + ")";
                 assertEquals(message, expected, actual);
             }
+        
+        expected = false;
+        squares.setSquare(2, 2, Square.SquareType.RED);
+        for(x = 1; x <= 2; x++)
+            for(y = 1; y <= 2; y++) {
+                actual = TetrisShape.SQUARE.isShapeFound(x, y, squares);
+                message = "SQUARE (" + x + ", " + y + ")";
+                assertEquals(message, expected, actual);
+            }
     }
     
     @Test
@@ -76,10 +85,10 @@ public class ShapeTest {
          * ooooo
          */
         SquaresMatrix squares = new SquaresMatrix(5, 5)
-                .insert(1, 2, Square.SquareType.BLUE)
-                .insert(1, 3, Square.SquareType.BLUE)
-                .insert(2, 1, Square.SquareType.BLUE)
-                .insert(2, 2, Square.SquareType.BLUE);
+                .setSquare(1, 2, Square.SquareType.BLUE)
+                .setSquare(1, 3, Square.SquareType.BLUE)
+                .setSquare(2, 1, Square.SquareType.BLUE)
+                .setSquare(2, 2, Square.SquareType.BLUE);
         /* pattern match a S_RIGHT_H */
         String message;
         boolean expected = false;

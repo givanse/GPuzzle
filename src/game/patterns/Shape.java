@@ -1,6 +1,6 @@
 package game.patterns;
 
-import game.pieces.Square;
+import game.pieces.Square.SquareType;
 import game.pieces.SquaresMatrix;
 
 /**
@@ -11,6 +11,24 @@ import game.pieces.SquaresMatrix;
 public abstract class Shape {
         
     abstract boolean findPatternMatch(int x, int y, SquaresMatrix squares);
+    
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param squareType
+     * @param squares
+     * @return True  if the position holds a Square that has the same SquareType
+     *         False otherwise
+     */
+    protected boolean isMatchingSquare(int x, int y, SquareType squareType, 
+                                                   SquaresMatrix squares) {
+        if(squares.isPositionAvailable(x, y) == false)
+            return false;
+        if(squares.getSquare(x, y).getSquareType() != squareType)
+            return false;
+        return true;
+    }
     
     /* Public methods */
         
