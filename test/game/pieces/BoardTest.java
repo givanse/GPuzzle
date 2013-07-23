@@ -1,5 +1,6 @@
 package game.pieces;
 
+import game.patterns.TetrisShape;
 import game.pieces.Board.SwapDirection;
 import game.pieces.Square.SquareType;
 import org.junit.BeforeClass;
@@ -29,7 +30,7 @@ public class BoardTest {
     @BeforeClass
     public static void setUpClass() {
         int expected = 15;
-        int actual = Tetris.TetrisShape.values().length;
+        int actual = TetrisShape.values().length;
         assertEquals(expected, actual);
     }
     
