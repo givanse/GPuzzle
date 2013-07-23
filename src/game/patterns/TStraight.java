@@ -19,7 +19,7 @@ public class TStraight extends Tetromino {
                                                    SquaresMatrix squares) {
         for(int i = 0; i <= 3; i++)
             for(int j = 3; j >= 0; j--)
-                if(this.testHorizontalLine(i, j, x, y, squareType, squares))
+                if(this.isHorizontalMatch(i, j, x, y, squareType, squares))
                     return true;
         return false;
     }
@@ -28,7 +28,7 @@ public class TStraight extends Tetromino {
                                                    SquaresMatrix squares) {
         for(int i = 0; i <= 3; i++)
             for(int j = 3; j >= 0; j--)
-                if(this.testVerticalLine(i, j, x, y, squareType, squares))
+                if(this.isVerticalMatch(i, j, x, y, squareType, squares))
                     return true;
         return false;
     }

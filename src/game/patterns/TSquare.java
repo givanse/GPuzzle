@@ -25,9 +25,9 @@ public class TSquare extends Tetromino {
          * |_|_|
          */
         boolean match = true;
-        match = match && super.isMatchingSquare(x-1, y, squareType, squares);
-        match = match && super.isMatchingSquare(x, y-1, squareType, squares);
-        match = match && super.isMatchingSquare(x-1, y-1, squareType, squares);
+        match = match && super.isSquareMatch(x-1, y, squareType, squares);
+        match = match && super.isSquareMatch(x, y-1, squareType, squares);
+        match = match && super.isSquareMatch(x-1, y-1, squareType, squares);
         if(match) return true;
         
         /**
@@ -36,9 +36,9 @@ public class TSquare extends Tetromino {
          * |_|_|
          */
         match = true;
-        match = match && super.isMatchingSquare(x+1, y, squareType, squares);
-        match = match && super.isMatchingSquare(x, y-1, squareType, squares);
-        match = match && super.isMatchingSquare(x+1, y-1, squareType, squares);
+        match = match && super.isSquareMatch(x+1, y, squareType, squares);
+        match = match && super.isSquareMatch(x, y-1, squareType, squares);
+        match = match && super.isSquareMatch(x+1, y-1, squareType, squares);
         if(match) return true;
         
         /**
@@ -47,9 +47,9 @@ public class TSquare extends Tetromino {
          * |_ _|
          */
         match = true;
-        match = match && super.isMatchingSquare(x-1, y, squareType, squares);
-        match = match && super.isMatchingSquare(x, y+1, squareType, squares);
-        match = match && super.isMatchingSquare(x-1, y+1, squareType, squares);
+        match = match && super.isSquareMatch(x-1, y, squareType, squares);
+        match = match && super.isSquareMatch(x, y+1, squareType, squares);
+        match = match && super.isSquareMatch(x-1, y+1, squareType, squares);
         if(match) return true;
 
         /**
@@ -58,9 +58,9 @@ public class TSquare extends Tetromino {
          * |_ _|
          */
         match = true;
-        match = match && super.isMatchingSquare(x+1, y, squareType, squares);
-        match = match && super.isMatchingSquare(x, y+1, squareType, squares);
-        match = match && super.isMatchingSquare(x+1, y+1, squareType, squares);
+        match = match && super.isSquareMatch(x+1, y, squareType, squares);
+        match = match && super.isSquareMatch(x, y+1, squareType, squares);
+        match = match && super.isSquareMatch(x+1, y+1, squareType, squares);
         return match;
     }
 }
