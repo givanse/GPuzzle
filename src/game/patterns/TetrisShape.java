@@ -1,5 +1,8 @@
 package game.patterns;
     
+import game.pieces.Square;
+import game.pieces.SquaresMatrix;
+
 /**
  * The last letter of each tetromino type, _H or _V, stands for 
  * Horizontal or Vertical.
@@ -11,13 +14,6 @@ package game.patterns;
  * [][][]<>
  * 
  * Note that the shape T is not included.
- * 
- * All the shapes in one matrix:
- *  _ _ _ _
- * |_|_|_|_|
- * |_|_|_|
- * |_|_|
- * |_|
  * 
  * @author givanse
  */
@@ -48,7 +44,7 @@ public enum TetrisShape {
         this.shape = shape;
     }
 
-    public boolean isShapeFound(int x, int y, boolean matrix[][]) {
-        return this.shape.isShapeFound(x, y, matrix);
+    public boolean isShapeFound(int x, int y, SquaresMatrix squares) {
+        return this.shape.isShapeFound(x, y, squares);
     }
 }

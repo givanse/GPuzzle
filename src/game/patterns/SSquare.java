@@ -1,5 +1,7 @@
 package game.patterns;
 
+import game.pieces.SquaresMatrix;
+
 /**
  *
  * @author givanse
@@ -10,16 +12,16 @@ public class SSquare extends Shape {
      * 
      * @param x
      * @param y
-     * @param matrix
+     * @param squares
      * @return 
      */
     @Override
-    boolean findPatternMatch(int x, int y, boolean matrix[][]) {
+    boolean findPatternMatch(int x, int y, SquaresMatrix squares) {
         boolean isMatch = true;
         upwardLeft:
         for(int i = x; i > x-2; i--)
             for(int j = y; j > y-2; j--)
-                if(matrix[i][j] == false) {
+                if(squares.isPositionAvailable(i, j) == false) {
                     isMatch =  false;
                     break upwardLeft;
                 }
@@ -28,7 +30,7 @@ public class SSquare extends Shape {
         upwardRight:
         for(int i = x; i < x+2; i++)
             for(int j = y; j > y-2; j--)
-                if(matrix[i][j] == false) {
+                if(squares.isPositionAvailable(i, j) == false) {
                     isMatch = false;
                     break upwardRight;
                 }
@@ -37,7 +39,7 @@ public class SSquare extends Shape {
         downwardLeft:
         for(int i = x; i > x-2; i--)
             for(int j = y; j < y+2; j++)
-                if(matrix[i][j] == false) {
+                if(squares.isPositionAvailable(i, j) == false) {
                     isMatch = false;
                     break downwardLeft;
                 }
@@ -46,7 +48,7 @@ public class SSquare extends Shape {
         /*  last chance */
         for(int i = x; i < x+2; i++)
             for(int j = y; j < y+2; j++)
-                if(matrix[i][j] == false)
+                if(squares.isPositionAvailable(i, j) == false)
                     return false;
         return true;
     }
