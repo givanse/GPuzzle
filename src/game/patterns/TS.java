@@ -7,20 +7,38 @@ import game.pieces.SquaresMatrix;
  *
  * @author givanse
  */
-public class TS extends Tetromino {
-
-    private final Direction direction;
-    private final PointingDirection pointingDirection;
+class TS extends Tetromino {
     
-    public TS(PointingDirection pointingDirection, Direction direction) {
-        this.pointingDirection = pointingDirection;
-        this.direction = direction;
+    private boolean fpmRightHorizontal(int x, int y, SquareType squareType,
+                                                     SquaresMatrix squares) {
+        return false;
     }
     
-    @Override
-    protected boolean findPatternMatch(int x, int y, SquareType squareType,
+    private boolean fpmRightVertical(int x, int y, SquareType squareType,
                                                      SquaresMatrix squares) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;
+    }
+    
+    private boolean fpmLeftHorizontal(int x, int y, SquareType squareType,
+                                                     SquaresMatrix squares) {
+        return false;
+    }
+    
+    private boolean fpmLeftVertical(int x, int y, SquareType squareType,
+                                                     SquaresMatrix squares) {
+        return false;
+    }
+    
+    /* Public methods */
+    
+    @Override
+    protected int[][] findPatternMatch(int x, int y, SquareType squareType,
+                                                     SquaresMatrix squares) {
+        this.fpmRightHorizontal(x, y, squareType, squares);
+        this.fpmRightVertical(x, y, squareType, squares);
+        this.fpmLeftHorizontal(x, y, squareType, squares);
+        this.fpmLeftVertical(x, y, squareType, squares);
+        return new int[0][0];
     }
     
 }

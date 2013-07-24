@@ -1,9 +1,7 @@
 package game.pieces;
 
-import game.patterns.TetrominoType;
 import game.pieces.Board.SwapDirection;
 import game.pieces.Square.SquareType;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -27,13 +25,6 @@ public class BoardTest {
             .setSquare(1, 2, SquareType.BLUE)
             .setSquare(2, 1, SquareType.BLUE)
         );
-                
-    @BeforeClass
-    public static void setUpClass() {
-        int expected = 15;
-        int actual = TetrominoType.values().length;
-        assertEquals(expected, actual);
-    }
     
     @Test
     public void getFallingSquaresTest() {

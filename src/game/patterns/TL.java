@@ -7,23 +7,61 @@ import game.pieces.SquaresMatrix;
  *
  * @author givanse
  */
-public class TL extends Tetromino {
-
-    private final Direction direction;
-    private final PointingDirection pointingDirection;
-    private final LPosition lPosition;
+class TL extends Tetromino {
     
-    public TL(PointingDirection pointingDirection, Direction direction, 
-                                                   LPosition lPosition) {
-        this.pointingDirection = pointingDirection;
-        this.direction = direction;
-        this.lPosition = lPosition;
+    private boolean fpmRightHorizontal(int x, int y,
+                                SquareType squareType, SquaresMatrix squares) {
+        return false;
     }
+    
+    private boolean fpmRightVertical(int x, int y,
+                                SquareType squareType, SquaresMatrix squares) {
+        return false;
+    }
+    
+    private boolean fpmRightHorizontalFlipped(int x, int y, 
+                                SquareType squareType, SquaresMatrix squares) {
+        return false;
+    }
+    
+    private boolean fpmRightVerticalFlipped(int x, int y,
+                                SquareType squareType, SquaresMatrix squares) {
+        return false;
+    }
+    
+    private boolean fpmLeftHorizontal(int x, int y,
+                                SquareType squareType, SquaresMatrix squares) {
+        return false;
+    }
+    
+    private boolean fpmLeftVertical(int x, int y, 
+                                SquareType squareType, SquaresMatrix squares) {
+        return false;
+    }
+    
+    private boolean fpmLeftHorizontalFlipped(int x, int y,
+                                SquareType squareType, SquaresMatrix squares) {
+        return false;
+    }
+    
+    private boolean fpmLeftVerticalFlipped(int x, int y,
+                                SquareType squareType, SquaresMatrix squares) {
+        return false;
+    }
+    
+    /* Public methods */
     
     @Override
-    protected boolean findPatternMatch(int x, int y, SquareType squareType,
+    protected int[][] findPatternMatch(int x, int y, SquareType squareType,
                                                      SquaresMatrix squares) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.fpmRightHorizontal(x, y, squareType, squares);
+        this.fpmRightHorizontalFlipped(x, y, squareType, squares);
+        this.fpmRightVertical(x, y, squareType, squares);
+        this.fpmRightVerticalFlipped(x, y, squareType, squares);
+        this.fpmLeftHorizontal(x, y, squareType, squares);
+        this.fpmLeftHorizontalFlipped(x, y, squareType, squares);
+        this.fpmLeftVertical(x, y, squareType, squares);
+        this.fpmLeftVerticalFlipped(x, y, squareType, squares);
+        return new int[0][0];
     }
-    
 }
