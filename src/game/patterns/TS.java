@@ -13,9 +13,41 @@ class TS extends Tetromino {
                                                      SquaresMatrix squares) {
         /**
          *  _ _ _
+         * |   |_|
+         * |_ _ _|
+         */
+        if(Tetromino.isSquareMatch(x-1, y, squareType, squares))
+          if(Tetromino.isSquareMatch(x-1, y+1, squareType, squares))
+            if(Tetromino.isSquareMatch(x-2, y+1, squareType, squares))
+              return new int[][]{{x, y}, {x-1, y}, {x-1, y+1}, {x-2, y+1}};
+        /**
+         *  _ _ _
          * | |_| |
          * |_ _ _|
          */
+        if(Tetromino.isSquareMatch(x+1, y, squareType, squares))
+          if(Tetromino.isSquareMatch(x, y+1, squareType, squares))
+            if(Tetromino.isSquareMatch(x-1, y+1, squareType, squares))
+              return new int[][]{{x, y}, {x+1, y}, {x, y+1}, {x-1, y+1}};
+        /**
+         *  _ _ _
+         * |  _  |
+         * |_|_|_|
+         */
+        if(Tetromino.isSquareMatch(x-1, y, squareType, squares))
+          if(Tetromino.isSquareMatch(x, y-1, squareType, squares))
+            if(Tetromino.isSquareMatch(x+1, y-1, squareType, squares))
+              return new int[][]{{x, y}, {x-1, y}, {x, y-1}, {x+1, y-1}};
+        /**
+         *  _ _ _
+         * |_    |
+         * |_|_ _|
+         */
+        if(Tetromino.isSquareMatch(x+1, y, squareType, squares))
+          if(Tetromino.isSquareMatch(x+1, y-1, squareType, squares))
+            if(Tetromino.isSquareMatch(x+2, y-1, squareType, squares))
+              return new int[][]{{x, y}, {x+1, y}, {x+1, y-1}, {x+2, y-1}};
+        
         return new int[0][0];
     }
     
