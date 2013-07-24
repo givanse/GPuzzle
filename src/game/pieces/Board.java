@@ -91,12 +91,12 @@ public class Board {
                 int patternFound[][] = 
                       Tetromino.performPatternMatching(x, y, this.boardSquares);
                 this.boardSquares.deleteSquares(patternFound);
-                this.moveDownLooseRows();
+                this.moveDownFlyingSquares();
             }
     }
     
-    public void moveDownLooseRows() {
-        
+    public void moveDownFlyingSquares() {
+        this.boardSquares.moveDownFlyingSquares();
     }
     
     public SquaresMatrix getSquares() {

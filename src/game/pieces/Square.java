@@ -1,6 +1,7 @@
 package game.pieces;
 
 import java.awt.Image;
+import java.util.Objects;
 import javax.swing.ImageIcon;
 
 /**
@@ -72,5 +73,39 @@ public class Square {
     public void stopFalling() {
         this.isFalling = false;
     }
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + this.x;
+        hash = 67 * hash + this.y;
+        hash = 67 * hash + (this.isFalling ? 1 : 0);
+        hash = 67 * hash + Objects.hashCode(this.squareColour);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        final Square other = (Square) obj;
+        if (this.x != other.x) {
+            return false;
+        }
+        if (this.y != other.y) {
+            return false;
+        }
+        if (this.isFalling != other.isFalling) {
+            return false;
+        }
+        if (this.squareColour != other.squareColour) {
+            return false;
+        }
+        return true;
+    }
+ 
 }
