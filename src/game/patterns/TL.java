@@ -1,6 +1,6 @@
 package game.patterns;
 
-import game.pieces.Square.SquareType;
+import game.pieces.Square.SquareColour;
 import game.pieces.SquaresMatrix;
 
 /**
@@ -10,49 +10,49 @@ import game.pieces.SquaresMatrix;
 class TL extends Tetromino {
     
     private boolean fpmRightHorizontal(int x, int y,
-                                SquareType squareType, SquaresMatrix squares) {
+                                SquareColour squareType, SquaresMatrix squares) {
         return false;
     }
     
     private boolean fpmRightVertical(int x, int y,
-                                SquareType squareType, SquaresMatrix squares) {
+                                SquareColour squareType, SquaresMatrix squares) {
         return false;
     }
     
     private boolean fpmRightHorizontalFlipped(int x, int y, 
-                                SquareType squareType, SquaresMatrix squares) {
+                                SquareColour squareType, SquaresMatrix squares) {
         return false;
     }
     
     private boolean fpmRightVerticalFlipped(int x, int y,
-                                SquareType squareType, SquaresMatrix squares) {
+                                SquareColour squareType, SquaresMatrix squares) {
         return false;
     }
     
     private boolean fpmLeftHorizontal(int x, int y,
-                                SquareType squareType, SquaresMatrix squares) {
+                                SquareColour squareType, SquaresMatrix squares) {
         return false;
     }
     
     private boolean fpmLeftVertical(int x, int y, 
-                                SquareType squareType, SquaresMatrix squares) {
+                                SquareColour squareType, SquaresMatrix squares) {
         return false;
     }
     
     private boolean fpmLeftHorizontalFlipped(int x, int y,
-                                SquareType squareType, SquaresMatrix squares) {
+                                SquareColour squareType, SquaresMatrix squares) {
         return false;
     }
     
     private boolean fpmLeftVerticalFlipped(int x, int y,
-                                SquareType squareType, SquaresMatrix squares) {
+                                SquareColour squareType, SquaresMatrix squares) {
         return false;
     }
     
     /* Public methods */
     
     @Override
-    protected int[][] findPatternMatch(int x, int y, SquareType squareType,
+    protected int[][] findPatternMatch(int x, int y, SquareColour squareType,
                                                      SquaresMatrix squares) {
         this.fpmRightHorizontal(x, y, squareType, squares);
         this.fpmRightHorizontalFlipped(x, y, squareType, squares);

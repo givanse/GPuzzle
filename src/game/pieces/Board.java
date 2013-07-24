@@ -1,6 +1,8 @@
 package game.pieces;
 
-import game.pieces.Square.SquareType;
+import game.patterns.Tetromino;
+import game.patterns.TetrominoType;
+import game.pieces.Square.SquareColour;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,7 +12,7 @@ import java.util.Random;
  */
 public class Board {
     
-    private final SquaresMatrix squares;
+    private final SquaresMatrix boardSquares;
     private final ArrayList<Square> fallingSquares = new ArrayList<>(2);
     
     public enum SwapDirection {LEFT, RIGHT, UP, DOWN};
@@ -21,21 +23,21 @@ public class Board {
         this(Board.WIDTH_IN_SQUARES, Board.HEIGHT_IN_SQUARES);
     }
     
-    public Board(SquaresMatrix squares) {
-        this.squares = squares;
+    public Board(int widthInSquares, int heightInSquares) {
+        this(new SquaresMatrix(widthInSquares, heightInSquares));
     }
     
-    public Board(int widthInSquares, int heightInSquares) {
-        this.squares = new SquaresMatrix(widthInSquares, heightInSquares);
+    public Board(SquaresMatrix squares) {
+        this.boardSquares = squares;
         this.generateRandomFallingPair();
     }
     
     private void generateRandomFallingPair() {
         Random random = new Random(System.currentTimeMillis());
-        int width = this.squares.getWidth();
+        int width = this.boardSquares.getWidth();
         int randomX = random.nextInt(width);
         int constantY = 0;
-        SquareType sqrTypes[] = SquareType.values();
+        SquareColour sqrTypes[] = SquareColour.values();
         int randomType = random.nextInt(sqrTypes.length);
         Square square1 = new Square(randomX, constantY, sqrTypes[randomType]);
         this.fallingSquares.add(square1);
@@ -56,15 +58,41 @@ public class Board {
     }
     
     public final boolean isPositionAvailable(int x, int y) {
-        return false;
+        return this.boardSquares.isPositionAvailable(x, y);
     }
     
-    public boolean isValidSwap(int x, int y, SwapDirection dir) {
-        return true;
+    public boolean isValidSwap(int x, int y, SwapDirection swapDirection) {
+        
+        if(x < 0 || y < 0)
+            return false;
+        
+        if(this.isPositionAvailable(x, y))        /* No square for swap here. */
+            return false;
+        
+        int newX = x;
+        int newY = y;
+        
+        newX += (swapDirection == SwapDirection.RIGHT) ? 1 : 0;
+        newX += (swapDirection == SwapDirection.LEFT) ? -1 : 0;
+        
+        newY += (swapDirection == SwapDirection.DOWN) ? 1 : 0;
+        newY += (swapDirection == SwapDirection.UP) ? -1 : 0;
+        
+        if(newX < 0 || newY < 0)
+            return false;
+        
+        boolean foundSquareForSwap = !this.isPositionAvailable(newX, newY);
+            return foundSquareForSwap;
     }
     
     public void deleteCompletedTetrisShapes() {
-        
+        for(int x = 0; x < this.boardSquares.getWidth(); x++)
+            for(int y = 0; y < this.boardSquares.getHeight(); y++) {
+                int patternFound[][] = 
+                      Tetromino.performPatternMatching(x, y, this.boardSquares);
+                this.boardSquares.deleteSquares(patternFound);
+                this.moveDownLooseRows();
+            }
     }
     
     public void moveDownLooseRows() {
@@ -72,6 +100,6 @@ public class Board {
     }
     
     public SquaresMatrix getSquares() {
-        return this.squares;
+        return this.boardSquares;
     }
 }

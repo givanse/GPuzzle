@@ -2,7 +2,7 @@ package game;
 
 import game.pieces.Board;
 import game.pieces.Square;
-import game.pieces.Square.SquareType;
+import game.pieces.Square.SquareColour;
 import gui.view.BoardPanel;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -68,13 +68,13 @@ public class GameService implements Runnable {
     
     public void drawObjects(Graphics graphics) {
         /* just some provitional random drawings */
-        SquareType squareTypes[] = SquareType.values();
+        SquareColour squareTypes[] = SquareColour.values();
         int squareTypesIndex = 0;
         int lastX = BoardPanel.CANVAS_WIDTH - 64;
         int lastY = BoardPanel.CANVAS_HEIGHT - 64;
         for(int x = 0; x < lastX; x += Square.SIZE)
             for(int y = 0; y < lastY; y += Square.SIZE) {
-                SquareType st = squareTypes[squareTypesIndex++];
+                SquareColour st = squareTypes[squareTypesIndex++];
                 squareTypesIndex = (squareTypesIndex == squareTypes.length) ?
                                     0 : squareTypesIndex;
                 Image square = st.getImage();

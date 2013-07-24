@@ -1,6 +1,6 @@
 package game.pieces;
 
-import game.pieces.Square.SquareType;
+import game.pieces.Square.SquareColour;
 import java.util.Arrays;
 
 /**
@@ -29,13 +29,13 @@ public class SquaresMatrix {
      * @param y
      * @param square 
      */
-    public SquaresMatrix setSquare(int x, int y, SquareType squareType) {
+    public SquaresMatrix setSquare(int x, int y, SquareColour squareType) {
         this.squares[x][y] = new Square(x, y, squareType);
         return this;
     }
     
     public boolean isPositionAvailable(int x, int y) {
-        return this.getSquare(x, y) != null;
+        return this.getSquare(x, y) ==  null;
     }
     
     public int getWidth() {
@@ -73,5 +73,7 @@ public class SquaresMatrix {
         return hash;
     }
     
-    
+    public void deleteSquares(int squares[][]) {
+        
+    }
 }

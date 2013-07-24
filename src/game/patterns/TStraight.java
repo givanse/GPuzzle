@@ -1,6 +1,6 @@
 package game.patterns;
 
-import game.pieces.Square.SquareType;
+import game.pieces.Square.SquareColour;
 import game.pieces.SquaresMatrix;
 
 /**
@@ -9,7 +9,7 @@ import game.pieces.SquaresMatrix;
  */
 class TStraight extends Tetromino {
 
-    private boolean findPatternMatchH(int x, int y, SquareType squareType, 
+    private boolean findPatternMatchH(int x, int y, SquareColour squareType, 
                                                    SquaresMatrix squares) {
         for(int i = 0; i <= 3; i++)
             for(int j = 3; j >= 0; j--)
@@ -18,7 +18,7 @@ class TStraight extends Tetromino {
         return false;
     }
     
-    private boolean findPatternMatchV(int x, int y, SquareType squareType,
+    private boolean findPatternMatchV(int x, int y, SquareColour squareType,
                                                    SquaresMatrix squares) {
         for(int i = 0; i <= 3; i++)
             for(int j = 3; j >= 0; j--)
@@ -30,7 +30,7 @@ class TStraight extends Tetromino {
     /* Public methods */
     
     @Override
-    protected int[][] findPatternMatch(int x, int y, SquareType squareType,
+    protected int[][] findPatternMatch(int x, int y, SquareColour squareType,
                                                      SquaresMatrix squares) {
         this.findPatternMatchH(x, y, squareType, squares);
         this.findPatternMatchV(x, y, squareType, squares);

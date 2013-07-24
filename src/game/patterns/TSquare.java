@@ -1,6 +1,6 @@
 package game.patterns;
 
-import game.pieces.Square.SquareType;
+import game.pieces.Square.SquareColour;
 import game.pieces.SquaresMatrix;
 
 /**
@@ -17,7 +17,7 @@ class TSquare extends Tetromino {
      * @return 
      */
     @Override
-    protected int[][] findPatternMatch(int x, int y, SquareType squareType,
+    protected int[][] findPatternMatch(int x, int y, SquareColour squareType,
                                                      SquaresMatrix squares) {
         /**
          *  _ _

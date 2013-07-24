@@ -1,7 +1,7 @@
 package game.pieces;
 
 import game.pieces.Board.SwapDirection;
-import game.pieces.Square.SquareType;
+import game.pieces.Square.SquareColour;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -19,11 +19,11 @@ public class BoardTest {
      * [   ][2,1][   ]
      */
     private static final Board boardCross = new Board(new SquaresMatrix(3, 3)
-            .setSquare(0, 1, SquareType.BLUE)
-            .setSquare(1, 0, SquareType.BLUE)
-            .setSquare(1, 1, SquareType.BLUE)
-            .setSquare(1, 2, SquareType.BLUE)
-            .setSquare(2, 1, SquareType.BLUE)
+            .setSquare(0, 1, SquareColour.BLUE)
+            .setSquare(1, 0, SquareColour.BLUE)
+            .setSquare(1, 1, SquareColour.BLUE)
+            .setSquare(1, 2, SquareColour.BLUE)
+            .setSquare(2, 1, SquareColour.BLUE)
         );
     
     @Test
@@ -44,15 +44,20 @@ public class BoardTest {
     @Test
     public void isPositionAvailableTest() {
         boolean expected = true;
+        boolean actual;
         for(int x = 0; x < 3 ; x++)
             for(int y = 0; y < 3; y++) {
-                boolean actual = board3x3Empty.isPositionAvailable(x, y);
+                actual = board3x3Empty.isPositionAvailable(x, y);
                 assertEquals(expected, actual);
             }
+        
+        expected = false;
+        actual = boardCross.isPositionAvailable(1, 1);
+        assertEquals(expected, actual);
     }
     
     @Test
-    public void isValidMoveTest() {
+    public void isValidSwapTest() {
         /**
          * < >[+][ ]
          * [+][+][+]
@@ -76,16 +81,16 @@ public class BoardTest {
          * [ ][+][ ]
          */
         expected = true;
-        actual = boardCross.isValidSwap(0, 1, SwapDirection.DOWN);
+        actual = boardCross.isValidSwap(1, 0, SwapDirection.DOWN);
         assertEquals(expected, actual);
         expected = false;
-        actual = boardCross.isValidSwap(0, 1, SwapDirection.UP);
+        actual = boardCross.isValidSwap(1, 0, SwapDirection.UP);
         assertEquals(expected, actual);
         expected = false;
-        actual = boardCross.isValidSwap(0, 1, SwapDirection.LEFT);
+        actual = boardCross.isValidSwap(1, 0, SwapDirection.LEFT);
         assertEquals(expected, actual);
         expected = false;
-        actual = boardCross.isValidSwap(0, 1, SwapDirection.RIGHT);
+        actual = boardCross.isValidSwap(1, 0, SwapDirection.RIGHT);
         assertEquals(expected, actual);
         /**
          * [ ][+][ ]
@@ -130,16 +135,16 @@ public class BoardTest {
          * [ ][ ]
          */
         SquaresMatrix squares = new SquaresMatrix(2, 2);
-        squares.setSquare(0, 0, SquareType.PINK);
-        squares.setSquare(0, 1, SquareType.PINK);
+        squares.setSquare(0, 0, SquareColour.PINK);
+        squares.setSquare(0, 1, SquareColour.PINK);
         Board board = new Board(squares);
         /**
          * [ ][ ]
          * [+][+]
          */
         SquaresMatrix expecteds = new SquaresMatrix(2, 2);
-        squares.setSquare(1, 0, SquareType.PINK);
-        squares.setSquare(1, 1, SquareType.PINK);
+        squares.setSquare(1, 0, SquareColour.PINK);
+        squares.setSquare(1, 1, SquareColour.PINK);
         board.moveDownLooseRows();
         SquaresMatrix actuals = board.getSquares();
         assertEquals(expecteds, actuals);
@@ -149,8 +154,8 @@ public class BoardTest {
          * [1,0][   ]
          */
         board = new Board(new SquaresMatrix(2, 2)
-                .setSquare(0, 1, SquareType.PINK)
-                .setSquare(1, 0, SquareType.PINK)
+                .setSquare(0, 1, SquareColour.PINK)
+                .setSquare(1, 0, SquareColour.PINK)
             );
         board.moveDownLooseRows();
         actuals = board.getSquares();
@@ -161,15 +166,15 @@ public class BoardTest {
          * [   ][1,1]
          */
         board = new Board(new SquaresMatrix(2, 2)
-                .setSquare(0, 0, SquareType.PINK)
-                .setSquare(0, 1, SquareType.PINK)
-                .setSquare(1, 1, SquareType.PINK)
+                .setSquare(0, 0, SquareColour.PINK)
+                .setSquare(0, 1, SquareColour.PINK)
+                .setSquare(1, 1, SquareColour.PINK)
             );
         /**
          * [ ][+]
          * [+][+]
          */
-        expecteds.setSquare(0, 1, SquareType.PINK);
+        expecteds.setSquare(0, 1, SquareColour.PINK);
         board.moveDownLooseRows();
         actuals = board.getSquares();
         assertEquals(expecteds, actuals);
@@ -181,10 +186,10 @@ public class BoardTest {
          * [ ][ ]
          */
         board = new Board(new SquaresMatrix(2, 4)
-                .setSquare(0, 0, SquareType.PINK)
-                .setSquare(0, 1, SquareType.PINK)
-                .setSquare(2, 0, SquareType.PINK)
-                .setSquare(2, 1, SquareType.PINK)
+                .setSquare(0, 0, SquareColour.PINK)
+                .setSquare(0, 1, SquareColour.PINK)
+                .setSquare(2, 0, SquareColour.PINK)
+                .setSquare(2, 1, SquareColour.PINK)
             );
         /**
          * [ ][ ]
@@ -193,10 +198,10 @@ public class BoardTest {
          * [+][+]
          */
         expecteds = new SquaresMatrix(2, 4)
-                .setSquare(2, 0, SquareType.PINK)
-                .setSquare(2, 1, SquareType.PINK)
-                .setSquare(3, 0, SquareType.PINK)
-                .setSquare(3, 1, SquareType.PINK);
+                .setSquare(2, 0, SquareColour.PINK)
+                .setSquare(2, 1, SquareColour.PINK)
+                .setSquare(3, 0, SquareColour.PINK)
+                .setSquare(3, 1, SquareColour.PINK);
         board.moveDownLooseRows();
         actuals = board.getSquares();
         assertEquals(expecteds, actuals);
@@ -209,10 +214,10 @@ public class BoardTest {
          * [+][+]
          */
         Board board = new Board(new SquaresMatrix(2, 2)
-                .setSquare(0, 0, SquareType.PINK)
-                .setSquare(0, 1, SquareType.PINK)
-                .setSquare(1, 0, SquareType.PINK)
-                .setSquare(1, 1, SquareType.PINK)
+                .setSquare(0, 0, SquareColour.PINK)
+                .setSquare(0, 1, SquareColour.PINK)
+                .setSquare(1, 0, SquareColour.PINK)
+                .setSquare(1, 1, SquareColour.PINK)
             );
         /**
          * [ ][ ]
@@ -232,20 +237,20 @@ public class BoardTest {
          * [+][+]
          */
         board = new Board(new SquaresMatrix(2, 2)
-                .setSquare(0, 0, SquareType.YELLOW)
-                .setSquare(0, 1, SquareType.YELLOW)
-                .setSquare(1, 0, SquareType.YELLOW)
-                .setSquare(1, 1, SquareType.RED)
+                .setSquare(0, 0, SquareColour.YELLOW)
+                .setSquare(0, 1, SquareColour.YELLOW)
+                .setSquare(1, 0, SquareColour.YELLOW)
+                .setSquare(1, 1, SquareColour.RED)
             );
         /**
          * [+][+]
          * [+][+]
          */
         expecteds = new SquaresMatrix(2, 2)
-                .setSquare(0, 0, SquareType.YELLOW)
-                .setSquare(0, 1, SquareType.YELLOW)
-                .setSquare(1, 0, SquareType.YELLOW)
-                .setSquare(1, 1, SquareType.RED);
+                .setSquare(0, 0, SquareColour.YELLOW)
+                .setSquare(0, 1, SquareColour.YELLOW)
+                .setSquare(1, 0, SquareColour.YELLOW)
+                .setSquare(1, 1, SquareColour.RED);
         board.deleteCompletedTetrisShapes();
         actuals = board.getSquares();
         assertEquals(expecteds, actuals);

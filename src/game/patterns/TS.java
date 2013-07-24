@@ -1,6 +1,6 @@
 package game.patterns;
 
-import game.pieces.Square.SquareType;
+import game.pieces.Square.SquareColour;
 import game.pieces.SquaresMatrix;
 
 /**
@@ -9,7 +9,7 @@ import game.pieces.SquaresMatrix;
  */
 class TS extends Tetromino {
     
-    private int[][] fpmRightHorizontal(int x, int y, SquareType squareType,
+    private int[][] fpmRightHorizontal(int x, int y, SquareColour squareType,
                                                      SquaresMatrix squares) {
         /**
          *  _ _ _
@@ -51,17 +51,17 @@ class TS extends Tetromino {
         return new int[0][0];
     }
     
-    private int[][] fpmRightVertical(int x, int y, SquareType squareType,
+    private int[][] fpmRightVertical(int x, int y, SquareColour squareType,
                                                      SquaresMatrix squares) {
         return new int[0][0];
     }
     
-    private int[][] fpmLeftHorizontal(int x, int y, SquareType squareType,
+    private int[][] fpmLeftHorizontal(int x, int y, SquareColour squareType,
                                                      SquaresMatrix squares) {
         return new int[0][0];
     }
     
-    private int[][] fpmLeftVertical(int x, int y, SquareType squareType,
+    private int[][] fpmLeftVertical(int x, int y, SquareColour squareType,
                                                      SquaresMatrix squares) {
         return new int[0][0];
     }
@@ -69,7 +69,7 @@ class TS extends Tetromino {
     /* Public methods */
     
     @Override
-    protected int[][] findPatternMatch(int x, int y, SquareType squareType,
+    protected int[][] findPatternMatch(int x, int y, SquareColour squareType,
                                                      SquaresMatrix squares) {
         int result[][];
         
