@@ -12,9 +12,9 @@ public class Square {
     private int x; /* position in a board, not pixels */
     private int y; /* position in a board, not pixels */
     private boolean isFalling; // defaults to false
-    private SquareType squareType;
+    private SquareColour squareColour;
     
-    public enum SquareType {
+    public enum SquareColour {
         BLUE("img/blue.png"),  
         GREEN("img/green.png"), 
         PINK("img/pink.png"), 
@@ -23,7 +23,7 @@ public class Square {
         
         /* Add an image property to the elements of this Enum */
         Image image;
-        SquareType(String imageFilePath) {
+        SquareColour(String imageFilePath) {
             this.image = new ImageIcon(
                               getClass().getResource(imageFilePath)).getImage();
         }
@@ -32,14 +32,14 @@ public class Square {
 
     public static int SIZE = 32; // pixels
 
-    Square(SquareType squareType) {
+    Square(SquareColour squareType) {
         this(0, 0, squareType);
     }
     
-    Square(int x, int y, SquareType squareType) {
+    Square(int x, int y, SquareColour squareType) {
         this.x = x;
         this.y = y;
-        this.squareType = squareType;
+        this.squareColour = squareType;
         this.isFalling = true;
     }
 
@@ -61,8 +61,8 @@ public class Square {
         this.y = y;
     }
 
-    public SquareType getSquareType() {
-        return squareType;
+    public SquareColour getSquareColour() {
+        return squareColour;
     }
 
     public boolean isFalling() {
