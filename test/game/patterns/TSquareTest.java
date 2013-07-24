@@ -14,10 +14,10 @@ public class TSquareTest {
     @Test
     public void findPatternMatchTest() {
         /**
-         * oooo
-         * oxxo
-         * oxxo
-         * oooo
+         * 0123
+         * 1xx1
+         * 2xx2
+         * 3  3
          */
         SquaresMatrix squares = new SquaresMatrix(4, 4)
                 .setSquare(1, 1, Square.SquareType.BLUE)

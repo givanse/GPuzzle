@@ -12,14 +12,14 @@ import static org.junit.Assert.*;
 public class TSTest {
     
     @Test
-    public void findPatternMatchTest() {
+    public void findPatternMatchRightHorizontalTest() {
         /**
-         * ooooo
-         * ooxxo
-         * oxxoo
-         * ooooo
+         * 01234
+         * 1 xx1
+         * 2xx 2
+         * 3   3
          */
-        SquaresMatrix squares = new SquaresMatrix(5, 5)
+        SquaresMatrix squares = new SquaresMatrix(5, 4)
                 .setSquare(1, 2, Square.SquareType.BLUE)
                 .setSquare(1, 3, Square.SquareType.BLUE)
                 .setSquare(2, 1, Square.SquareType.BLUE)
@@ -66,20 +66,32 @@ public class TSTest {
         message = "S (" + x + ", " + y + ")";
         assertArrayEquals(message, expecteds, actuals);
         
-        expecteds = new int[][]{{1, 2}, {1, 3}, {2, 1}, {2, 2}};
+        /**
+         * 01234
+         * 1 xx1
+         * 2xx 2
+         * 3   3
+         */
         x = 1; y = 2;
+        expecteds = new int[][]{{1, 2}, {1, 3}, {3, 2}, {3, 1}};
         actuals = TetrominoType.S.isPatternFound(x, y, squares);
         message = "S (" + x + ", " + y + ")";
         assertArrayEquals(message, expecteds, actuals);
+        
+        x = 1; y = 3;
+        expecteds = new int[][]{{1, 3}, {1, 2}, {2, 2}, {1, 2}};
+        actuals = TetrominoType.S.isPatternFound(x, y, squares);
+        message = "S (" + x + ", " + y + ")";
+        assertArrayEquals(message, expecteds, actuals);
+        
         x = 2; y = 1;
+        expecteds = new int[][]{{2, 1}, {2, 2}, {1, 2}, {1, 3}};
         actuals = TetrominoType.S.isPatternFound(x, y, squares);
         message = "S (" + x + ", " + y + ")";
         assertArrayEquals(message, expecteds, actuals);
+        
         x = 2; y = 2;
-        actuals = TetrominoType.S.isPatternFound(x, y, squares);
-        message = "S (" + x + ", " + y + ")";
-        assertArrayEquals(message, expecteds, actuals);
-        x = 3; y = 1;
+        expecteds = new int[][]{{2, 2}, {2, 1}, {1, 2}, {1, 3}};
         actuals = TetrominoType.S.isPatternFound(x, y, squares);
         message = "S (" + x + ", " + y + ")";
         assertArrayEquals(message, expecteds, actuals);

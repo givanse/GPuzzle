@@ -9,24 +9,29 @@ import game.pieces.SquaresMatrix;
  */
 class TS extends Tetromino {
     
-    private boolean fpmRightHorizontal(int x, int y, SquareType squareType,
+    private int[][] fpmRightHorizontal(int x, int y, SquareType squareType,
                                                      SquaresMatrix squares) {
-        return false;
+        /**
+         *  _ _ _
+         * | |_| |
+         * |_ _ _|
+         */
+        return new int[0][0];
     }
     
-    private boolean fpmRightVertical(int x, int y, SquareType squareType,
+    private int[][] fpmRightVertical(int x, int y, SquareType squareType,
                                                      SquaresMatrix squares) {
-        return false;
+        return new int[0][0];
     }
     
-    private boolean fpmLeftHorizontal(int x, int y, SquareType squareType,
+    private int[][] fpmLeftHorizontal(int x, int y, SquareType squareType,
                                                      SquaresMatrix squares) {
-        return false;
+        return new int[0][0];
     }
     
-    private boolean fpmLeftVertical(int x, int y, SquareType squareType,
+    private int[][] fpmLeftVertical(int x, int y, SquareType squareType,
                                                      SquaresMatrix squares) {
-        return false;
+        return new int[0][0];
     }
     
     /* Public methods */
@@ -34,10 +39,20 @@ class TS extends Tetromino {
     @Override
     protected int[][] findPatternMatch(int x, int y, SquareType squareType,
                                                      SquaresMatrix squares) {
-        this.fpmRightHorizontal(x, y, squareType, squares);
-        this.fpmRightVertical(x, y, squareType, squares);
-        this.fpmLeftHorizontal(x, y, squareType, squares);
-        this.fpmLeftVertical(x, y, squareType, squares);
+        int result[][];
+        
+        result = this.fpmRightHorizontal(x, y, squareType, squares);
+        if(result.length > 0) return result;
+        
+        result = this.fpmRightVertical(x, y, squareType, squares);
+        if(result.length > 0) return result;
+        
+        result = this.fpmLeftHorizontal(x, y, squareType, squares);
+        if(result.length > 0) return result;
+        
+        result = this.fpmLeftVertical(x, y, squareType, squares);
+        if(result.length > 0) return result;
+        
         return new int[0][0];
     }
     
