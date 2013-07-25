@@ -222,5 +222,32 @@ public class SquareMatrixTest {
                 .insertSquare(0, 3, Square.SquareColour.PINK)
                 .insertSquare(1, 3, Square.SquareColour.RED);
         assertEquals(expected, actual);
+        
+        /**
+         * [ ][ ]
+         * [ ][+]
+         * [+][ ]
+         * [+][ ]
+         * [ ][+]
+         */
+        actual = new SquaresMatrix(2, 5)
+                .insertSquare(1, 1, Square.SquareColour.RED)
+                .insertSquare(0, 2, Square.SquareColour.RED)
+                .insertSquare(0, 3, Square.SquareColour.RED)
+                .insertSquare(1, 4, Square.SquareColour.RED);
+        actual.moveDownFlyingSquares();
+        /**
+         * [ ][ ]
+         * [ ][ ]
+         * [ ][ ]
+         * [+][+]
+         * [+][+]
+         */
+        expected = new SquaresMatrix(2, 5)
+                .insertSquare(0, 3, Square.SquareColour.RED)
+                .insertSquare(1, 3, Square.SquareColour.RED)
+                .insertSquare(0, 4, Square.SquareColour.RED)
+                .insertSquare(1, 4, Square.SquareColour.RED);
+        assertEquals(expected, actual);
     }
 }
