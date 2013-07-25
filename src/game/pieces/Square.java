@@ -75,6 +75,12 @@ public class Square {
     }
 
     @Override
+    public String toString() {
+        return "Square{" + "x=" + x + ", y=" + y + 
+               ", squareColour=" + squareColour + '}';
+    }
+
+    @Override
     public int hashCode() {
         int hash = 7;
         hash = 67 * hash + this.x;

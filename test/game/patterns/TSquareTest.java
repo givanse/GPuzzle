@@ -20,10 +20,10 @@ public class TSquareTest {
          * 3  3
          */
         SquaresMatrix squares = new SquaresMatrix(4, 4)
-                .setSquare(1, 1, Square.SquareColour.BLUE)
-                .setSquare(1, 2, Square.SquareColour.BLUE)
-                .setSquare(2, 1, Square.SquareColour.BLUE)
-                .setSquare(2, 2, Square.SquareColour.BLUE);
+                .insertSquare(1, 1, Square.SquareColour.BLUE)
+                .insertSquare(1, 2, Square.SquareColour.BLUE)
+                .insertSquare(2, 1, Square.SquareColour.BLUE)
+                .insertSquare(2, 2, Square.SquareColour.BLUE);
         /* pattern match a square shape */
         int x = -1, y = -1;
         String message;
@@ -87,7 +87,7 @@ public class TSquareTest {
         /* The next tests fail because there is a color/SquareType mismatch */
         
         expecteds = new int[0][0];
-        squares.setSquare(2, 2, Square.SquareColour.RED);
+        squares.insertSquare(2, 2, Square.SquareColour.RED);
         for(x = 1; x <= 2; x++)
             for(y = 1; y <= 2; y++) {
                 actuals = TetrominoType.SQUARE.isPatternFound(x, y, squares);

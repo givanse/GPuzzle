@@ -61,8 +61,7 @@ public class Board {
         return this.boardSquares.isPositionAvailable(x, y);
     }
     
-    public boolean isValidSwap(int x, int y, SwapDirection swapDirection) {
-        
+    public boolean isValidSwap(int x, int y, SwapDirection swapDirection) {      
         if(x < 0 || y < 0)
             return false;
         

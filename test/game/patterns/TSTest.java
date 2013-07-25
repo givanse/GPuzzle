@@ -20,10 +20,10 @@ public class TSTest {
          * 3   3
          */
         SquaresMatrix squares = new SquaresMatrix(5, 4)
-                .setSquare(2, 1, Square.SquareColour.BLUE)
-                .setSquare(3, 1, Square.SquareColour.BLUE)
-                .setSquare(1, 2, Square.SquareColour.BLUE)
-                .setSquare(2, 2, Square.SquareColour.BLUE);
+                .insertSquare(2, 1, Square.SquareColour.BLUE)
+                .insertSquare(3, 1, Square.SquareColour.BLUE)
+                .insertSquare(1, 2, Square.SquareColour.BLUE)
+                .insertSquare(2, 2, Square.SquareColour.BLUE);
         /* pattern match a S */
         String message;
         int expecteds[][] = new int[0][0];

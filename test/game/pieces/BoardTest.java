@@ -19,11 +19,11 @@ public class BoardTest {
      * [   ][2,1][   ]
      */
     private static final Board boardCross = new Board(new SquaresMatrix(3, 3)
-            .setSquare(0, 1, SquareColour.BLUE)
-            .setSquare(1, 0, SquareColour.BLUE)
-            .setSquare(1, 1, SquareColour.BLUE)
-            .setSquare(1, 2, SquareColour.BLUE)
-            .setSquare(2, 1, SquareColour.BLUE)
+            .insertSquare(0, 1, SquareColour.BLUE)
+            .insertSquare(1, 0, SquareColour.BLUE)
+            .insertSquare(1, 1, SquareColour.BLUE)
+            .insertSquare(1, 2, SquareColour.BLUE)
+            .insertSquare(2, 1, SquareColour.BLUE)
         );
     
     @Test
@@ -135,10 +135,10 @@ public class BoardTest {
          * [+][+]
          */
         Board board = new Board(new SquaresMatrix(2, 2)
-                .setSquare(0, 0, SquareColour.PINK)
-                .setSquare(0, 1, SquareColour.PINK)
-                .setSquare(1, 0, SquareColour.PINK)
-                .setSquare(1, 1, SquareColour.PINK)
+                .insertSquare(0, 0, SquareColour.PINK)
+                .insertSquare(0, 1, SquareColour.PINK)
+                .insertSquare(1, 0, SquareColour.PINK)
+                .insertSquare(1, 1, SquareColour.PINK)
             );
         /**
          * [ ][ ]
@@ -158,20 +158,20 @@ public class BoardTest {
          * [+][+]
          */
         board = new Board(new SquaresMatrix(2, 2)
-                .setSquare(0, 0, SquareColour.YELLOW)
-                .setSquare(0, 1, SquareColour.YELLOW)
-                .setSquare(1, 0, SquareColour.YELLOW)
-                .setSquare(1, 1, SquareColour.RED)
+                .insertSquare(0, 0, SquareColour.YELLOW)
+                .insertSquare(0, 1, SquareColour.YELLOW)
+                .insertSquare(1, 0, SquareColour.YELLOW)
+                .insertSquare(1, 1, SquareColour.RED)
             );
         /**
          * [+][+]
          * [+][+]
          */
         expecteds = new SquaresMatrix(2, 2)
-                .setSquare(0, 0, SquareColour.YELLOW)
-                .setSquare(0, 1, SquareColour.YELLOW)
-                .setSquare(1, 0, SquareColour.YELLOW)
-                .setSquare(1, 1, SquareColour.RED);
+                .insertSquare(0, 0, SquareColour.YELLOW)
+                .insertSquare(0, 1, SquareColour.YELLOW)
+                .insertSquare(1, 0, SquareColour.YELLOW)
+                .insertSquare(1, 1, SquareColour.RED);
         board.deleteCompletedTetrisShapes();
         actuals = board.getSquares();
         assertEquals(expecteds, actuals);
