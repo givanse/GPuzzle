@@ -9,6 +9,47 @@ import static org.junit.Assert.*;
  */
 public class SquareMatrixTest {
     
+    @Test
+    public void isPositionAvailableTest() {
+        SquaresMatrix squares = new SquaresMatrix(1, 1);
+        assertTrue(squares.isPositionAvailable(0, 0));
+        
+        squares.insertSquare(0, 0, Square.SquareColour.BLUE);
+        assertFalse(squares.isPositionAvailable(0, 0));
+        
+        /**
+         *  0123
+         * 0    0
+         * 1 xx 1
+         * 2 xx 2
+         * 3    3
+         */
+        squares = new SquaresMatrix(4, 4)
+                .insertSquare(1, 1, Square.SquareColour.BLUE)
+                .insertSquare(2, 1, Square.SquareColour.BLUE)
+                .insertSquare(1, 2, Square.SquareColour.BLUE)
+                .insertSquare(2, 2, Square.SquareColour.BLUE);
+        assertTrue(squares.isPositionAvailable(0, 0));
+        assertTrue(squares.isPositionAvailable(1, 0));
+        assertTrue(squares.isPositionAvailable(2, 0));
+        assertTrue(squares.isPositionAvailable(3, 0));
+        
+        assertTrue(squares.isPositionAvailable(0, 1));
+        assertFalse(squares.isPositionAvailable(1, 1));
+        assertFalse(squares.isPositionAvailable(2, 1));
+        assertTrue(squares.isPositionAvailable(3, 1));
+        
+        assertTrue(squares.isPositionAvailable(0, 2));
+        assertFalse(squares.isPositionAvailable(1, 2));
+        assertFalse(squares.isPositionAvailable(2, 2));
+        assertTrue(squares.isPositionAvailable(3, 2));
+        
+        assertTrue(squares.isPositionAvailable(0, 3));
+        assertTrue(squares.isPositionAvailable(1, 3));
+        assertTrue(squares.isPositionAvailable(2, 3));
+        assertTrue(squares.isPositionAvailable(3, 3));
+    }
+    
     @Test 
     public void insertSquareTest() {
         /* 1 x 1 */
