@@ -10,6 +10,52 @@ import static org.junit.Assert.*;
 public class SquareMatrixTest {
     
     @Test
+    public void getSquareTest() {
+        /**
+         *  0123
+         * 0    0
+         * 1 xx 1
+         * 2 xx 2
+         * 3    3
+         */
+        SquaresMatrix squares = new SquaresMatrix(4, 4)
+                .insertSquare(1, 1, Square.SquareColour.BLUE)
+                .insertSquare(2, 1, Square.SquareColour.GREEN)
+                .insertSquare(1, 2, Square.SquareColour.PINK)
+                .insertSquare(2, 2, Square.SquareColour.RED);
+        assertNull(squares.getSquare(0, 0));
+        assertNull(squares.getSquare(1, 0));
+        assertNull(squares.getSquare(2, 0));
+        assertNull(squares.getSquare(3, 0));
+        
+        assertNull(squares.getSquare(0, 1));
+        assertNull(squares.getSquare(3, 1));
+        assertNull(squares.getSquare(0, 2));
+        assertNull(squares.getSquare(3, 2));
+        
+        assertNull(squares.getSquare(0, 3));
+        assertNull(squares.getSquare(1, 3));
+        assertNull(squares.getSquare(2, 3));
+        assertNull(squares.getSquare(3, 3));
+        
+        Square expected = new Square(1, 1, Square.SquareColour.BLUE);
+        Square actual = squares.getSquare(1, 1);
+        assertEquals(expected, actual);
+        
+        expected = new Square(2, 1, Square.SquareColour.GREEN);
+        actual = squares.getSquare(2, 1);
+        assertEquals(expected, actual);
+        
+        expected = new Square(1, 2, Square.SquareColour.PINK);
+        actual = squares.getSquare(1, 2);
+        assertEquals(expected, actual);
+        
+        expected = new Square(2, 2, Square.SquareColour.RED);
+        actual = squares.getSquare(2, 2);
+        assertEquals(expected, actual);
+    }
+    
+    @Test
     public void isPositionAvailableTest() {
         SquaresMatrix squares = new SquaresMatrix(1, 1);
         assertTrue(squares.isPositionAvailable(0, 0));
