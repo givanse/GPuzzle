@@ -53,6 +53,16 @@ public class SquareMatrixTest {
         expected = new Square(2, 2, Square.SquareColour.RED);
         actual = squares.getSquare(2, 2);
         assertEquals(expected, actual);
+        
+        try {
+            squares.getSquare(3, 4);
+            fail("This test should fail with IndexOutOfBoundsException.");
+        } catch(IndexOutOfBoundsException ex) {}
+        
+        try {
+            squares.getSquare(4, 3);
+            fail("This test should fail with IndexOutOfBoundsException.");
+        } catch(IndexOutOfBoundsException ex) {}
     }
     
     @Test
