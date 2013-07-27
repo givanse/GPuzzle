@@ -1,6 +1,5 @@
 package game.pieces;
 
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import game.pieces.Square.SquareColour;
 import java.util.Arrays;
 
@@ -60,7 +59,7 @@ public class SquaresMatrix {
      * @param square 
      */
     public SquaresMatrix insertSquare(int x, int y, SquareColour squareType) {
-        if(x >= this.getWidth() || y >= this.getHeight())
+        if(x >= this.getNumberOfRows() || y >= this.getNumberOfColumns())
             throw new IndexOutOfBoundsException(
                     "Can not add a Square in that position.");
             
@@ -72,12 +71,12 @@ public class SquaresMatrix {
         return !(this.getSquare(x, y) instanceof Square);
     }
     
-    public int getWidth() {
+    public int getNumberOfRows() {
         return this.squares.length;
     }
     
-    public int getHeight() {
-        if(this.squares.length == 0)
+    public int getNumberOfColumns() {
+        if(this.getNumberOfRows() == 0)
             return 0;
         
         return this.squares[0].length;
@@ -103,17 +102,18 @@ public class SquaresMatrix {
     }
     
     public void moveDownFlyingSquares() {
-        int constantY = this.getHeight() - 1;        /* Start from the bottom */
-        for(int x = 0; x < this.getWidth(); x++) {
-            this.packColumn(x, constantY);
+        /* Start from the bottom */
+        int lastColumn = this.getNumberOfColumns() - 1;
+        for(int rowNum = 0; rowNum < this.getNumberOfRows(); rowNum++) {
+            this.packColumn(rowNum, lastColumn);
         }
     }
 
     @Override
     public String toString() {
         String str = "";
-        for(int x = 0; x < this.getWidth(); x++)
-            for(int y = 0; y < this.getHeight(); y++) {
+        for(int x = 0; x < this.getNumberOfRows(); x++)
+            for(int y = 0; y < this.getNumberOfColumns(); y++) {
                 Square square = this.getSquare(x, y);
                 str += (square == null) ? 
                         "x=" + x + ", y=" + y + ", null, " : 

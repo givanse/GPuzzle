@@ -143,34 +143,34 @@ public class SquaresMatrixTest {
         /* 2 x 2 */
         SquaresMatrix squaresMatrix = new SquaresMatrix(2, 2);
         int expected = 2;
-        int actual = squaresMatrix.getWidth();
+        int actual = squaresMatrix.getNumberOfRows();
         assertEquals(expected, actual);
         expected = 2;
-        actual = squaresMatrix.getHeight();
+        actual = squaresMatrix.getNumberOfColumns();
         assertEquals(expected, actual);
         /* 3 x 7 */
         squaresMatrix = new SquaresMatrix(3, 7);
         expected = 3;
-        actual = squaresMatrix.getWidth();
+        actual = squaresMatrix.getNumberOfRows();
         assertEquals(expected, actual);
         expected = 7;
-        actual = squaresMatrix.getHeight();
+        actual = squaresMatrix.getNumberOfColumns();
         assertEquals(expected, actual);
         /* 4 x 3 */
         squaresMatrix = new SquaresMatrix(4, 3);
         expected = 4;
-        actual = squaresMatrix.getWidth();
+        actual = squaresMatrix.getNumberOfRows();
         assertEquals(expected, actual);
         expected = 3;
-        actual = squaresMatrix.getHeight();
+        actual = squaresMatrix.getNumberOfColumns();
         assertEquals(expected, actual);
         /* 0 x 0 */
         squaresMatrix = new SquaresMatrix(0, 0);
         expected = 0;
-        actual = squaresMatrix.getWidth();
+        actual = squaresMatrix.getNumberOfRows();
         assertEquals(expected, actual);
         expected = 0;
-        actual = squaresMatrix.getHeight();
+        actual = squaresMatrix.getNumberOfColumns();
         assertEquals(expected, actual);
     }
 
@@ -243,7 +243,7 @@ public class SquaresMatrixTest {
                 .insertSquare(4, 2, Square.SquareColour.PINK)
                 .insertSquare(2, 4, Square.SquareColour.PINK)
                 .insertSquare(3, 4, Square.SquareColour.GREEN)
-                .insertSquare(4, 4, Square.SquareColour.PINK);;
+                .insertSquare(4, 4, Square.SquareColour.PINK);
         assertEquals(expected, actual);
     }
     

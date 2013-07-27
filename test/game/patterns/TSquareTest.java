@@ -29,11 +29,11 @@ public class TSquareTest extends TSquare {
         int x, y;
         int expecteds[][] = new int[0][0];
         int actuals[][];
-        for(x = 0; x < squares.getWidth(); x++) {
+        for(x = 0; x < squares.getNumberOfRows(); x++) {
             y = 0;
             actuals = TetrominoType.SQUARE.isPatternFound(x, y, squares);
             assertArrayEquals(expecteds, actuals);
-            y = squares.getHeight() - 1;
+            y = squares.getNumberOfColumns() - 1;
             actuals = TetrominoType.SQUARE.isPatternFound(x, y, squares);
             assertArrayEquals(expecteds, actuals);
         }
