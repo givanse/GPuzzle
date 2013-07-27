@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
  *
  * @author givanse
  */
-public class SquareMatrixTest {
+public class SquaresMatrixTest {
     
     @Test
     public void getSquareTest() {
@@ -164,8 +164,89 @@ public class SquareMatrixTest {
         expected = 3;
         actual = squaresMatrix.getHeight();
         assertEquals(expected, actual);
+        /* 0 x 0 */
+        squaresMatrix = new SquaresMatrix(0, 0);
+        expected = 0;
+        actual = squaresMatrix.getWidth();
+        assertEquals(expected, actual);
+        expected = 0;
+        actual = squaresMatrix.getHeight();
+        assertEquals(expected, actual);
     }
 
+    @Test
+    public void deleteSquaresTest() {
+        /* 0 x 0 */
+        SquaresMatrix actual = new SquaresMatrix(0, 0);
+        actual.deleteSquares(new int[0][0]);
+        SquaresMatrix expected = new SquaresMatrix(0, 0);
+        assertEquals(expected, actual);
+        
+        /* 1 x 1 empty */
+        actual = new SquaresMatrix(1, 1);
+        actual.deleteSquares(new int[][]{{0, 0}});
+        expected = new SquaresMatrix(1, 1);
+        assertEquals(expected, actual);
+        
+        /* 1 x 1 not empty */
+        actual = new SquaresMatrix(1, 1)
+                .insertSquare(0, 0, Square.SquareColour.BLUE);
+        actual.deleteSquares(new int[][]{{0, 0}});
+        expected = new SquaresMatrix(1, 1);
+        assertEquals(expected, actual);
+        
+        /**
+         *  012
+         * 0b  0
+         * 1 b 1
+         * 2  b2
+         */
+        actual = new SquaresMatrix(3, 3)
+                .insertSquare(0, 0, Square.SquareColour.BLUE)
+                .insertSquare(1, 1, Square.SquareColour.BLUE)
+                .insertSquare(2, 2, Square.SquareColour.BLUE);
+        actual.deleteSquares(new int[][]{{0, 0}, {1, 1}, {2, 2}});
+        expected = new SquaresMatrix(3, 3);
+        assertEquals(expected, actual);
+        
+        /**
+         *  01234
+         * 0     0
+         * 1 r   1
+         * 2  pgp2
+         * 3  gyg3
+         * 4  pgp4  
+         */
+        actual = new SquaresMatrix(5, 5)
+                .insertSquare(1, 1, Square.SquareColour.RED)
+                .insertSquare(2, 2, Square.SquareColour.PINK)
+                .insertSquare(3, 2, Square.SquareColour.GREEN)
+                .insertSquare(4, 2, Square.SquareColour.PINK)
+                .insertSquare(2, 3, Square.SquareColour.GREEN)
+                .insertSquare(3, 3, Square.SquareColour.YELLOW)
+                .insertSquare(4, 3, Square.SquareColour.GREEN)
+                .insertSquare(2, 4, Square.SquareColour.PINK)
+                .insertSquare(3, 4, Square.SquareColour.GREEN)
+                .insertSquare(4, 4, Square.SquareColour.PINK);
+        actual.deleteSquares(new int[][]{{3, 3}, {1, 1}, {4, 3}, {2, 3}});
+        /**
+         *  01234
+         * 0     0
+         * 1     1
+         * 2  pgp2
+         * 3     3
+         * 4  pgp4  
+         */
+        expected = new SquaresMatrix(5, 5)
+                .insertSquare(2, 2, Square.SquareColour.PINK)
+                .insertSquare(3, 2, Square.SquareColour.GREEN)
+                .insertSquare(4, 2, Square.SquareColour.PINK)
+                .insertSquare(2, 4, Square.SquareColour.PINK)
+                .insertSquare(3, 4, Square.SquareColour.GREEN)
+                .insertSquare(4, 4, Square.SquareColour.PINK);;
+        assertEquals(expected, actual);
+    }
+    
     @Test 
     public void packColumnTest() {
         /**

@@ -77,17 +77,29 @@ public class SquaresMatrix {
     }
     
     public int getHeight() {
+        if(this.squares.length == 0)
+            return 0;
+        
         return this.squares[0].length;
     }
     
-    public void deleteSquares(int squares[][]) {
-        if(squares[0] == null)
+    /**
+     * 
+     * @param coordinates 
+     */
+    public void deleteSquares(int coordinates[][]) {
+        if(coordinates.length == 0)
             return;
-        int width = squares[0].length;
-        int height = squares.length;
-        for(int x = 0; x < width; x++)
-            for(int y = 0; x < height; y++)
-                this.squares[x][y] = null;
+        
+        int totalRows = coordinates.length;
+        int firstColumn = 0;
+        int secondColumn = 1;
+        
+        for(int rowNum = 0; rowNum < totalRows; rowNum++) {
+            int x = coordinates[rowNum][firstColumn];
+            int y = coordinates[rowNum][secondColumn];
+            this.squares[x][y] = null;
+        }
     }
     
     public void moveDownFlyingSquares() {
