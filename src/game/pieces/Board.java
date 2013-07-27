@@ -1,7 +1,6 @@
 package game.pieces;
 
 import game.patterns.Tetromino;
-import game.patterns.TetrominoType;
 import game.pieces.Square.SquareColour;
 import java.util.ArrayList;
 import java.util.Random;
@@ -34,7 +33,7 @@ public class Board {
     
     private void generateRandomFallingPair() {
         Random random = new Random(System.currentTimeMillis());
-        int width = this.boardSquares.getWidth();
+        int width = this.boardSquares.getNumberOfRows();
         int randomX = random.nextInt(width);
         int constantY = 0;
         SquareColour sqrTypes[] = SquareColour.values();
@@ -85,13 +84,14 @@ public class Board {
     }
     
     public void deleteCompletedTetrisShapes() {
-        for(int x = 0; x < this.boardSquares.getWidth(); x++)
-            for(int y = 0; y < this.boardSquares.getHeight(); y++) {
+        for(int x = 0; x < this.boardSquares.getNumberOfRows(); x++) {
+            for(int y = 0; y < this.boardSquares.getNumberOfColumns(); y++) {
                 int patternFound[][] = 
                       Tetromino.performPatternMatching(x, y, this.boardSquares);
                 this.boardSquares.deleteSquares(patternFound);
                 this.moveDownFlyingSquares();
             }
+        }
     }
     
     public void moveDownFlyingSquares() {

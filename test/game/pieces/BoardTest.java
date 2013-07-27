@@ -131,49 +131,46 @@ public class BoardTest {
     @Test
     public void deleteCompletedTetrisShapesTest() {
         /**
-         * [+][+]
-         * [+][+]
+         *   0  1
+         * 0[+][+]
+         * 1[+][+]
          */
         Board board = new Board(new SquaresMatrix(2, 2)
                 .insertSquare(0, 0, SquareColour.PINK)
-                .insertSquare(0, 1, SquareColour.PINK)
                 .insertSquare(1, 0, SquareColour.PINK)
-                .insertSquare(1, 1, SquareColour.PINK)
-            );
+                .insertSquare(0, 1, SquareColour.PINK)
+                .insertSquare(1, 1, SquareColour.PINK));
+        board.deleteCompletedTetrisShapes();
+        SquaresMatrix actuals = board.getSquares();
         /**
          * [ ][ ]
          * [ ][ ]
          */
         SquaresMatrix expecteds = new SquaresMatrix(2, 2);
-        board.deleteCompletedTetrisShapes();
-        SquaresMatrix actuals = board.getSquares();
         assertEquals(expecteds, actuals);
         
         /**
-         * Nothing will be removed because we have different colors, although
-         * we have a valid shape.
+         * Although we have a valid shape, nothing will be removed because 
+         * we have different colors within that shape.
          */
+        
         /**
-         * [+][+]
-         * [+][+]
+         *   0  1
+         * 0[+][+]
+         * 1[+][+]
          */
         board = new Board(new SquaresMatrix(2, 2)
                 .insertSquare(0, 0, SquareColour.YELLOW)
-                .insertSquare(0, 1, SquareColour.YELLOW)
                 .insertSquare(1, 0, SquareColour.YELLOW)
-                .insertSquare(1, 1, SquareColour.RED)
-            );
-        /**
-         * [+][+]
-         * [+][+]
-         */
-        expecteds = new SquaresMatrix(2, 2)
-                .insertSquare(0, 0, SquareColour.YELLOW)
                 .insertSquare(0, 1, SquareColour.YELLOW)
-                .insertSquare(1, 0, SquareColour.YELLOW)
-                .insertSquare(1, 1, SquareColour.RED);
+                .insertSquare(1, 1, SquareColour.RED));
         board.deleteCompletedTetrisShapes();
         actuals = board.getSquares();
+        expecteds = new SquaresMatrix(2, 2)
+                .insertSquare(0, 0, SquareColour.YELLOW)
+                .insertSquare(1, 0, SquareColour.YELLOW)
+                .insertSquare(0, 1, SquareColour.YELLOW)
+                .insertSquare(1, 1, SquareColour.RED);
         assertEquals(expecteds, actuals);
     }
     
