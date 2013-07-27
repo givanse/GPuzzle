@@ -22,11 +22,11 @@ public abstract class Tetromino {
      * @return 
      */
     protected abstract int[][] findPatternMatch(int x, int y, 
-                                  SquareColour squareType, SquaresMatrix squares);
+                                SquareColour squareType, SquaresMatrix squares);
     
     protected static boolean isHorizontalMatch(
-                                 int nBackward, int nForward, int x, int y,
-                                 SquareColour squareType, SquaresMatrix squares) {
+                               int nBackward, int nForward, int x, int y,
+                               SquareColour squareType, SquaresMatrix squares) {
         /* Backward */
         for(int i = x; i > x - nBackward; i--)
             if(!Tetromino.isSquareMatch(i, y, squareType, squares))
@@ -39,8 +39,8 @@ public abstract class Tetromino {
     }
     
     protected static boolean isVerticalMatch(
-                                 int nBackward, int nForward, int x, int y,
-                                 SquareColour squareType, SquaresMatrix squares) {
+                               int nBackward, int nForward, int x, int y,
+                               SquareColour squareType, SquaresMatrix squares) {
         /* Backward */
         for(int i = y; i > y - nBackward; i--)
             if(!Tetromino.isSquareMatch(x, i, squareType, squares))
@@ -58,13 +58,13 @@ public abstract class Tetromino {
      * @param y
      * @param squareType
      * @param squares
-     * @return True  if the position holds a Square that has the same SquareColour
-     *         False otherwise
+     * @return True if the position holds a Square that has the same 
+     *         SquareColour, False otherwise.
      */
     protected static boolean isSquareMatch(int x, int y, 
                                            SquareColour squareType, 
                                            SquaresMatrix squares) {
-        if(squares.isPositionAvailable(x, y) == false)
+        if(squares.isPositionAvailable(x, y))
             return false;
         if(squares.getSquare(x, y).getSquareColour() != squareType)
             return false;
@@ -81,7 +81,8 @@ public abstract class Tetromino {
      * @return true if a match was found, false otherwise
      */
     protected int[][] isPatternFound(int x, int y, SquaresMatrix squares) {
-        if(squares.isPositionAvailable(x, y) == false)
+         /* Its empty, no pattern can be found. */
+        if(squares.isPositionAvailable(x, y))
             return new int[0][0];
         SquareColour squareType = squares.getSquare(x, y).getSquareColour();
         return this.findPatternMatch(x, y, squareType, squares);
@@ -92,7 +93,6 @@ public abstract class Tetromino {
 
     public static int[][] performPatternMatching(int x, int y, 
                                                  SquaresMatrix squares) {
-        TetrominoType.SQUARE.isPatternFound(x, y, squares);
-        return null;
+        return TetrominoType.SQUARE.isPatternFound(x, y, squares);
     }
 }

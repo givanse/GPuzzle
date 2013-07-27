@@ -1,5 +1,6 @@
 package game.pieces;
 
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import game.pieces.Square.SquareColour;
 import java.util.Arrays;
 
@@ -68,7 +69,7 @@ public class SquaresMatrix {
     }
     
     public boolean isPositionAvailable(int x, int y) {
-        return this.getSquare(x, y) ==  null;
+        return !(this.getSquare(x, y) instanceof Square);
     }
     
     public int getWidth() {
