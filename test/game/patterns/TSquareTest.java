@@ -97,6 +97,25 @@ public class TSquareTest extends TSquare {
                 actuals = TetrominoType.SQUARE.isPatternFound(x, y, squares);
                 assertArrayEquals(expecteds, actuals);
             }
+        
+        /**
+         *  0123456789
+         * 0          0
+         * 1          1
+         * 2          2
+         * 3        pp3
+         * 4        pp4
+         * 5          5
+         */
+        squares = new SquaresMatrix(10, 6)
+                .insertSquare(8, 3, Square.SquareColour.PINK)
+                .insertSquare(9, 3, Square.SquareColour.PINK)
+                .insertSquare(8, 4, Square.SquareColour.PINK)
+                .insertSquare(9, 4, Square.SquareColour.PINK);
+        
+        expecteds = new int[][]{{8, 3}, {9, 3}, {8, 4}, {9, 4}};
+        actuals = TetrominoType.SQUARE.isPatternFound(8, 3, squares);
+        assertArrayEquals(expecteds, actuals);
     }
    
 }
