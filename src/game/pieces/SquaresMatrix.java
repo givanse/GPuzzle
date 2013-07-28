@@ -1,12 +1,11 @@
 package game.pieces;
 
 import game.pieces.Square.SquareColour;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * This data structure is just a two dimensional array of Squares that provides
- * convenient methods.
- * 
+ *
  * @author givanse
  */
 public class SquaresMatrix {
@@ -46,6 +45,28 @@ public class SquaresMatrix {
     
     /* Public methods */
     
+    public int[] getAvailableTopColumns() {
+        if(this.getNumberOfRows() < 1)
+            return null;
+        
+        int yConstant = 0;
+        ArrayList<Integer> columnsList = 
+                                       new ArrayList(this.getNumberOfColumns());
+        for(int x = 0; x < this.getNumberOfRows(); x++) {
+            if(this.isPositionAvailable(x, yConstant))
+                columnsList.add(x);
+        }
+        
+        /* ArrayList to Array */
+        int availableColumns[] = new int[columnsList.size()];
+        int i = 0;
+        for(Integer columnNumber : columnsList) {
+            availableColumns[i++] = columnNumber;
+        }
+        
+        return availableColumns;
+    }
+    
     public Square getSquare(int x, int y) {
         return this.squares[x][y];
     }
@@ -68,6 +89,7 @@ public class SquaresMatrix {
                     "Can not add a Square in that position.");
             
         this.squares[x][y] = new Square(x, y, squareType);
+        
         return this;
     }
     

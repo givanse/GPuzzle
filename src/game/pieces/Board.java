@@ -36,8 +36,7 @@ public class Board {
         /**
          * Produce an array with the same width of the board.
          */
-        int availableColumns[] = 
-                               new int[this.squaresMatrix.getNumberOfColumns()];
+        int availableColumns[] = this.squaresMatrix.getAvailableTopColumns();
         /* Shuffle the availble columns. */
         
         /* Use the first two columns. */
