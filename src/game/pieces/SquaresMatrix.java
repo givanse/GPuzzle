@@ -46,15 +46,15 @@ public class SquaresMatrix {
     /* Public methods */
     
     public int[] getAvailableTopColumns() {
-        if(this.getNumberOfRows() < 1)
+        if(this.getNumberOfColumns() < 1)
             return null;
         
-        int yConstant = 0;
+        int row = 0;
         ArrayList<Integer> columnsList = 
-                                       new ArrayList(this.getNumberOfColumns());
-        for(int x = 0; x < this.getNumberOfRows(); x++) {
-            if(this.isPositionAvailable(x, yConstant))
-                columnsList.add(x);
+                                       new ArrayList(this.getNumberOfRows());
+        for(int column = 0; column < this.getNumberOfColumns(); column++) {
+            if(this.isPositionAvailable(column, row))
+                columnsList.add(column);
         }
         
         /* ArrayList to Array */
@@ -84,7 +84,7 @@ public class SquaresMatrix {
      * @param square 
      */
     public SquaresMatrix insertSquare(int x, int y, SquareColour squareType) {
-        if(x >= this.getNumberOfRows() || y >= this.getNumberOfColumns())
+        if(x >= this.getNumberOfColumns() || y >= this.getNumberOfRows())
             throw new IndexOutOfBoundsException(
                     "Can not add a Square in that position.");
             
@@ -97,12 +97,20 @@ public class SquaresMatrix {
         return !(this.getSquare(x, y) instanceof Square);
     }
     
-    public int getNumberOfRows() {
+    /**
+     * 
+     * @return The width of this matrix.
+     */
+    public int getNumberOfColumns() {
         return this.squares.length;
     }
     
-    public int getNumberOfColumns() {
-        if(this.getNumberOfRows() == 0)
+    /**
+     * 
+     * @return The height of this matrix. 
+     */
+    public int getNumberOfRows() {
+        if(this.getNumberOfColumns() == 0)
             return 0;
         
         return this.squares[0].length;
@@ -116,30 +124,30 @@ public class SquaresMatrix {
         if(coordinates.length == 0)
             return;
         
-        int totalRows = coordinates.length;
-        int firstColumn = 0;
-        int secondColumn = 1;
+        int totalColumns = coordinates.length;
+        int firstRow = 0;
+        int secondRow = 1;
         
-        for(int rowNum = 0; rowNum < totalRows; rowNum++) {
-            int x = coordinates[rowNum][firstColumn];
-            int y = coordinates[rowNum][secondColumn];
+        for(int colNum = 0; colNum < totalColumns; colNum++) {
+            int x = coordinates[colNum][firstRow];
+            int y = coordinates[colNum][secondRow];
             this.squares[x][y] = null;
         }
     }
     
     public void moveDownFlyingSquares() {
         /* Start from the bottom */
-        int lastColumn = this.getNumberOfColumns() - 1;
-        for(int rowNum = 0; rowNum < this.getNumberOfRows(); rowNum++) {
-            this.packColumn(rowNum, lastColumn);
+        int lastRow = this.getNumberOfRows() - 1;
+        for(int colNum = 0; colNum < this.getNumberOfColumns(); colNum++) {
+            this.packColumn(colNum, lastRow);
         }
     }
 
     @Override
     public String toString() {
         String str = "";
-        for(int x = 0; x < this.getNumberOfRows(); x++)
-            for(int y = 0; y < this.getNumberOfColumns(); y++) {
+        for(int x = 0; x < this.getNumberOfColumns(); x++)
+            for(int y = 0; y < this.getNumberOfRows(); y++) {
                 Square square = this.getSquare(x, y);
                 str += (square == null) ? 
                         "x=" + x + ", y=" + y + ", null, " : 

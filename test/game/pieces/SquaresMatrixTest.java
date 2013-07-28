@@ -173,39 +173,6 @@ public class SquaresMatrixTest {
     }
     
     @Test 
-    public void getNumberOfRowsTest() {
-        /* 0 x 0 */
-        SquaresMatrix squaresMatrix = new SquaresMatrix(0, 0);
-        int expected = 0;
-        int actual = squaresMatrix.getNumberOfRows();
-        assertEquals(expected, actual);
-        
-        /* 1 x 0 */
-        squaresMatrix = new SquaresMatrix(1, 0);
-        expected = 1;
-        actual = squaresMatrix.getNumberOfRows();
-        assertEquals(expected, actual);
-        
-        /* 2 x 0 */
-        squaresMatrix = new SquaresMatrix(2, 0);
-        expected = 2;
-        actual = squaresMatrix.getNumberOfRows();
-        assertEquals(expected, actual);
-        
-        /* 3 x 1 */
-        squaresMatrix = new SquaresMatrix(3, 1);
-        expected = 3;
-        actual = squaresMatrix.getNumberOfRows();
-        assertEquals(expected, actual);
-        
-        /* 7 x 2 */
-        squaresMatrix = new SquaresMatrix(7, 2);
-        expected = 7;
-        actual = squaresMatrix.getNumberOfRows();
-        assertEquals(expected, actual);
-    }
-
-    @Test 
     public void getNumberOfColumnsTest() {
         /* 0 x 0 */
         SquaresMatrix squaresMatrix = new SquaresMatrix(0, 0);
@@ -213,34 +180,67 @@ public class SquaresMatrixTest {
         int actual = squaresMatrix.getNumberOfColumns();
         assertEquals(expected, actual);
         
+        /* 1 x 0 */
+        squaresMatrix = new SquaresMatrix(1, 0);
+        expected = 1;
+        actual = squaresMatrix.getNumberOfColumns();
+        assertEquals(expected, actual);
+        
+        /* 2 x 0 */
+        squaresMatrix = new SquaresMatrix(2, 0);
+        expected = 2;
+        actual = squaresMatrix.getNumberOfColumns();
+        assertEquals(expected, actual);
+        
+        /* 3 x 1 */
+        squaresMatrix = new SquaresMatrix(3, 1);
+        expected = 3;
+        actual = squaresMatrix.getNumberOfColumns();
+        assertEquals(expected, actual);
+        
+        /* 7 x 2 */
+        squaresMatrix = new SquaresMatrix(7, 2);
+        expected = 7;
+        actual = squaresMatrix.getNumberOfColumns();
+        assertEquals(expected, actual);
+    }
+
+    @Test 
+    public void getNumberOfRowsTest() {
+        /* 0 x 0 */
+        SquaresMatrix squaresMatrix = new SquaresMatrix(0, 0);
+        int expected = 0;
+        int actual = squaresMatrix.getNumberOfRows();
+        assertEquals(expected, actual);
+        
         /* 0 x 1 */
         squaresMatrix = new SquaresMatrix(0, 1);
         expected = 0;
-        actual = squaresMatrix.getNumberOfColumns();
+        actual = squaresMatrix.getNumberOfRows();
         assertEquals(expected, actual);
         
         /* 0 x 2 */
         squaresMatrix = new SquaresMatrix(0, 2);
         expected = 0;
-        actual = squaresMatrix.getNumberOfColumns();
+        actual = squaresMatrix.getNumberOfRows();
         assertEquals(expected, actual);
         
         /* 1 x 2 */
         squaresMatrix = new SquaresMatrix(1, 2);
         expected = 2;
-        actual = squaresMatrix.getNumberOfColumns();
+        actual = squaresMatrix.getNumberOfRows();
         assertEquals(expected, actual);
         
         /* 1 x 3 */
         squaresMatrix = new SquaresMatrix(1, 3);
         expected = 3;
-        actual = squaresMatrix.getNumberOfColumns();
+        actual = squaresMatrix.getNumberOfRows();
         assertEquals(expected, actual);
         
         /* 2 x 7 */
         squaresMatrix = new SquaresMatrix(2, 7);
         expected = 7;
-        actual = squaresMatrix.getNumberOfColumns();
+        actual = squaresMatrix.getNumberOfRows();
         assertEquals(expected, actual);
     }
         

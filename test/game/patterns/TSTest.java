@@ -28,7 +28,7 @@ public class TSTest {
         int expecteds[][] = new int[0][0];
         int actuals[][];
         int x, y;
-        for(x = 0; x < squares.getNumberOfRows(); x++) {
+        for(x = 0; x < squares.getNumberOfColumns(); x++) {
             y = 0;
             actuals = TetrominoType.S.isPatternFound(x, y, squares);
             assertArrayEquals(expecteds, actuals);

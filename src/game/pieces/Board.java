@@ -101,8 +101,8 @@ public class Board {
     }
     
     public void deleteCompletedTetrisShapes() {
-        for(int x = 0; x < this.squaresMatrix.getNumberOfRows(); x++) {
-            for(int y = 0; y < this.squaresMatrix.getNumberOfColumns(); y++) {
+        for(int x = 0; x < this.squaresMatrix.getNumberOfColumns(); x++) {
+            for(int y = 0; y < this.squaresMatrix.getNumberOfRows(); y++) {
                 int patternFound[][] = 
                       Tetromino.performPatternMatching(x, y, this.squaresMatrix);
                 this.squaresMatrix.deleteSquares(patternFound);

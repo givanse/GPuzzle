@@ -73,8 +73,8 @@ public abstract class Tetromino {
         if(!(squares instanceof SquaresMatrix))
             return false;
         
-        if(x >= squares.getNumberOfRows() ||
-           y >= squares.getNumberOfRows())
+        if(x >= squares.getNumberOfColumns() ||
+           y >= squares.getNumberOfColumns())
             return false;
         
         if(squares.isPositionAvailable(x, y))
