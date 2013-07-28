@@ -35,7 +35,7 @@ public class Board {
     
     /* Public methods */
     
-    public void generateRandomFallingPair() {
+    public final void generateRandomFallingPair() {
         /**
          * Produce an array with the same width of the board.
          */
@@ -43,19 +43,29 @@ public class Board {
         if(availableColumns.length < 1)
             return;
         
-        /* Shuffle the availble columns. */
-        //TODO: shuffle array
+        Random randomGenerator = new Random(System.currentTimeMillis());
+        /**
+         * Shuffle the available columns. 
+         * Fisher-Yates shuffle a.k.a. the Knuth shuffle, modern version.
+         */
+        for(int i = availableColumns.length - 1; i >= 1; i--) {
+             /* +1 because the n argument is exclusive */
+            int j = randomGenerator.nextInt(i + 1);
+            // swap a[j] and a[i]
+            int tmp = availableColumns[j];
+            availableColumns[j] = availableColumns[i];
+            availableColumns[i] = tmp;
+        }
         
         /* Use the first two columns. */
         int col1Indx = 0, col2Indx = 0;
-        col2Indx = (availableColumns.length == 1) ? 0 : 1;
+        col2Indx = (availableColumns.length == 1) ? col2Indx : 1;
         int x1 = availableColumns[col1Indx];
         int x2 = availableColumns[col2Indx];
         
         /**
          * Produce two random colours, that may be repeated.
          */
-        Random randomGenerator = new Random(System.currentTimeMillis());
         SquareColour sqrColours[] = SquareColour.values();
         int randomColourNumber = randomGenerator.nextInt(sqrColours.length);
         SquareColour randomColour1 = sqrColours[randomColourNumber];

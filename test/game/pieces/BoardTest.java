@@ -24,25 +24,29 @@ public class BoardTest {
         boardDefault = new Board(1, 1);
         ArrayList<Square> fallingSquares = boardDefault.getFallingSquares();
         
-        Square square0 = fallingSquares.get(0);
-        assertEquals(0, square0.getX());
-        assertEquals(0, square0.getY());
-        
-        Square square1 = fallingSquares.get(1);
+        Square square1 = fallingSquares.get(0);
         assertEquals(0, square1.getX());
         assertEquals(0, square1.getY());
+        
+        Square square2 = fallingSquares.get(1);
+        assertEquals(0, square2.getX());
+        assertEquals(0, square2.getY());
         
         /* 2x1 */
         boardDefault = new Board(2, 1);
         fallingSquares = boardDefault.getFallingSquares();
         
-        square0 = fallingSquares.get(0);
-        assertEquals(0, square0.getX());
-        assertEquals(0, square0.getY());
-        
-        square1 = fallingSquares.get(1);
-        assertEquals(1, square1.getX());
+        square1 = fallingSquares.get(0);
+        square2 = fallingSquares.get(1);
+        if(square1.getX() == 0) {
+            assertEquals(1, square2.getX());
+        } else if(square1.getX() == 1) {
+            assertEquals(0, square2.getX());
+        } else {
+            fail("The generated Square has the wrong position.");
+        }
         assertEquals(0, square1.getY());
+        assertEquals(0, square2.getY());
         
         /**
          * 4x1
@@ -53,13 +57,17 @@ public class BoardTest {
                 .insertSquare(2, 0, SquareColour.RED));
         fallingSquares = boardDefault.getFallingSquares();
         
-        square0 = fallingSquares.get(0);
-        assertEquals(1, square0.getX());
-        assertEquals(0, square0.getY());
-        
-        square1 = fallingSquares.get(1);
-        assertEquals(3, square1.getX());
+        square1 = fallingSquares.get(0);
+        square2 = fallingSquares.get(1);
+        if(square1.getX() == 1) {
+            assertEquals(3, square2.getX());
+        } else if(square1.getX() == 3) {
+            assertEquals(1, square2.getX());
+        } else {
+            fail("The generated Square has the wrong position.");
+        }
         assertEquals(0, square1.getY());
+        assertEquals(0, square2.getY());
     }
     
     @Test
