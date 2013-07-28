@@ -29,15 +29,22 @@ public class Board {
     
     public Board(SquaresMatrix squares) {
         this.squaresMatrix = squares;
-        this.generateRandomFallingPair();
+        if(this.squaresMatrix.getNumberOfRows() > 0)
+            this.generateRandomFallingPair();
     }
     
-    private void generateRandomFallingPair() {
+    /* Public methods */
+    
+    public void generateRandomFallingPair() {
         /**
          * Produce an array with the same width of the board.
          */
         int availableColumns[] = this.squaresMatrix.getAvailableTopColumns();
+        if(availableColumns.length < 1)
+            return;
+        
         /* Shuffle the availble columns. */
+        //TODO: shuffle array
         
         /* Use the first two columns. */
         int col1Indx = 0, col2Indx = 0;
@@ -62,8 +69,6 @@ public class Board {
         this.fallingSquares.add(square1);
         this.fallingSquares.add(square2);
     }
-    
-    /* Public methods */
     
     public void update() {
         
