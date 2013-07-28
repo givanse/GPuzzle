@@ -28,8 +28,8 @@ public class BoardPanel extends JPanel {
     private final int drawableHeight;
     
     /* The units for the next variables are pixels. */
-    protected static int BORDER_WIDTH = 2;
-    private static int SPACE_FILLED_BY_BORDERS = BoardPanel.BORDER_WIDTH * 2;    
+    private static int BORDER_WIDTH = 2;
+    public static int SPACE_FILLED_BY_BORDERS = BoardPanel.BORDER_WIDTH * 2;    
     public static int CANVAS_WIDTH  = (Square.SIZE * Board.WIDTH_IN_SQUARES) + 
                                        BoardPanel.SPACE_FILLED_BY_BORDERS; 
     public static int CANVAS_HEIGHT = (Square.SIZE * Board.HEIGHT_IN_SQUARES) + 

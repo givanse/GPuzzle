@@ -11,31 +11,30 @@ import static org.junit.Assert.*;
  */
 public class BoardTest {
     
-    private static final Board boardDefault = new Board();
-    private static final Board board3x3Empty = new Board(3, 3);
-    /**
-     * [   ][0,1][   ]
-     * [1,0][1,1][1,2]
-     * [   ][2,1][   ]
-     */
-    private static final Board boardCross = new Board(new SquaresMatrix(3, 3)
+    @Test
+    public void getFallingSquaresTest() {
+        Board boardDefault = new Board();
+        int actual = boardDefault.getFallingSquares().size();
+        int expected = 2;
+        assertEquals(expected, actual);
+        
+        Board board3x3Empty = new Board(3, 3);
+        actual = board3x3Empty.getFallingSquares().size();
+        expected = 2;
+        assertEquals(expected, actual);
+        
+        /**
+         * [   ][0,1][   ]
+         * [1,0][1,1][1,2]
+         * [   ][2,1][   ]
+         */
+        Board boardCross = new Board(new SquaresMatrix(3, 3)
             .insertSquare(0, 1, SquareColour.BLUE)
             .insertSquare(1, 0, SquareColour.BLUE)
             .insertSquare(1, 1, SquareColour.BLUE)
             .insertSquare(1, 2, SquareColour.BLUE)
             .insertSquare(2, 1, SquareColour.BLUE)
         );
-    
-    @Test
-    public void getFallingSquaresTest() {
-        int expected = 2;
-        int actual = boardDefault.getFallingSquares().size();
-        assertEquals(expected, actual);
-        
-        expected = 2;
-        actual = board3x3Empty.getFallingSquares().size();
-        assertEquals(expected, actual);
-        
         expected = 2;
         actual = boardCross.getFallingSquares().size();
         assertEquals(expected, actual);
@@ -43,6 +42,7 @@ public class BoardTest {
     
     @Test
     public void isPositionAvailableTest() {
+        Board board3x3Empty = new Board(3, 3);
         boolean expected = true;
         boolean actual;
         for(int x = 0; x < 3 ; x++)
@@ -50,14 +50,23 @@ public class BoardTest {
                 actual = board3x3Empty.isPositionAvailable(x, y);
                 assertEquals(expected, actual);
             }
-        
-        expected = false;
-        actual = boardCross.isPositionAvailable(1, 1);
-        assertEquals(expected, actual);
     }
     
     @Test
     public void isValidSwapTest() {
+        /**
+         * [   ][0,1][   ]
+         * [1,0][1,1][1,2]
+         * [   ][2,1][   ]
+         */
+        Board boardCross = new Board(new SquaresMatrix(3, 3)
+            .insertSquare(0, 1, SquareColour.BLUE)
+            .insertSquare(1, 0, SquareColour.BLUE)
+            .insertSquare(1, 1, SquareColour.BLUE)
+            .insertSquare(1, 2, SquareColour.BLUE)
+            .insertSquare(2, 1, SquareColour.BLUE)
+        );
+        
         /**
          * < >[+][ ]
          * [+][+][+]
@@ -135,19 +144,18 @@ public class BoardTest {
          * 0[+][+]
          * 1[+][+]
          */
-        Board board = new Board(new SquaresMatrix(2, 2)
+        Board actual = new Board(new SquaresMatrix(2, 2)
                 .insertSquare(0, 0, SquareColour.PINK)
                 .insertSquare(1, 0, SquareColour.PINK)
                 .insertSquare(0, 1, SquareColour.PINK)
                 .insertSquare(1, 1, SquareColour.PINK));
-        board.deleteCompletedTetrisShapes();
-        SquaresMatrix actuals = board.getSquares();
+        actual.deleteCompletedTetrisShapes();
         /**
          * [ ][ ]
          * [ ][ ]
          */
-        SquaresMatrix expecteds = new SquaresMatrix(2, 2);
-        assertEquals(expecteds, actuals);
+        Board expected = new Board(2, 2);
+        assertEquals(expected, actual);
         
         /**
          * Although we have a valid shape, nothing will be removed because 
@@ -159,19 +167,18 @@ public class BoardTest {
          * 0[+][+]
          * 1[+][+]
          */
-        board = new Board(new SquaresMatrix(2, 2)
+        actual = new Board(new SquaresMatrix(2, 2)
                 .insertSquare(0, 0, SquareColour.YELLOW)
                 .insertSquare(1, 0, SquareColour.YELLOW)
                 .insertSquare(0, 1, SquareColour.YELLOW)
                 .insertSquare(1, 1, SquareColour.RED));
-        board.deleteCompletedTetrisShapes();
-        actuals = board.getSquares();
-        expecteds = new SquaresMatrix(2, 2)
+        actual.deleteCompletedTetrisShapes();
+        expected = new Board(new SquaresMatrix(2, 2)
                 .insertSquare(0, 0, SquareColour.YELLOW)
                 .insertSquare(1, 0, SquareColour.YELLOW)
                 .insertSquare(0, 1, SquareColour.YELLOW)
-                .insertSquare(1, 1, SquareColour.RED);
-        assertEquals(expecteds, actuals);
+                .insertSquare(1, 1, SquareColour.RED));
+        assertEquals(expected, actual);
     }
     
 }

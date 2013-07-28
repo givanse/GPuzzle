@@ -3,6 +3,7 @@ package game.pieces;
 import game.patterns.Tetromino;
 import game.pieces.Square.SquareColour;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Random;
  */
 public class Board {
     
-    private final SquaresMatrix boardSquares;
+    private final SquaresMatrix squaresMatrix;
     private final ArrayList<Square> fallingSquares = new ArrayList<>(2);
     
     public enum SwapDirection {LEFT, RIGHT, UP, DOWN};
@@ -27,22 +28,39 @@ public class Board {
     }
     
     public Board(SquaresMatrix squares) {
-        this.boardSquares = squares;
+        this.squaresMatrix = squares;
         this.generateRandomFallingPair();
     }
     
     private void generateRandomFallingPair() {
-        Random random = new Random(System.currentTimeMillis());
-        int width = this.boardSquares.getNumberOfRows();
-        int randomX = random.nextInt(width);
-        int constantY = 0;
-        SquareColour sqrTypes[] = SquareColour.values();
-        int randomType = random.nextInt(sqrTypes.length);
-        Square square1 = new Square(randomX, constantY, sqrTypes[randomType]);
+        /**
+         * Produce an array with the same width of the board.
+         */
+        int availableColumns[] = 
+                               new int[this.squaresMatrix.getNumberOfColumns()];
+        /* Shuffle the availble columns. */
+        
+        /* Use the first two columns. */
+        int col1Indx = 0, col2Indx = 0;
+        col2Indx = (availableColumns.length == 1) ? 0 : 1;
+        int x1 = availableColumns[col1Indx];
+        int x2 = availableColumns[col2Indx];
+        
+        /**
+         * Produce two random colours, that may be repeated.
+         */
+        Random randomGenerator = new Random(System.currentTimeMillis());
+        SquareColour sqrColours[] = SquareColour.values();
+        int randomColourNumber = randomGenerator.nextInt(sqrColours.length);
+        SquareColour randomColour1 = sqrColours[randomColourNumber];
+        randomColourNumber = randomGenerator.nextInt(sqrColours.length);
+        SquareColour randomColour2 = sqrColours[randomColourNumber];
+        
+        int yConstant = 0;
+        Square square1 = new Square(x1, yConstant, randomColour1);
+        Square square2 = new Square(x2, yConstant, randomColour2);
+        
         this.fallingSquares.add(square1);
-        randomX = (randomX == width - 1) ? randomX - 1 : randomX + 1;
-        randomType = random.nextInt(sqrTypes.length);
-        Square square2 = new Square(randomX, constantY, sqrTypes[randomType]);
         this.fallingSquares.add(square2);
     }
     
@@ -57,7 +75,7 @@ public class Board {
     }
     
     public final boolean isPositionAvailable(int x, int y) {
-        return this.boardSquares.isPositionAvailable(x, y);
+        return this.squaresMatrix.isPositionAvailable(x, y);
     }
     
     public boolean isValidSwap(int x, int y, SwapDirection swapDirection) {      
@@ -84,21 +102,44 @@ public class Board {
     }
     
     public void deleteCompletedTetrisShapes() {
-        for(int x = 0; x < this.boardSquares.getNumberOfRows(); x++) {
-            for(int y = 0; y < this.boardSquares.getNumberOfColumns(); y++) {
+        for(int x = 0; x < this.squaresMatrix.getNumberOfRows(); x++) {
+            for(int y = 0; y < this.squaresMatrix.getNumberOfColumns(); y++) {
                 int patternFound[][] = 
-                      Tetromino.performPatternMatching(x, y, this.boardSquares);
-                this.boardSquares.deleteSquares(patternFound);
+                      Tetromino.performPatternMatching(x, y, this.squaresMatrix);
+                this.squaresMatrix.deleteSquares(patternFound);
                 this.moveDownFlyingSquares();
             }
         }
     }
     
     public void moveDownFlyingSquares() {
-        this.boardSquares.moveDownFlyingSquares();
+        this.squaresMatrix.moveDownFlyingSquares();
     }
     
-    public SquaresMatrix getSquares() {
-        return this.boardSquares;
+    public Square[][] getSquares() {
+        return this.squaresMatrix.getSquares();
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.squaresMatrix);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Board other = (Board) obj;
+        if (!Objects.equals(this.squaresMatrix, other.squaresMatrix)) {
+            return false;
+        }
+        return true;
+    }
+    
 }

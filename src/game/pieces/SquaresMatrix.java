@@ -50,6 +50,10 @@ public class SquaresMatrix {
         return this.squares[x][y];
     }
     
+    public Square[][] getSquares() {
+        return this.squares;
+    }
+    
     /**
      * Adds a new square to the matrix. If a square already exists in the (x, y)
      * position, it is overwritten.

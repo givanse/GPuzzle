@@ -6,7 +6,7 @@ import game.pieces.Square.SquareColour;
 import gui.view.BoardPanel;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.util.EnumSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -32,7 +32,7 @@ public class GameService implements Runnable {
     private void updateObjects() {
         this.board.update();
     }
-        
+    
     /* Public methods */
     
     @Override
@@ -67,18 +67,24 @@ public class GameService implements Runnable {
     }
     
     public void drawObjects(Graphics graphics) {
-        /* just some provitional random drawings */
-        SquareColour squareTypes[] = SquareColour.values();
-        int squareTypesIndex = 0;
-        int lastX = BoardPanel.CANVAS_WIDTH - 64;
-        int lastY = BoardPanel.CANVAS_HEIGHT - 64;
-        for(int x = 0; x < lastX; x += Square.SIZE)
-            for(int y = 0; y < lastY; y += Square.SIZE) {
-                SquareColour st = squareTypes[squareTypesIndex++];
-                squareTypesIndex = (squareTypesIndex == squareTypes.length) ?
-                                    0 : squareTypesIndex;
-                Image square = st.getImage();
-                graphics.drawImage(square, x, y, this.boardPanel);
+        /* Draw board squares. */
+        for(Square[] row : this.board.getSquares()) {
+            for(Square s : row) {
+                if(s == null)
+                    continue;
+                int xPixels = (s.getX() * Square.SIZE) - 
+                              BoardPanel.SPACE_FILLED_BY_BORDERS;
+                int yPixels = (s.getY() * Square.SIZE) - 
+                              BoardPanel.SPACE_FILLED_BY_BORDERS;
+                graphics.drawImage(s.getSquareColour().getImage(), 
+                                   xPixels, yPixels, this.boardPanel);
             }
+        }
+        
+        /* Draw falling squares. */
+        for(Square s : this.board.getFallingSquares()) {
+            graphics.drawImage(s.getSquareColour().getImage(), 
+                               s.getX(), s.getY(), this.boardPanel);
+        }
     }
 }
