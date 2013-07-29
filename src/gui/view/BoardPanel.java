@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  *
  * @author givanse
  */
-public class BoardPanel extends JPanel {
+public final class BoardPanel extends JPanel {
    
     protected static Color BACKGROUND_COLOR = Color.DARK_GRAY;
     protected static Color BACKGROUND_GRID_COLOR = Color.LIGHT_GRAY;
@@ -32,23 +32,14 @@ public class BoardPanel extends JPanel {
     public static int CANVAS_WIDTH  = (Square.SIZE * Board.WIDTH_IN_SQUARES) + 
                                        BoardPanel.SPACE_FILLED_BY_BORDERS; 
     public static int CANVAS_HEIGHT = (Square.SIZE * Board.HEIGHT_IN_SQUARES) + 
-                                       BoardPanel.SPACE_FILLED_BY_BORDERS; 
+                                       BoardPanel.SPACE_FILLED_BY_BORDERS;
                                     
     public BoardPanel() {
         this.drawableWidth  = BoardPanel.CANVAS_WIDTH - 
                               BoardPanel.SPACE_FILLED_BY_BORDERS;
         this.drawableHeight = BoardPanel.CANVAS_HEIGHT - 
                               BoardPanel.SPACE_FILLED_BY_BORDERS;
-        /* add custom cursor */
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Image cursorImage = new ImageIcon(
-                           getClass().getResource("img/cursor.png")).getImage();
-        int x = cursorImage.getWidth(this) / 2; 
-        int y = x;
-        Point cursorHotSpot = new Point(x, y);
-        Cursor cursor = toolkit.createCustomCursor(
-                                          cursorImage, cursorHotSpot, "Cursor");
-        this.setCursor(cursor);
+        this.changeCursorToDefault();
     }
     
     private void drawObjectsOnScreen() {    
@@ -135,6 +126,22 @@ public class BoardPanel extends JPanel {
     }
     
     /* Public methods */
+    
+    public void changeCursor(Image cursorImage) {
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        int x = cursorImage.getWidth(this) / 2; 
+        int y = x;
+        Point cursorHotSpot = new Point(x, y);
+        Cursor cursor = toolkit.createCustomCursor(
+                                          cursorImage, cursorHotSpot, "Cursor");
+        this.setCursor(cursor);
+    }
+    
+    public void changeCursorToDefault() {
+        Image cursorImage = new ImageIcon(
+                           getClass().getResource("img/cursor.png")).getImage();
+        this.changeCursor(cursorImage);
+    }
     
     public void drawObjects(Square boardSquares[][], 
                             ArrayList<Square> fallingSquares) {

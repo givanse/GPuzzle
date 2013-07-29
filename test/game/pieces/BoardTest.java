@@ -205,7 +205,7 @@ public class BoardTest {
                 .insertSquare(1, 0, SquareColour.PINK)
                 .insertSquare(0, 1, SquareColour.PINK)
                 .insertSquare(1, 1, SquareColour.PINK));
-        actual.deleteCompletedTetrisShapes();
+        actual.checkAndDeleteCompletedTetrisShapes();
         /**
          * [ ][ ]
          * [ ][ ]
@@ -228,7 +228,7 @@ public class BoardTest {
                 .insertSquare(1, 0, SquareColour.YELLOW)
                 .insertSquare(0, 1, SquareColour.YELLOW)
                 .insertSquare(1, 1, SquareColour.RED));
-        actual.deleteCompletedTetrisShapes();
+        actual.checkAndDeleteCompletedTetrisShapes();
         expected = new Board(new SquaresMatrix(2, 2)
                 .insertSquare(0, 0, SquareColour.YELLOW)
                 .insertSquare(1, 0, SquareColour.YELLOW)

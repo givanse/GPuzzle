@@ -38,7 +38,7 @@ public class Board {
             this.addRandomFallingPairOfSquares();
     }
     
-    private void deleteCompletedTetrisShape(int x, int y) {
+    private void checkAndDeleteCompletedTetrisShape(int x, int y) {
         int patternFound[][] = 
                      Tetromino.performPatternMatching(x, y, this.squaresMatrix);
         this.squaresMatrix.deleteSquares(patternFound);
@@ -96,7 +96,7 @@ public class Board {
                 this.fallingSquares.remove(s);
                 i--;
                 this.squaresMatrix.insertSquare(s);
-                this.deleteCompletedTetrisShape(s.getX(), s.getY());
+                this.checkAndDeleteCompletedTetrisShape(s.getX(), s.getY());
             }
         }
     }
@@ -132,10 +132,49 @@ public class Board {
             return foundSquareForSwap;
     }
     
-    public void deleteCompletedTetrisShapes() {
+    /**
+     * 
+     * @param x1
+     * @param y1
+     * @param x2 swaping towards this x
+     * @param y2 swaping towards this y
+     */
+    public void swapSquares(int x1, int y1, int x2, int y2) {
+        SwapDirection swapDirection = null;
+        if(y1 == y2) {
+            swapDirection = (x1 - x2) == 1 ? SwapDirection.LEFT : 
+                                             SwapDirection.RIGHT;
+        }
+        if(x1 == x2) {
+            swapDirection = (y1 - y2) == 1 ? SwapDirection.UP : 
+                                             SwapDirection.DOWN;
+        }
+        
+        if(swapDirection == null)
+            return;
+        
+        if(this.isValidSwap(x1, y1, swapDirection)) {
+            Square s1 = this.squaresMatrix.getSquare(x1, y1);
+            Square s2 = this.squaresMatrix.getSquare(x2, y2);
+            /* swap coordinates */
+            int tmpX = s1.getX();
+            int tmpY = s1.getY();
+            s1.setX(s2.getX());
+            s1.setY(s2.getY());
+            s2.setX(tmpX);
+            s2.setY(tmpY);
+            /* add/overwrite to matrix */
+            this.squaresMatrix.insertSquare(s1);
+            this.squaresMatrix.insertSquare(s2);
+        }
+        this.checkAndDeleteCompletedTetrisShape(x1, y1);
+        this.checkAndDeleteCompletedTetrisShape(x2, y2);
+    }
+    
+    public void checkAndDeleteCompletedTetrisShapes() {
         for(int x = 0; x < this.squaresMatrix.getNumberOfColumns(); x++) {
             for(int y = 0; y < this.squaresMatrix.getNumberOfRows(); y++) {
-                this.deleteCompletedTetrisShape(x, y);
+                this.checkAndDeleteCompletedTetrisShape(x, y);
                 this.squaresMatrix.moveDownFlyingSquares();
             }
         }

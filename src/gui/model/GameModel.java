@@ -1,6 +1,7 @@
 package gui.model;
 
 import game.pieces.Board;
+import game.pieces.Square;
 import gui.control.GameListener;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -81,7 +82,8 @@ public final class GameModel{
         this.board.updateSquares();
         for(int i = 0; i < listeners.size(); i++) {
             this.listeners.get(i).squaresChanged(
-                    this.board.getSquares(), this.board.getFallingSquares());
+                    this.board.getSquares(), this.board.getFallingSquares()
+            );
         }
     }
     
@@ -99,7 +101,7 @@ public final class GameModel{
         this.speed = GameModel.FALLING_SPEED_INITIAL;
         
         Timer levelTimer = new Timer();
-        levelTimer.schedule(new TimerTask(){
+        levelTimer.schedule(new TimerTask(){ 
             @Override
             public void run() {
                 if(getSpeed() > GameModel.FALLING_SPEED_MAX)
@@ -116,13 +118,33 @@ public final class GameModel{
             @Override
             public void run() {
                 if(!board.addRandomFallingPairOfSquares())
-                    setGameState(gameState.OVER);
+                    setGameState(GameState.OVER);
                 if(gameState ==  GameState.OVER)
                     this.cancel();
             }
         }, GameModel.SPAWN_TIME, GameModel.SPAWN_TIME);
         
-        setGameState(gameState.RUNNING);
+        setGameState(GameState.RUNNING);
+    }
+    
+    public Square getSquare(int x, int y) {
+        return this.board.getSquares()[x][y];
+    }
+    
+    public boolean isPositionAvailable(int x, int y) {
+        return this.board.isPositionAvailable(x, y);
+    }
+    
+    public boolean isFallingSquare(int x, int y) {
+        for(Square col : this.board.getFallingSquares()) {
+            if(x == col.getX() && y == col.getY())
+                return true;
+        }
+        return false;
+    }
+    
+    public void swapSquares(int x1, int y1, int x2, int y2) {
+        this.board.swapSquares(x1, y1, x2, y2);
     }
     
 }

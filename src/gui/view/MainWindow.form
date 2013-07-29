@@ -33,7 +33,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="panelBoard" min="-2" max="-2" attributes="0"/>
+              <Component id="boardPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="buttonPause" min="-2" pref="100" max="-2" attributes="0"/>
@@ -62,9 +62,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="buttonNewGame" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="237" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="233" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="panelBoard" min="-2" max="-2" attributes="0"/>
+                  <Component id="boardPanel" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -90,7 +90,7 @@
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="handleButtonPauseStateChanged"/>
       </Events>
     </Component>
-    <Container class="gui.view.BoardPanel" name="panelBoard">
+    <Container class="gui.view.BoardPanel" name="boardPanel">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="BoardPanel.BACKGROUND_COLOR" type="code"/>

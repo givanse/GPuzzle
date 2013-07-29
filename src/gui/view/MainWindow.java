@@ -20,19 +20,16 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
-        this.boardMouseListener = new BoardMouseListener(this.textAreaLog);
-        this.panelBoard.addMouseListener(this.boardMouseListener);
         
         this.startNewGame();
-
-        ScoreController scoreController = 
-                           new ScoreController(this.scoreField, this.gameModel);
-        SpeedController speedController = 
-                           new SpeedController(this.speedField, this.gameModel);
-        GameStateController gameStateController = 
-                      new GameStateController(this.textAreaLog, this.gameModel);
-        BoardController boardController = 
-                           new BoardController(this.panelBoard, this.gameModel);      
+        
+        this.boardPanel.addMouseListener(new BoardMouseListener(
+                            this.boardPanel, this.textAreaLog, this.gameModel));
+        new ScoreController(this.scoreField, this.gameModel);
+        new SpeedController(this.speedField, this.gameModel);
+        new GameStateController(this.textAreaLog, this.gameModel);
+        new BoardController(this.boardPanel, this.gameModel); 
+        
     }
 
     /**
@@ -46,7 +43,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         buttonNewGame = new javax.swing.JButton();
         buttonPause = new javax.swing.JToggleButton();
-        panelBoard = new gui.view.BoardPanel();
+        boardPanel = new gui.view.BoardPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         textAreaLog = new javax.swing.JTextArea();
         scoreField = new javax.swing.JTextField();
@@ -78,19 +75,19 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        panelBoard.setBackground(BoardPanel.BACKGROUND_COLOR);
-        panelBoard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        panelBoard.setFocusable(false);
-        panelBoard.setPreferredSize(new java.awt.Dimension(BoardPanel.CANVAS_WIDTH, BoardPanel.CANVAS_HEIGHT));
+        boardPanel.setBackground(BoardPanel.BACKGROUND_COLOR);
+        boardPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        boardPanel.setFocusable(false);
+        boardPanel.setPreferredSize(new java.awt.Dimension(BoardPanel.CANVAS_WIDTH, BoardPanel.CANVAS_HEIGHT));
 
-        javax.swing.GroupLayout panelBoardLayout = new javax.swing.GroupLayout(panelBoard);
-        panelBoard.setLayout(panelBoardLayout);
-        panelBoardLayout.setHorizontalGroup(
-            panelBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout boardPanelLayout = new javax.swing.GroupLayout(boardPanel);
+        boardPanel.setLayout(boardPanelLayout);
+        boardPanelLayout.setHorizontalGroup(
+            boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
-        panelBoardLayout.setVerticalGroup(
-            panelBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        boardPanelLayout.setVerticalGroup(
+            boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
@@ -119,7 +116,7 @@ public class MainWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelBoard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(boardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonPause, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -144,8 +141,8 @@ public class MainWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonNewGame)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
-                    .addComponent(panelBoard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE))
+                    .addComponent(boardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -226,15 +223,14 @@ public class MainWindow extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private gui.view.BoardPanel boardPanel;
     private javax.swing.JButton buttonNewGame;
     private javax.swing.JToggleButton buttonPause;
     private javax.swing.JScrollPane jScrollPane1;
-    private gui.view.BoardPanel panelBoard;
     private javax.swing.JTextField scoreField;
     private javax.swing.JTextField speedField;
     private javax.swing.JTextArea textAreaLog;
     // End of variables declaration//GEN-END:variables
-    private BoardMouseListener boardMouseListener;
     private GameModel gameModel;
     private GameService gameService;
 }
