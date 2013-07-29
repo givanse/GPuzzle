@@ -1,6 +1,6 @@
 package gui.control;
 
-import game.Utilery;
+import game.Utility;
 import game.pieces.Square;
 import gui.model.GameModel;
 import gui.view.BoardPanel;
@@ -65,7 +65,7 @@ public class BoardMouseListener extends MouseAdapter {
         String str = "(" + pixelsX + ", " + pixelsY + ") px\n";
         this.logTextArea.append(str);
         int squareCoords[] = 
-                     Utilery.convertPixelCoordsToSquareCoords(pixelsX, pixelsY);
+                     Utility.convertPixelCoordsToSquareCoords(pixelsX, pixelsY);
         int x = squareCoords[0];
         int y = squareCoords[1];
         str = "[" + x + ", " + y + "] sqr\n";

@@ -100,7 +100,7 @@ public final class GameModel{
         this.board = new Board(rowsFilledWithSquares);
         this.speed = GameModel.FALLING_SPEED_INITIAL;
         
-        Timer levelTimer = new Timer();
+        Timer levelTimer = new Timer("levelTimer");
         levelTimer.schedule(new TimerTask(){ 
             @Override
             public void run() {
@@ -113,7 +113,7 @@ public final class GameModel{
             }
         }, 0, GameModel.LEVEL_DURATION);
         
-        Timer spawnTimer = new Timer();
+        Timer spawnTimer = new Timer("spawnTimer");
         spawnTimer.schedule(new TimerTask(){
             @Override
             public void run() {

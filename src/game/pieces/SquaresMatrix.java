@@ -1,6 +1,6 @@
 package game.pieces;
 
-import game.Utilery;
+import game.Utility;
 import game.pieces.Square.SquareColour;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,7 +95,7 @@ public class SquaresMatrix {
         int bottomRow = this.getNumberOfRows() - 1;
         int lastRow = this.getNumberOfRows() - rowsQuantity;
         for(int row = bottomRow; row >= lastRow; row--) {
-            int shuffledColumns[] = Utilery.shuffleArray(availableColumns);
+            int shuffledColumns[] = Utility.shuffleArray(availableColumns);
             int missingSquaresPerRow = 3;
             int lastCol = this.getNumberOfColumns() - missingSquaresPerRow;
             for(int col = 0; col < lastCol; col++) {
@@ -106,6 +106,10 @@ public class SquaresMatrix {
     }
     
     public boolean isPositionAvailable(int x, int y) {
+        if(x < 0 || x >= this.getNumberOfColumns() ||
+           y < 0 || y >= this.getNumberOfRows())
+            return false;
+        
         return !(this.getSquare(x, y) instanceof Square);
     }
     

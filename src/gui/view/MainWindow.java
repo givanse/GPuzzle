@@ -1,7 +1,7 @@
 package gui.view;
 
 import gui.control.BoardMouseListener;
-import game.GameService;
+import game.GameLoopService;
 import gui.control.BoardController;
 import gui.control.GameStateController;
 import gui.control.ScoreController;
@@ -180,7 +180,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void startNewGame() {
         if(this.gameModel == null) {
             this.gameModel = new GameModel();
-            this.gameService = new GameService(this.gameModel);
+            this.gameService = new GameLoopService(this.gameModel);
         } else {
             this.gameModel.startNewGame();
         }
@@ -235,5 +235,5 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextArea textAreaLog;
     // End of variables declaration//GEN-END:variables
     private GameModel gameModel;
-    private GameService gameService;
+    private GameLoopService gameService;
 }

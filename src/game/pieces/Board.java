@@ -1,6 +1,6 @@
 package game.pieces;
 
-import game.Utilery;
+import game.Utility;
 import game.patterns.Tetromino;
 import game.pieces.Square.SquareColour;
 import java.util.ArrayList;
@@ -42,9 +42,13 @@ public class Board {
         int patternFound[][] = 
                      Tetromino.performPatternMatching(x, y, this.squaresMatrix);
         this.squaresMatrix.deleteSquares(patternFound);
-        if(this.squaresMatrix.moveDownFlyingSquares(x, y)) {
-            for(int i = 0; i < this.squaresMatrix.getNumberOfColumns(); i++)
-                this.checkAndDeleteCompletedTetrisShape(i, y);
+        /* Pack the empty spaces left by the deleted tetromino */
+        for(int i = 0; i < patternFound.length; i++) {
+            int delX = patternFound[i][0];
+            int delY = patternFound[i][1];
+            if(this.squaresMatrix.moveDownFlyingSquares(delX, delY)) {
+                this.checkAndDeleteCompletedTetrisShapes();
+            }
         }
     }
     
@@ -59,9 +63,9 @@ public class Board {
         if(availableColumns.length < 2)
             return false;
         
-        int shuffledColumns[] = Utilery.shuffleArray(availableColumns);
+        int shuffledColumns[] = Utility.shuffleArray(availableColumns);
         
-        int xCoords[] = Utilery.getTwoConsecutiveNumbers(shuffledColumns);
+        int xCoords[] = Utility.getTwoConsecutiveNumbers(shuffledColumns);
         int x1 = xCoords[0];
         int x2 = xCoords[1];
         
@@ -137,40 +141,33 @@ public class Board {
     
     /**
      * 
-     * @param x1
-     * @param y1
-     * @param x2 swaping towards this x
-     * @param y2 swaping towards this y
+     * @param x
+     * @param y
+     * @param xSwap swaping towards this x
+     * @param ySwap swaping towards this y
      */
-    public boolean swapSquares(int x1, int y1, int x2, int y2) {
+    public boolean swapSquares(int x, int y, int xSwap, int ySwap) {
         SwapDirection swapDirection = null;
-        if(y1 == y2)
-            swapDirection = (x1 - x2) == 1 ? SwapDirection.LEFT : 
-                                             SwapDirection.RIGHT;
-        if(x1 == x2)
-            swapDirection = (y1 - y2) == 1 ? SwapDirection.UP : 
-                                             SwapDirection.DOWN;
+        if(y == ySwap)
+            swapDirection = (x - xSwap) == 1 ? SwapDirection.LEFT : 
+                                               SwapDirection.RIGHT;
+        if(x == xSwap)
+            swapDirection = (y - ySwap) == 1 ? SwapDirection.UP : 
+                                               SwapDirection.DOWN;
         
         if(swapDirection == null)
             return false;
         
         boolean swapCompleted = false;
-        if(this.isValidSwap(x1, y1, swapDirection)) {
-            Square s1 = this.squaresMatrix.getSquare(x1, y1);
-            Square s2 = this.squaresMatrix.getSquare(x2, y2);
+        if(this.isValidSwap(x, y, swapDirection)) {
+            Square square = this.squaresMatrix.getSquare(x, y);
+            Square squareSwap = this.squaresMatrix.getSquare(xSwap, ySwap);
             /* swap coordinates */
-            int tmpX = s1.getX();
-            int tmpY = s1.getY();
-            s1.setX(s2.getX());
-            s1.setY(s2.getY());
-            s2.setX(tmpX);
-            s2.setY(tmpY);
-            /* add/overwrite to matrix */
-            this.squaresMatrix.insertSquare(s1);
-            this.squaresMatrix.insertSquare(s2);
+            this.squaresMatrix.insertSquare(x, y, squareSwap.getSquareColour());
+            this.squaresMatrix.insertSquare(xSwap, ySwap, square.getSquareColour());
             
-            this.checkAndDeleteCompletedTetrisShape(s1.getX(), s1.getY());
-            this.checkAndDeleteCompletedTetrisShape(s2.getX(), s2.getY());
+            this.checkAndDeleteCompletedTetrisShape(square.getX(), square.getY());
+            this.checkAndDeleteCompletedTetrisShape(squareSwap.getX(), squareSwap.getY());
             swapCompleted = true;
         }
         return swapCompleted;

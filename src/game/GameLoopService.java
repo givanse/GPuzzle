@@ -37,7 +37,7 @@ public class GameLoopService implements Runnable {
         if (this.gameThread == null || 
             this.gameModel.getGameState() == GameState.OVER) {
             this.gameModel.setGameState(GameState.RUNNING);
-            this.gameThread = new Thread(this);
+            this.gameThread = new Thread(this, "GameServiceLoop");
             this.gameThread.start();
         }
     }
