@@ -133,7 +133,7 @@ public final class GameModel{
             }
         }, GameModel.SPAWN_TIME, GameModel.SPAWN_TIME);
         
-        setGameState(GameState.RUNNING);
+        this.setGameState(GameState.RUNNING);
     }
     
     public Square getSquare(int x, int y) {

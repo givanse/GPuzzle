@@ -2,6 +2,8 @@ package game;
 
 import gui.model.GameModel;
 import gui.model.GameModel.GameState;
+import gui.view.MainWindow;
+import sun.awt.windows.ThemeReader;
 
 /**
  *
@@ -20,22 +22,21 @@ public class GameLoopService implements Runnable {
     
     @Override
     public void run() {
-        while(this.gameModel.getGameState() != GameState.OVER) {
-            if(this.gameModel.getGameState() == GameState.PAUSED) {
-              continue;
+        while(true) {
+            if(this.gameModel.getGameState() == GameState.RUNNING) {
+                this.gameModel.updateSquares();
+                try {
+                    Thread.sleep(this.gameModel.getSpeed());
+                } catch (InterruptedException ex) { }
+                System.err.println("game service running");
+            } else {
+                System.err.println("game service not running");
             }
-
-            this.gameModel.updateSquares();
-
-            try {
-                Thread.sleep(this.gameModel.getSpeed());
-            } catch (InterruptedException ex) { }
         }
     }
     
     public void start() {
-        if (this.gameThread == null || 
-            this.gameModel.getGameState() == GameState.OVER) {
+        if (this.gameThread == null) {
             this.gameModel.setGameState(GameState.RUNNING);
             this.gameThread = new Thread(this, "GameServiceLoop");
             this.gameThread.start();
