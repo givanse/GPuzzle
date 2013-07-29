@@ -35,12 +35,12 @@ public class Board {
     public Board(SquaresMatrix squares) {
         this.squaresMatrix = squares;
         if(this.squaresMatrix.getNumberOfRows() > 0)
-            this.generateRandomFallingPair();
+            this.addRandomFallingPairOfSquares();
     }
     
     /* Public methods */
     
-    public final void generateRandomFallingPair() {
+    public final void addRandomFallingPairOfSquares() {
         /**
          * Produce an array with the same width of the board.
          */

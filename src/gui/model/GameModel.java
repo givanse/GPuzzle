@@ -20,32 +20,40 @@ public final class GameModel{
     private long speed;
     
     private ArrayList<GameListener> listeners;
-    private Timer timer; 
-    private static long INITIAL_SPEED = 1 * 1000; /* 1 second */
-    private static long MAX_SPEED = 100; /* 100 milliseconds */
-    private static long SPEED_INCREASE = 100; /* 100 milliseconds */
-    /* Interval at which the SPAWN_TIME is decreases, 2 minutes. */
-    private static long INCREASE_SPEED_INTERVAL = (2 * 60 * 1000); 
-    
-    /* Interval at wich new squares appear */
-    public static long SPAWN_TIME = 10 * 1000; /* 10 seconds */
-    
+    private static long FALLING_SPEED_INITIAL = 1 * 1000; /* 1 second */
+    private static long FALLING_SPEED_MAX = 100; /* 100 milliseconds */
+    private static long FALLING_SPEED_INCREASE = 100; /* 100 milliseconds */
+    /* Interval at wich a new pair of squares will appear. */
+    public static long SPAWN_TIME = 2 * 1000; /* 2 seconds */
+    public static long SPAWN_TIME_MIN = 200; /* 0.1 seconds */
+    public static long SPAWN_TIME_DECREASE = 200; /* 0.5 seconds */
+    /**
+     * Interval at which:
+     *   SPAWN_TIME decreased
+     *   speed      increased
+     * The interval lasts 2 minutes. 
+     */
+    private static long LEVEL_DURATION = (2 * 60 * 1000); 
+   
     public GameModel() {
         this.gameState = GameState.OVER;
         int rowsFilledWithSquares = 5;
         this.board = new Board(rowsFilledWithSquares);
-        this.speed = GameModel.INITIAL_SPEED;
+        this.speed = GameModel.FALLING_SPEED_INITIAL;
         
         this.listeners = new ArrayList();
         
-         this.timer = new Timer();
-         this.timer.schedule(new TimerTask(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask(){
             @Override
             public void run() {
-                if(getSpeed() > GameModel.MAX_SPEED)
-                    setSpeed(getSpeed() - GameModel.SPEED_INCREASE);
+                if(getSpeed() > GameModel.FALLING_SPEED_MAX)
+                    setSpeed(getSpeed() - GameModel.FALLING_SPEED_INCREASE);
+                if(GameModel.SPAWN_TIME > GameModel.SPAWN_TIME_MIN)
+                    GameModel.SPAWN_TIME -= GameModel.SPAWN_TIME_DECREASE;
             }
-         }, GameModel.INCREASE_SPEED_INTERVAL, GameModel.INCREASE_SPEED_INTERVAL);
+        }, GameModel.LEVEL_DURATION,
+           GameModel.LEVEL_DURATION);
     }
     
     public void removeListener(GameListener listener){
