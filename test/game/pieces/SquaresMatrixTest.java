@@ -330,7 +330,7 @@ public class SquaresMatrixTest {
          * [+][ ]
          * [ ][+]
          */
-        actual.packColumn(1, 1);
+        actual.moveDownFlyingSquares(1, 1);
         
         SquaresMatrix expected = new SquaresMatrix(2, 2)
                 .insertSquare(0, 0, Square.SquareColour.YELLOW)
@@ -340,7 +340,7 @@ public class SquaresMatrixTest {
          * [ ][ ]
          * [+][+]
          */
-        actual.packColumn(0, 1);
+        actual.moveDownFlyingSquares(0, 1);
         expected = new SquaresMatrix(2, 2)
                 .insertSquare(0, 1, Square.SquareColour.YELLOW)
                 .insertSquare(1, 1, Square.SquareColour.PINK);
@@ -355,7 +355,7 @@ public class SquaresMatrixTest {
         actual = new SquaresMatrix(1, 4)
                 .insertSquare(0, 0, Square.SquareColour.BLUE)
                 .insertSquare(0, 2, Square.SquareColour.RED);
-        actual.packColumn(0, 3);
+        actual.moveDownFlyingSquares(0, 3);
         /**
          * [ ]
          * [ ]
@@ -375,7 +375,7 @@ public class SquaresMatrixTest {
         actual = new SquaresMatrix(2, 2)
                 .insertSquare(1, 0, Square.SquareColour.YELLOW)
                 .insertSquare(0, 1, Square.SquareColour.PINK);
-        actual.packColumn(1, 1);
+        actual.moveDownFlyingSquares(1, 1);
         /**
          *   0  1
          * 0[ ][ ]
