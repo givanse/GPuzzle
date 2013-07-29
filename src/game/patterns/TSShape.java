@@ -89,7 +89,7 @@ class TSShape extends Tetromino {
         if(result.length > 0) 
             return result;
         
-        return new int[0][0];
+        return result;
     }
     
 }

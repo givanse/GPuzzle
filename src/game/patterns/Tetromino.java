@@ -24,32 +24,48 @@ public abstract class Tetromino {
     protected abstract int[][] findPatternMatch(int x, int y, 
                                 SquareColour squareType, SquaresMatrix squares);
     
-    protected static boolean isHorizontalMatch(
+    protected static int[][] isHorizontalMatch(
                                int nBackward, int nForward, int x, int y,
                                SquareColour squareType, SquaresMatrix squares) {
+        int result[][] = new int[4][2];
+        int rCounter = 0;
         /* Backward */
         for(int i = x; i > x - nBackward; i--)
-            if(!Tetromino.isSquareMatch(i, y, squareType, squares))
-                return false;
+            if(!Tetromino.isSquareMatch(i, y, squareType, squares)) {
+                return new int[0][0];
+            } else {
+                result[rCounter++] = new int[]{i, y};
+            }
         /* Forward */
         for(int i = x; i < x + nForward; i++)
-            if(!Tetromino.isSquareMatch(i, y, squareType, squares))
-                return false;
-        return true;
+            if(!Tetromino.isSquareMatch(i, y, squareType, squares)) {
+                return new int[0][0];
+            } else {
+                result[rCounter++] = new int[]{i, y};
+            }
+        return result;
     }
     
-    protected static boolean isVerticalMatch(
+    protected static int[][] isVerticalMatch(
                                int nBackward, int nForward, int x, int y,
                                SquareColour squareType, SquaresMatrix squares) {
+        int result[][] = new int[4][2];
+        int rCounter = 0;
         /* Backward */
         for(int i = y; i > y - nBackward; i--)
-            if(!Tetromino.isSquareMatch(x, i, squareType, squares))
-                return false;
+            if(!Tetromino.isSquareMatch(x, i, squareType, squares)) {
+                return new int[0][0];
+            } else {
+                result[rCounter++] = new int[]{x, i};
+            }
         /* Forward */
         for(int i = y; i < y + nForward; i++)
-            if(!Tetromino.isSquareMatch(x, i, squareType, squares))
-                return false;
-        return true;
+            if(!Tetromino.isSquareMatch(x, i, squareType, squares)) {
+                return new int[0][0];
+            } else {
+                result[rCounter++] = new int[]{x, i};
+            }
+        return result;
     }
     
     /**
@@ -116,6 +132,10 @@ public abstract class Tetromino {
         tetromino = TetrominoType.SShape.isPatternFound(x, y, squares);
         if(tetromino.length != 0)
             return tetromino;
+        
+        /*tetromino = TetrominoType.STRAIGHT.isPatternFound(x, y, squares);
+        if(tetromino.length != 0)
+            return tetromino;*/
         
         return tetromino;
     }
