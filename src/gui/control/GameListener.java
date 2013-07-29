@@ -12,6 +12,8 @@ public interface GameListener {
     
     public void scoreChanged(int score);
     
+    public void speedChanged(int score);
+    
     public void gameStateChanged(GameState gameState);
     
     public void squaresChanged(Square boardSquares[][], 

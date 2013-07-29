@@ -23,9 +23,9 @@ public class Board {
         this(Board.WIDTH_IN_SQUARES, Board.HEIGHT_IN_SQUARES);
     }
     
-    public Board(int rowsQuantity) {
+    public Board(int rowsFilledWithSquares) {
         this(Board.WIDTH_IN_SQUARES, Board.HEIGHT_IN_SQUARES);
-        this.squaresMatrix.insertRandomSquares(rowsQuantity);
+        this.squaresMatrix.insertRandomSquares(rowsFilledWithSquares);
     }
     
     public Board(int widthInSquares, int heightInSquares) {

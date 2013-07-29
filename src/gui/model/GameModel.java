@@ -20,8 +20,8 @@ public class GameModel{
 
     public GameModel() {
         this.gameState = GameState.RUNNING;
-        int filledRows = 3;
-        this.board = new Board(filledRows);
+        int rowsFilledWithSquares = 5;
+        this.board = new Board(rowsFilledWithSquares);
         this.listeners = new ArrayList();
     }
     

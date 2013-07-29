@@ -19,5 +19,8 @@ public class GameAdapter implements GameListener {
     @Override
     public void squaresChanged(Square boardSquares[][], 
                                ArrayList<Square> fallingSquares) { }
+
+    @Override
+    public void speedChanged(int score) { }
     
 }

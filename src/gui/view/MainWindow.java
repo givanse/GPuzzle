@@ -4,6 +4,7 @@ import gui.control.BoardMouseListener;
 import game.GameService;
 import gui.control.BoardController;
 import gui.control.ScoreController;
+import gui.control.SpeedController;
 import gui.model.GameModel;
 import gui.model.GameModel.GameState;
 import java.awt.Color;
@@ -27,6 +28,8 @@ public class MainWindow extends javax.swing.JFrame {
 
         ScoreController scoreController = 
                            new ScoreController(this.scoreField, this.gameModel);
+        SpeedController speedController = 
+                           new SpeedController(this.speedField, this.gameModel);
         BoardController boardController = 
                            new BoardController(this.panelBoard, this.gameModel);      
     }
