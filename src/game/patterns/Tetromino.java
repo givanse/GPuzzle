@@ -113,7 +113,7 @@ public abstract class Tetromino {
         if(tetromino.length != 0)
             return tetromino;
         
-        tetromino = TetrominoType.S.isPatternFound(x, y, squares);
+        tetromino = TetrominoType.SShape.isPatternFound(x, y, squares);
         if(tetromino.length != 0)
             return tetromino;
         

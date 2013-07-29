@@ -69,10 +69,7 @@ public class SquaresMatrixTest {
     public void isPositionAvailableTest() {
         /* 0x0 */
         SquaresMatrix squaresMatrix = new SquaresMatrix(0, 0);
-        try {
-            squaresMatrix.isPositionAvailable(0, 0);
-            fail("Should throw IndexOutOfBoundsException.");
-        } catch(IndexOutOfBoundsException ex) { }
+        assertFalse(squaresMatrix.isPositionAvailable(0, 0));
         
         /* 1x1 */
         squaresMatrix = new SquaresMatrix(1, 1);
@@ -503,25 +500,25 @@ public class SquaresMatrixTest {
     public void getAvailableTopColumns() {
         /* 0x0 */
         SquaresMatrix squaresMatrix = new SquaresMatrix(0, 0);
-        int actuals[] = squaresMatrix.getAvailableTopRowPairs();
+        int actuals[] = squaresMatrix.getAvailableTopRowColumnPairs();
         int expecteds[] = new int[0];
         assertArrayEquals(expecteds, actuals);
         
         /* 1x1 */
         squaresMatrix = new SquaresMatrix(1, 1);
-        actuals = squaresMatrix.getAvailableTopRowPairs();
+        actuals = squaresMatrix.getAvailableTopRowColumnPairs();
         expecteds = new int[0];
         assertArrayEquals(expecteds, actuals);
         
         /* 2x2 */
         squaresMatrix = new SquaresMatrix(2, 2);
-        actuals = squaresMatrix.getAvailableTopRowPairs();
+        actuals = squaresMatrix.getAvailableTopRowColumnPairs();
         expecteds = new int[]{0, 1};
         assertArrayEquals(expecteds, actuals);
         
         /* 3x1 */
         squaresMatrix = new SquaresMatrix(3, 1);
-        actuals = squaresMatrix.getAvailableTopRowPairs();
+        actuals = squaresMatrix.getAvailableTopRowColumnPairs();
         expecteds = new int[]{0, 1, 2};
         assertArrayEquals(expecteds, actuals);
         
@@ -532,7 +529,7 @@ public class SquaresMatrixTest {
          */
         squaresMatrix = new SquaresMatrix(3, 1)
                 .insertSquare(1, 0, Square.SquareColour.BLUE);
-        actuals = squaresMatrix.getAvailableTopRowPairs();
+        actuals = squaresMatrix.getAvailableTopRowColumnPairs();
         expecteds = new int[0];
         assertArrayEquals(expecteds, actuals);
         
@@ -545,7 +542,7 @@ public class SquaresMatrixTest {
                 .insertSquare(0, 0, Square.SquareColour.BLUE)
                 .insertSquare(3, 0, Square.SquareColour.BLUE)
                 .insertSquare(6, 0, Square.SquareColour.BLUE);
-        actuals = squaresMatrix.getAvailableTopRowPairs();
+        actuals = squaresMatrix.getAvailableTopRowColumnPairs();
         expecteds = new int[]{1, 2, 4, 5};
         assertArrayEquals(expecteds, actuals);
     }

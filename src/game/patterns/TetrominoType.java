@@ -9,8 +9,8 @@ import game.pieces.SquaresMatrix;
 public enum TetrominoType { 
     SQUARE(new TSquare()),
     STRAIGHT(new TStraight()), 
-    S(new TS()), 
-    L(new TL());
+    SShape(new TSShape()), 
+    LShape(new TLShape());
     
     private Tetromino tetromino;
 

@@ -2,22 +2,23 @@ package gui.control;
 
 import game.pieces.Square;
 import gui.model.GameModel;
-import gui.view.BoardPanel;
+import gui.view.BoardView;
 import java.util.ArrayList;
 
 /**
  *
  * @author givanse
  */
-public class BoardController {
-    public BoardController(final BoardPanel boardPanel, 
-                          final GameModel gameModel) {
+public class BoardViewController {
+    
+    public BoardViewController(final BoardView boardView, 
+                               final GameModel gameModel) {
         
         GameListener gameListener = new GameAdapter() {
             @Override
             public void squaresChanged(Square boardSquares[][], 
                                        ArrayList<Square> fallingSquares){
-                boardPanel.drawObjects(boardSquares, fallingSquares);
+                boardView.drawObjects(boardSquares, fallingSquares);
             }
         };
         

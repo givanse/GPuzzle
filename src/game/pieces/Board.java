@@ -16,8 +16,8 @@ public class Board {
     private final ArrayList<Square> fallingSquares = new ArrayList<>(2);
     
     public enum SwapDirection {LEFT, RIGHT, UP, DOWN};
-    public static int WIDTH_IN_SQUARES = 12;  // number of squares 
-    public static int HEIGHT_IN_SQUARES = 18; // number of squares
+    public static int WIDTH_IN_SQUARES = 12;             /* number of squares */
+    public static int HEIGHT_IN_SQUARES = 18;            /* number of squares */
     
     public Board() {
         this(Board.WIDTH_IN_SQUARES, Board.HEIGHT_IN_SQUARES);
@@ -44,7 +44,7 @@ public class Board {
         /**
          * Produce an array with the same width of the board.
          */
-        int availableColumns[] = this.squaresMatrix.getAvailableTopRowPairs();
+        int availableColumns[] = this.squaresMatrix.getAvailableTopRowColumnPairs();
         
         if(availableColumns.length < 2)
             return false;

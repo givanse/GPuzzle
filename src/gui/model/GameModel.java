@@ -15,21 +15,24 @@ public final class GameModel{
  
     public enum GameState {RUNNING, PAUSED, OVER};
     
+    /* properties */
     private GameState gameState;
     private int completedShapesCount = 0;
     private int multiplier = 1;
-    private static int MULTIPLIER_INCREMENTS = 1;
-    private Board board;
     private long speed;
+    private Board board;
+    /* properties */
     
+    private static int MULTIPLIER_INCREMENTS = 1;
     private ArrayList<GameListener> listeners;
-    public static long FALLING_SPEED_INITIAL = 1 * 1000; /* 1 second */
-    private static long FALLING_SPEED_MAX = 100; /* 100 milliseconds */
-    private static long FALLING_SPEED_INCREASE = 100; /* 100 milliseconds */
+    
+    public static long FALLING_SPEED_INITIAL = 1 * 1000;          /* 1 second */
+    private static long FALLING_SPEED_MAX = 100;          /* 100 milliseconds */
+    private static long FALLING_SPEED_INCREASE = 100;     /* 100 milliseconds */
     /* Interval at wich a new pair of squares will appear. */
-    private static long SPAWN_TIME = 2 * 1000; /* 2 seconds */
-    private static long SPAWN_TIME_MIN = 200; /* 0.1 seconds */
-    private static long SPAWN_TIME_DECREASE = 200; /* 0.5 seconds */
+    private static long SPAWN_TIME = 2 * 1000;                   /* 2 seconds */
+    private static long SPAWN_TIME_MIN = 200;                  /* 0.1 seconds */
+    private static long SPAWN_TIME_DECREASE = 200;             /* 0.5 seconds */
     /**
      * Interval at which:
      *   SPAWN_TIME is decreased

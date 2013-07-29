@@ -1,8 +1,8 @@
 package gui.view;
 
-import gui.control.BoardMouseListener;
+import gui.control.BoardViewMouseListener;
 import game.GameLoopService;
-import gui.control.BoardController;
+import gui.control.BoardViewController;
 import gui.control.GameStateController;
 import gui.control.ScoreController;
 import gui.control.SpeedController;
@@ -10,7 +10,8 @@ import gui.model.GameModel;
 import gui.model.GameModel.GameState;
 
 /**
- *
+ * The main window of this application.
+ * 
  * @author givanse
  */
 public class MainWindow extends javax.swing.JFrame {
@@ -21,14 +22,14 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         
-        this.startNewGame();
+        this.createNewGame();
         
-        this.boardPanel.addMouseListener(new BoardMouseListener(
+        this.boardPanel.addMouseListener(new BoardViewMouseListener(
                             this.boardPanel, this.textAreaLog, this.gameModel));
         new ScoreController(this.scoreField, this.gameModel);
         new SpeedController(this.speedField, this.gameModel);
         new GameStateController(this.textAreaLog, this.gameModel);
-        new BoardController(this.boardPanel, this.gameModel); 
+        new BoardViewController(this.boardPanel, this.gameModel); 
         
     }
 
@@ -41,7 +42,7 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        boardPanel = new gui.view.BoardPanel();
+        boardPanel = new gui.view.BoardView();
         jPanel1 = new javax.swing.JPanel();
         buttonNewGame = new javax.swing.JButton();
         buttonPause = new javax.swing.JToggleButton();
@@ -61,17 +62,17 @@ public class MainWindow extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
-        boardPanel.setBackground(BoardPanel.BACKGROUND_COLOR);
+        boardPanel.setBackground(gui.view.BoardView.BACKGROUND_COLOR);
         boardPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         boardPanel.setFocusable(false);
-        boardPanel.setMaximumSize(new java.awt.Dimension(BoardPanel.CANVAS_WIDTH, BoardPanel.CANVAS_HEIGHT));
-        boardPanel.setPreferredSize(new java.awt.Dimension(BoardPanel.CANVAS_WIDTH, BoardPanel.CANVAS_HEIGHT));
+        boardPanel.setMaximumSize(new java.awt.Dimension(gui.view.BoardView.VIEW_WIDTH, gui.view.BoardView.VIEW_HEIGHT));
+        boardPanel.setPreferredSize(new java.awt.Dimension(gui.view.BoardView.VIEW_WIDTH, gui.view.BoardView.VIEW_HEIGHT));
 
         javax.swing.GroupLayout boardPanelLayout = new javax.swing.GroupLayout(boardPanel);
         boardPanel.setLayout(boardPanelLayout);
         boardPanelLayout.setHorizontalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 12, Short.MAX_VALUE)
+            .addGap(0, 11, Short.MAX_VALUE)
         );
         boardPanelLayout.setVerticalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +130,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(speedField))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -157,7 +158,7 @@ public class MainWindow extends javax.swing.JFrame {
         if(keyTyped ==  'p' || keyTyped ==  'P')
             this.buttonPause.setSelected(!this.buttonPause.isSelected());
         if(keyTyped ==  'n' || keyTyped ==  'N')
-            this.startNewGame();
+            this.createNewGame();
     }//GEN-LAST:event_handleKeyTyped
 
     private void handleButtonPauseStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_handleButtonPauseStateChanged
@@ -165,7 +166,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_handleButtonPauseStateChanged
 
     private void buttonNewGameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNewGameMouseClicked
-        this.startNewGame();
+        this.createNewGame();
     }//GEN-LAST:event_buttonNewGameMouseClicked
 
     private void handleEventPauseGame() {
@@ -177,17 +178,19 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     
-    private void startNewGame() {
+    private void createNewGame() {
         if(this.gameModel == null) {
+            this.textAreaLog.append("New game\n");
             this.gameModel = new GameModel();
-            this.gameService = new GameLoopService(this.gameModel);
+            this.gameLoopService = new GameLoopService(this.gameModel);
         } else {
+            this.textAreaLog.append("Start new game\n");
             this.gameModel.startNewGame();
         }
     }
-    
-    public void startGame() {
-        this.gameService.start();
+
+    public void startGameLoopService() {
+        this.gameLoopService.start();
     }
     
     /**
@@ -220,12 +223,12 @@ public class MainWindow extends javax.swing.JFrame {
             public void run() {
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.setVisible(true);
-                mainWindow.startGame();
+                mainWindow.startGameLoopService();
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private gui.view.BoardPanel boardPanel;
+    private gui.view.BoardView boardPanel;
     private javax.swing.JButton buttonNewGame;
     private javax.swing.JToggleButton buttonPause;
     private javax.swing.JPanel jPanel1;
@@ -235,5 +238,5 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextArea textAreaLog;
     // End of variables declaration//GEN-END:variables
     private GameModel gameModel;
-    private GameLoopService gameService;
+    private GameLoopService gameLoopService;
 }

@@ -19,7 +19,7 @@ public class SquaresMatrix {
     
     /* Public methods */
     
-    public int[] getAvailableTopRowPairs() {
+    public int[] getAvailableTopRowColumnPairs() {
         
         /* Only pairs of columns are valid. */
         if(this.getNumberOfColumns() < 2)

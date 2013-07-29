@@ -7,7 +7,7 @@ import game.pieces.SquaresMatrix;
  *
  * @author givanse
  */
-class TL extends Tetromino {
+class TLShape extends Tetromino {
     
     private boolean fpmRightHorizontal(int x, int y,
                                 SquareColour squareType, SquaresMatrix squares) {

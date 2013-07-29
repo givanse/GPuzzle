@@ -16,30 +16,37 @@ import javax.swing.JPanel;
  *
  * @author givanse
  */
-public final class BoardPanel extends JPanel {
+public final class BoardView extends JPanel {
    
     protected static Color BACKGROUND_COLOR = Color.DARK_GRAY;
     protected static Color BACKGROUND_GRID_COLOR = Color.LIGHT_GRAY;
     
     private Image offScreenImage;
     private Graphics offScreenGraphics;
-    private final int drawableWidth;
-    private final int drawableHeight;
+    /**
+     * Canvas is the drawable area of this view. 
+     */
+    private final int canvasWidth;
+    private final int canvasHeight;
+    private final Image sightCursorImage;
     
     /* The units for the next variables are pixels. */
     private static int BORDER_WIDTH = 2;
-    public static int SPACE_FILLED_BY_BORDERS = BoardPanel.BORDER_WIDTH * 2;    
-    public static int CANVAS_WIDTH  = (Square.SIZE * Board.WIDTH_IN_SQUARES) + 
-                                       BoardPanel.SPACE_FILLED_BY_BORDERS; 
-    public static int CANVAS_HEIGHT = (Square.SIZE * Board.HEIGHT_IN_SQUARES) + 
-                                       BoardPanel.SPACE_FILLED_BY_BORDERS;
+    private static int SPACE_FILLED_BY_BORDERS = BoardView.BORDER_WIDTH * 2;    
+    public static int VIEW_WIDTH  = (Square.SIZE * Board.WIDTH_IN_SQUARES) + 
+                                       BoardView.SPACE_FILLED_BY_BORDERS; 
+    public static int VIEW_HEIGHT = (Square.SIZE * Board.HEIGHT_IN_SQUARES) + 
+                                       BoardView.SPACE_FILLED_BY_BORDERS;
+    /* The units for the previous variables are pixels. */
                                     
-    public BoardPanel() {
-        this.drawableWidth  = BoardPanel.CANVAS_WIDTH - 
-                              BoardPanel.SPACE_FILLED_BY_BORDERS;
-        this.drawableHeight = BoardPanel.CANVAS_HEIGHT - 
-                              BoardPanel.SPACE_FILLED_BY_BORDERS;
-        this.changeCursorToDefault();
+    public BoardView() {
+        this.canvasWidth  = BoardView.VIEW_WIDTH - 
+                            BoardView.SPACE_FILLED_BY_BORDERS;
+        this.canvasHeight = BoardView.VIEW_HEIGHT - 
+                            BoardView.SPACE_FILLED_BY_BORDERS;
+        this.sightCursorImage = new ImageIcon(getClass()
+                                     .getResource("img/cursor.png")).getImage();
+        this.changeCursorToSightIcon();
     }
     
     private void drawObjectsOnScreen() {    
@@ -48,8 +55,8 @@ public final class BoardPanel extends JPanel {
             panelGraphics = this.getGraphics();
             if(panelGraphics != null && this.offScreenImage != null) {
                 panelGraphics.drawImage(this.offScreenImage, 
-                                        BoardPanel.BORDER_WIDTH, 
-                                        BoardPanel.BORDER_WIDTH, null);
+                                        BoardView.BORDER_WIDTH, 
+                                        BoardView.BORDER_WIDTH, null);
                 Toolkit.getDefaultToolkit().sync(); // Re-draw
                 panelGraphics.dispose();
             }
@@ -61,8 +68,8 @@ public final class BoardPanel extends JPanel {
     private void drawObjectsInMemory(Square boardSquares[][], 
                                      ArrayList<Square> fallingSquares) {
         if(this.offScreenImage == null) {
-            this.offScreenImage = this.createImage(this.drawableWidth, 
-                                                   this.drawableHeight);
+            this.offScreenImage = this.createImage(this.canvasWidth, 
+                                                   this.canvasHeight);
             if(this.offScreenImage == null) {
                 System.out.println("An off screen image couldn't be created.");
                 return;
@@ -70,31 +77,31 @@ public final class BoardPanel extends JPanel {
                 this.offScreenGraphics = this.offScreenImage.getGraphics();
             }
         }
-        this.offScreenGraphics.setColor(BoardPanel.BACKGROUND_COLOR);
+        this.offScreenGraphics.setColor(BoardView.BACKGROUND_COLOR);
         /* clear the canvas */
-        this.offScreenGraphics.fillRect(0, 0, this.drawableWidth, 
-                                              this.drawableHeight);
+        this.offScreenGraphics.fillRect(0, 0, this.canvasWidth, 
+                                              this.canvasHeight);
         this.drawBackgroundGrid();
         this.drawSquares(this.offScreenGraphics, boardSquares);
         this.drawSquares(this.offScreenGraphics, fallingSquares);
     }
       
     private void drawBackgroundGrid() {
-        this.offScreenGraphics.setColor(BoardPanel.BACKGROUND_GRID_COLOR);
+        this.offScreenGraphics.setColor(BoardView.BACKGROUND_GRID_COLOR);
         /* Draw vertical lines */
         int yStart = 0;
-        int yEnd = BoardPanel.CANVAS_HEIGHT - BoardPanel.BORDER_WIDTH;
+        int yEnd = BoardView.VIEW_HEIGHT - BoardView.BORDER_WIDTH;
         int i = Square.SIZE;      /* left outside just for formatting reasons */
-        for( ; i < BoardPanel.CANVAS_WIDTH; i += Square.SIZE) {
+        for( ; i < BoardView.VIEW_WIDTH; i += Square.SIZE) {
             int xStart = i;
             int xEnd = i;
             this.offScreenGraphics.drawLine(xStart, yStart, xEnd, yEnd);
         }
         /* Draw horizontal lines */
         int xStart = 0;
-        int xEnd = BoardPanel.CANVAS_WIDTH - BoardPanel.BORDER_WIDTH;
+        int xEnd = BoardView.VIEW_WIDTH - BoardView.BORDER_WIDTH;
         i = Square.SIZE;          /* left outside just for formatting reasons */
-        for( ; i < BoardPanel.CANVAS_HEIGHT; i += Square.SIZE) {
+        for( ; i < BoardView.VIEW_HEIGHT; i += Square.SIZE) {
             yStart = i; 
             yEnd = i;
             this.offScreenGraphics.drawLine(xStart, yStart, xEnd, yEnd);
@@ -137,10 +144,8 @@ public final class BoardPanel extends JPanel {
         this.setCursor(cursor);
     }
     
-    public void changeCursorToDefault() {
-        Image cursorImage = new ImageIcon(
-                           getClass().getResource("img/cursor.png")).getImage();
-        this.changeCursor(cursorImage);
+    public void changeCursorToSightIcon() {
+        this.changeCursor(this.sightCursorImage);
     }
     
     public void drawObjects(Square boardSquares[][], 

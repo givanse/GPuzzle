@@ -2,8 +2,6 @@ package game;
 
 import gui.model.GameModel;
 import gui.model.GameModel.GameState;
-import gui.view.MainWindow;
-import sun.awt.windows.ThemeReader;
 
 /**
  *

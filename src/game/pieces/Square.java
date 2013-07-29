@@ -11,9 +11,9 @@ import javax.swing.ImageIcon;
  */
 public class Square {
     
-    private int x; /* position in a board, not pixels */
-    private int y; /* position in a board, not pixels */
-    private boolean isFalling; // defaults to false
+    private int x;                         /* position in a board, not pixels */
+    private int y;                         /* position in a board, not pixels */
+    private boolean isFalling;                           /* defaults to false */
     private SquareColour squareColour;
     
     public enum SquareColour {
@@ -25,6 +25,7 @@ public class Square {
         
         /* Add an image property to the elements of this Enum */
         Image image;
+        
         SquareColour(String imageFilePath) {
             this.image = new ImageIcon(
                               getClass().getResource(imageFilePath)).getImage();
@@ -40,7 +41,7 @@ public class Square {
         }
     }
 
-    public static int SIZE = 32; // pixels
+    public static int SIZE = 32;                                    /* pixels */
 
     Square(SquareColour squareType) {
         this(0, 0, squareType);

@@ -7,7 +7,7 @@ import game.pieces.SquaresMatrix;
  *
  * @author givanse
  */
-class TS extends Tetromino {
+class TSShape extends Tetromino {
     
     private int[][] fpmRightHorizontal(int x, int y, SquareColour squareType,
                                                      SquaresMatrix squares) {
@@ -74,16 +74,20 @@ class TS extends Tetromino {
         int result[][];
         
         result = this.fpmRightHorizontal(x, y, squareType, squares);
-        if(result.length > 0) return result;
+        if(result.length > 0) 
+            return result;
         
         result = this.fpmRightVertical(x, y, squareType, squares);
-        if(result.length > 0) return result;
+        if(result.length > 0) 
+            return result;
         
         result = this.fpmLeftHorizontal(x, y, squareType, squares);
-        if(result.length > 0) return result;
+        if(result.length > 0) 
+            return result;
         
         result = this.fpmLeftVertical(x, y, squareType, squares);
-        if(result.length > 0) return result;
+        if(result.length > 0) 
+            return result;
         
         return new int[0][0];
     }
