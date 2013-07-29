@@ -6,7 +6,7 @@ import org.junit.Test;
  *
  * @author givanse
  */
-public class GameServiceTest {
+public class GameLoopServiceTest {
 
     @Test
     public void gameServiceTest() {
