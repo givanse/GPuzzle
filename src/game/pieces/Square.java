@@ -2,6 +2,7 @@ package game.pieces;
 
 import java.awt.Image;
 import java.util.Objects;
+import java.util.Random;
 import javax.swing.ImageIcon;
 
 /**
@@ -28,7 +29,15 @@ public class Square {
             this.image = new ImageIcon(
                               getClass().getResource(imageFilePath)).getImage();
         }
+        
         public Image getImage() { return this.image; }
+        
+        public static SquareColour getRandomColour() {
+            Square.SquareColour sqrColours[] = Square.SquareColour.values();
+            Random random = new Random(System.currentTimeMillis());
+            int randomColourNumber = random.nextInt(sqrColours.length);
+            return sqrColours[randomColourNumber];
+        }
     }
 
     public static int SIZE = 32; // pixels

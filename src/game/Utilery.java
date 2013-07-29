@@ -47,10 +47,4 @@ public class Utilery {
         throw new Error("A valid adjacent column was not found.");
     }
     
-    public static SquareColour getRandomColour() {
-        Square.SquareColour sqrColours[] = Square.SquareColour.values();
-        int randomColourNumber = RANDOM.nextInt(sqrColours.length);
-        return sqrColours[randomColourNumber];
-    }
-    
 }

@@ -108,6 +108,10 @@ public class SquaresMatrix {
         return this;
     }
     
+    public void insertRandomSquares(int initialSquaresQuantity) {
+        
+    }
+    
     public boolean isPositionAvailable(int x, int y) {
         return !(this.getSquare(x, y) instanceof Square);
     }

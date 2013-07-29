@@ -24,6 +24,11 @@ public class Board {
         this(Board.WIDTH_IN_SQUARES, Board.HEIGHT_IN_SQUARES);
     }
     
+    public Board(int initialSquaresQuantity) {
+        this(Board.WIDTH_IN_SQUARES, Board.HEIGHT_IN_SQUARES);
+        this.squaresMatrix.insertRandomSquares(initialSquaresQuantity);
+    }
+    
     public Board(int widthInSquares, int heightInSquares) {
         this(new SquaresMatrix(widthInSquares, heightInSquares));
     }
@@ -51,8 +56,8 @@ public class Board {
         int x1 = xCoords[0];
         int x2 = xCoords[1];
         
-        SquareColour randomColour1 = Utilery.getRandomColour();
-        SquareColour randomColour2 = Utilery.getRandomColour();
+        SquareColour randomColour1 = SquareColour.getRandomColour();
+        SquareColour randomColour2 = SquareColour.getRandomColour();
         
         int yConstant = 0;
         Square square1 = new Square(x1, yConstant, randomColour1);
