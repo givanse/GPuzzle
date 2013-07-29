@@ -7,7 +7,7 @@ import java.util.Random;
  *
  * @author givanse
  */
-public class Utilery {
+public class Utility {
 
     private static Random RANDOM = new Random(System.currentTimeMillis());
     
