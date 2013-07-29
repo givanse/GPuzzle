@@ -7,12 +7,12 @@ import gui.model.GameModel.GameState;
  *
  * @author givanse
  */
-public class GameService implements Runnable {
+public class GameLoopService implements Runnable {
     
     private Thread gameThread;
     private GameModel gameModel;
         
-    public GameService(GameModel gameModel) {
+    public GameLoopService(GameModel gameModel) {
         this.gameModel = gameModel;
     }
     
@@ -20,10 +20,8 @@ public class GameService implements Runnable {
     
     @Override
     public void run() {
-        while(this.gameModel.getGameState() != GameState.OVER) {  
-            System.out.println("running");
+        while(this.gameModel.getGameState() != GameState.OVER) {
             if(this.gameModel.getGameState() == GameState.PAUSED) {
-              System.out.println("paused");
               continue;
             }
 
