@@ -38,20 +38,6 @@ public class Board {
             this.addRandomFallingPairOfSquares();
     }
     
-    private void checkAndDeleteCompletedTetrisShape(int x, int y) {
-        int patternFound[][] = 
-                     Tetromino.performPatternMatching(x, y, this.squaresMatrix);
-        this.squaresMatrix.deleteSquares(patternFound);
-        /* Pack the empty spaces left by the deleted tetromino */
-        for(int i = 0; i < patternFound.length; i++) {
-            int delX = patternFound[i][0];
-            int delY = patternFound[i][1];
-            if(this.squaresMatrix.moveDownFlyingSquares(delX, delY)) {
-                this.checkAndDeleteCompletedTetrisShapes();
-            }
-        }
-    }
-    
     /* Public methods */
     
     public final boolean addRandomFallingPairOfSquares() {
@@ -165,12 +151,25 @@ public class Board {
             /* swap coordinates */
             this.squaresMatrix.insertSquare(x, y, squareSwap.getSquareColour());
             this.squaresMatrix.insertSquare(xSwap, ySwap, square.getSquareColour());
-            
-            this.checkAndDeleteCompletedTetrisShape(square.getX(), square.getY());
-            this.checkAndDeleteCompletedTetrisShape(squareSwap.getX(), squareSwap.getY());
             swapCompleted = true;
         }
         return swapCompleted;
+    }
+    
+    public boolean checkAndDeleteCompletedTetrisShape(int x, int y) {
+        boolean deletedPattern = false;
+        int patternFound[][] = 
+                     Tetromino.performPatternMatching(x, y, this.squaresMatrix);
+        deletedPattern = this.squaresMatrix.deleteSquares(patternFound);
+        /* Pack the empty spaces left by the deleted tetromino */
+        for(int i = 0; i < patternFound.length; i++) {
+            int delX = patternFound[i][0];
+            int delY = patternFound[i][1];
+            if(this.squaresMatrix.moveDownFlyingSquares(delX, delY)) {
+                this.checkAndDeleteCompletedTetrisShapes();
+            }
+        }
+        return deletedPattern;
     }
     
     public void checkAndDeleteCompletedTetrisShapes() {

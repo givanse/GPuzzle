@@ -136,19 +136,23 @@ public class SquaresMatrix {
      * 
      * @param coordinates 
      */
-    public void deleteSquares(int coordinates[][]) {
-        if(coordinates.length == 0)
-            return;
+    public boolean deleteSquares(int coordinates[][]) {
+        boolean deletedSquares = false;
         
         int totalColumns = coordinates.length;
+        if(totalColumns == 0)
+            return deletedSquares;
+        
         int firstRow = 0;
         int secondRow = 1;
-        
         for(int colNum = 0; colNum < totalColumns; colNum++) {
             int x = coordinates[colNum][firstRow];
             int y = coordinates[colNum][secondRow];
             this.squares[x][y] = null;
+            deletedSquares = true;
         }
+        
+        return deletedSquares;
     }
     
     /**

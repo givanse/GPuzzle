@@ -16,7 +16,9 @@ public final class GameModel{
     public enum GameState {RUNNING, PAUSED, OVER};
     
     private GameState gameState;
-    private int score = 0;
+    private int completedShapesCount = 0;
+    private int multiplier = 1;
+    private static int MULTIPLIER_INCREMENTS = 1;
     private Board board;
     private long speed;
     
@@ -34,12 +36,14 @@ public final class GameModel{
      *   speed      is increased
      * The interval lasts 2 minutes. 
      */
-    private static long LEVEL_DURATION = (2 * 60 * 1000); 
+    private static long LEVEL_DURATION = (2 * 60 * 1000);
     
     public GameModel() {
         this.listeners = new ArrayList();
         this.startNewGame();
     }
+    
+    /* Public Methods */
     
     public void removeListener(GameListener listener){
         listeners.remove(listener);
@@ -50,9 +54,9 @@ public final class GameModel{
     }
     
     public void setScore(int score){
-        this.score = score;
+        this.completedShapesCount = score;
         for(int i = 0; i < listeners.size(); i++){
-            this.listeners.get(i).scoreChanged(this.score);
+            this.listeners.get(i).scoreChanged(this.completedShapesCount);
         }
     }
     
@@ -108,6 +112,9 @@ public final class GameModel{
                     setSpeed(getSpeed() - GameModel.FALLING_SPEED_INCREASE);
                 if(GameModel.SPAWN_TIME > GameModel.SPAWN_TIME_MIN)
                     GameModel.SPAWN_TIME -= GameModel.SPAWN_TIME_DECREASE;
+                multiplier += MULTIPLIER_INCREMENTS;
+                
+                /* Check if this timer should keep running. */
                 if(gameState ==  GameState.OVER)
                     this.cancel();
             }
@@ -119,6 +126,8 @@ public final class GameModel{
             public void run() {
                 if(!board.addRandomFallingPairOfSquares())
                     setGameState(GameState.OVER);
+                
+                /* Check if this timer should keep running. */
                 if(gameState ==  GameState.OVER)
                     this.cancel();
             }
@@ -145,6 +154,19 @@ public final class GameModel{
     
     public boolean swapSquares(int x1, int y1, int x2, int y2) {
         return this.board.swapSquares(x1, y1, x2, y2);
+    }
+    
+    public boolean checkAndDeleteCompletedTetrisShape(int x, int y) {
+        return this.board.checkAndDeleteCompletedTetrisShape(x, y);
+    }
+    
+    /**
+     * The score increment is a combination of the number of tetrominos
+     * deleted and the time the player has lasted.
+     */
+    public void incrementScore() {
+        this.completedShapesCount++;
+        this.setScore(this.completedShapesCount * this.multiplier);
     }
     
 }

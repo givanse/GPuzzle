@@ -45,6 +45,17 @@ public class BoardMouseListener extends MouseAdapter {
     private void swapSquare(int x, int y) {
         boolean swapResult = this.gameModel.swapSquares(
                                         this.xBeingHold, this.yBeingHold, x, y);
+        boolean s1DeletedPattern = 
+               this.gameModel.checkAndDeleteCompletedTetrisShape(
+                                              this.xBeingHold, this.yBeingHold);
+        boolean s2DeletePattern = 
+                        this.gameModel.checkAndDeleteCompletedTetrisShape(x, y);
+        
+        if(s1DeletedPattern)
+            this.gameModel.incrementScore();
+        if(s2DeletePattern)
+            this.gameModel.incrementScore();
+     
         this.logTextArea.append("swap completed: " + swapResult + "\n");
         
         /* Either the swap is successful or not, the cursor is changed back. */
@@ -53,28 +64,7 @@ public class BoardMouseListener extends MouseAdapter {
         this.boardPanel.changeCursorToDefault();
     }
     
-    /* Public Methods */
-    
-    @Override
-    public void mouseClicked(MouseEvent evt) {
-        if(this.gameModel.getGameState() == GameModel.GameState.PAUSED)
-            return;
-        
-        int pixelsX = evt.getX();
-        int pixelsY = evt.getY();
-        String str = "(" + pixelsX + ", " + pixelsY + ") px\n";
-        this.logTextArea.append(str);
-        int squareCoords[] = 
-                     Utility.convertPixelCoordsToSquareCoords(pixelsX, pixelsY);
-        int x = squareCoords[0];
-        int y = squareCoords[1];
-        str = "[" + x + ", " + y + "] sqr\n";
-        this.logTextArea.append(str);
-        
-        this.handlePositionSelected(x, y);
-    }
-    
-    public void handlePositionSelected(int x, int y) {
+    private void handlePositionSelected(int x, int y) {
         /* Is it an empty space? */
         if(this.gameModel.isPositionAvailable(x, y)) {
             this.logTextArea.append("empty position\n");
@@ -97,6 +87,27 @@ public class BoardMouseListener extends MouseAdapter {
                 this.IS_CURSOR_HOLDING_A_SQUARE = CursorState.HOLDING;
                 break;
         }
+    }
+    
+    /* Public Methods */
+    
+    @Override
+    public void mouseClicked(MouseEvent evt) {
+        if(this.gameModel.getGameState() == GameModel.GameState.PAUSED)
+            return;
+        
+        int pixelsX = evt.getX();
+        int pixelsY = evt.getY();
+        String str = "(" + pixelsX + ", " + pixelsY + ") px\n";
+        this.logTextArea.append(str);
+        int squareCoords[] = 
+                     Utility.convertPixelCoordsToSquareCoords(pixelsX, pixelsY);
+        int x = squareCoords[0];
+        int y = squareCoords[1];
+        str = "[" + x + ", " + y + "] sqr\n";
+        this.logTextArea.append(str);
+        
+        this.handlePositionSelected(x, y);
     }
     
 }
