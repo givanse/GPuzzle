@@ -106,4 +106,27 @@ public class UtileryTest {
         assertEquals(expectedC2, actuals[1]);
     }
     
+    @Test
+    public void convertPixelCoordsToSquareCoordsTest() {
+        int actuals[] = Utilery.convertPixelCoordsToSquareCoords(23, 22);
+        int expecteds[] = new int[]{0, 0};
+        assertArrayEquals(expecteds, actuals);
+        
+        actuals = Utilery.convertPixelCoordsToSquareCoords(20, 50);
+        expecteds = new int[]{0, 1};
+        assertArrayEquals(expecteds, actuals);
+        
+        actuals = Utilery.convertPixelCoordsToSquareCoords(50, 18);
+        expecteds = new int[]{1, 0};
+        assertArrayEquals(expecteds, actuals);
+        
+        actuals = Utilery.convertPixelCoordsToSquareCoords(52, 49);
+        expecteds = new int[]{1, 1};
+        assertArrayEquals(expecteds, actuals);
+        
+        actuals = Utilery.convertPixelCoordsToSquareCoords(85, 179);
+        expecteds = new int[]{2, 5};
+        assertArrayEquals(expecteds, actuals);
+        
+    }
 }

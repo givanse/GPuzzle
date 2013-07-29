@@ -1,5 +1,6 @@
 package game;
 
+import game.pieces.Square;
 import java.util.Random;
 
 /**
@@ -45,4 +46,9 @@ public class Utilery {
         throw new Error("A valid adjacent column was not found.");
     }
     
+    public static int[] convertPixelCoordsToSquareCoords(int x, int y) {
+        int sqrX = x / Square.SIZE;
+        int sqrY = y / Square.SIZE;
+        return new int[]{sqrX, sqrY};
+    }
 }
