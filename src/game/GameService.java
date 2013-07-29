@@ -26,15 +26,13 @@ public class GameService implements Runnable {
               System.out.println("paused");
               continue;
             }
-            
+
             this.gameModel.updateSquares();
-            
+
             try {
-                long oneSec = 1000;
                 Thread.sleep(this.gameModel.getSpeed());
             } catch (InterruptedException ex) { }
         }
-        System.exit(0);
     }
     
     public void start() {

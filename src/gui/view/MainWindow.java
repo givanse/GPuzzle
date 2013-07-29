@@ -7,7 +7,6 @@ import gui.control.ScoreController;
 import gui.control.SpeedController;
 import gui.model.GameModel;
 import gui.model.GameModel.GameState;
-import java.awt.Color;
 
 /**
  *
@@ -23,8 +22,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.boardMouseListener = new BoardMouseListener(this.textAreaLog);
         this.panelBoard.addMouseListener(this.boardMouseListener);
         
-        this.gameModel = new GameModel();
-        this.gameService = new GameService(this.gameModel);
+        this.startNewGame();
 
         ScoreController scoreController = 
                            new ScoreController(this.scoreField, this.gameModel);
@@ -161,11 +159,11 @@ public class MainWindow extends javax.swing.JFrame {
         if(keyTyped ==  'p' || keyTyped ==  'P')
             this.buttonPause.setSelected(!this.buttonPause.isSelected());
         if(keyTyped ==  'n' || keyTyped ==  'N')
-            this.handleEventNewGame();
+            this.startNewGame();
     }//GEN-LAST:event_handleKeyTyped
 
     private void buttonNewGameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNewGameMouseClicked
-        this.handleEventNewGame();
+        this.startNewGame();
     }//GEN-LAST:event_buttonNewGameMouseClicked
 
     private void handleEventPauseGame() {
@@ -179,8 +177,14 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     
-    private void handleEventNewGame() {
-        
+    private void startNewGame() {
+        this.textAreaLog.append("new game\n");
+        if(this.gameModel == null) {
+            this.gameModel = new GameModel();
+            this.gameService = new GameService(this.gameModel);
+        } else {
+            this.gameModel.startNewGame();
+        }
     }
     
     public void startGame() {
