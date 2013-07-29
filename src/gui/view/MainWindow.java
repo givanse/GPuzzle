@@ -1,7 +1,12 @@
 package gui.view;
 
+import gui.control.BoardMouseListener;
+import game.GameService;
+import gui.control.BoardController;
+import gui.control.ScoreController;
+import gui.model.GameModel;
+import gui.model.GameModel.GameState;
 import java.awt.Color;
-import java.awt.Dimension;
 
 /**
  *
@@ -16,6 +21,14 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         this.boardMouseListener = new BoardMouseListener(this.textAreaLog);
         this.panelBoard.addMouseListener(this.boardMouseListener);
+        
+        this.gameModel = new GameModel();
+        ScoreController scoreController = 
+                           new ScoreController(this.scoreField, this.gameModel);
+        BoardController boardController = 
+                           new BoardController(this.panelBoard, this.gameModel);
+        GameService gameService = new GameService(this.gameModel);
+        gameService.start();
     }
 
     /**
@@ -162,10 +175,13 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void handleEventPauseGame() {
         boolean isPaused = this.buttonPause.isSelected();
-        if(isPaused)
+        if(isPaused) {
+            this.gameModel.setGameState(GameState.PAUSED);
             this.textAreaLog.append("game paused\n");
-        else
+        } else {
+            this.gameModel.setGameState(GameState.RUNNING);
             this.textAreaLog.append("game resumed\n");
+        }
     }
     
     /**
@@ -211,4 +227,5 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextArea textAreaLog;
     // End of variables declaration//GEN-END:variables
     private BoardMouseListener boardMouseListener;
+    private GameModel gameModel;
 }

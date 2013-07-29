@@ -1,90 +1,57 @@
 package game;
 
-import game.pieces.Board;
-import game.pieces.Square;
-import gui.view.BoardPanel;
-import java.awt.Graphics;
+import gui.model.GameModel;
+import gui.model.GameModel.GameState;
 
 /**
  *
  * @author givanse
  */
 public class GameService implements Runnable {
-
-    private enum State {RUNNING, PAUSED, OVER};
-    
-    private State gameState = State.OVER;
     
     private Thread gameThread;
-    
-    private BoardPanel boardPanel;
-    
-    private Board board;
+    private GameModel gameModel;
         
-    public GameService(BoardPanel boardPanel) {
-        this.boardPanel = boardPanel;
-        int rowsWithRandomSquares = 4;
-        this.board = new Board(rowsWithRandomSquares);
-    }
-    
-    private void updateObjects() {
-        this.board.update();
-    }
-    
-    private void drawSquare(Graphics graphics, Square square) {
-        int xPixels = (square.getX() * Square.SIZE);
-        int yPixels = (square.getY() * Square.SIZE);
-        graphics.drawImage(square.getSquareColour().getImage(), 
-                           xPixels, yPixels, this.boardPanel);
+    public GameService(GameModel gameModel) {
+        this.gameModel = gameModel;
     }
     
     /* Public methods */
     
     @Override
     public void run() {
-        this.gameState = State.RUNNING;
         long currentTime = System.nanoTime();
-        while( this.gameState == State.RUNNING ) {  
+        while(this.gameModel.getGameState() != GameState.OVER) {  
+            System.out.println("running");
+            if(this.gameModel.getGameState() == GameState.PAUSED) {
+              System.out.println("paused");
+              continue;
+            }
+            
             long initialTime = System.nanoTime();
             long elapsedTime = System.nanoTime() - currentTime;
             currentTime += elapsedTime;
-            this.updateObjects();
-            if(false) // if(gamePaused || gameOver)
-              continue;
-            else
-              this.boardPanel.drawObjects();
+            this.gameModel.updateSquares();
             int nano = 1000000;
             int totalElapsedTime = 
                                  (int) (System.nanoTime() - initialTime) / nano;
-            /* wait a bit for the animation */
+            /* Wait a little bit for the falling squares animation. */
             try {
-                Thread.sleep(totalElapsedTime > 0 ? 17 - totalElapsedTime : 4);
-            } catch (Exception e) { }
+                long sleepTime = 1000;
+                Thread.sleep(totalElapsedTime > 0 ? 
+                             sleepTime - totalElapsedTime :
+                             sleepTime);
+            } catch (InterruptedException ex) { }
         }
         System.exit(0);
     }
     
     public void start() {
-        if (this.gameThread == null || this.gameState == State.OVER ) {
+        if (this.gameThread == null || 
+            this.gameModel.getGameState() == GameState.OVER) {
             this.gameThread = new Thread(this);
             this.gameThread.start();
         }
     }
     
-    public void drawObjects(Graphics graphics) {
-        /* Draw board squares. */
-        for(Square[] row : this.board.getSquares()) {
-            for(Square s : row) {
-                if(s == null)
-                    continue;
-                else
-                    this.drawSquare(graphics, s);
-            }
-        }
-        
-        /* Draw falling squares. */
-        for(Square s : this.board.getFallingSquares()) {
-            this.drawSquare(graphics, s);
-        }
-    }
 }

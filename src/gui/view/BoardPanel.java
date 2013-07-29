@@ -1,6 +1,5 @@
 package gui.view;
 
-import game.GameService;
 import game.pieces.Board;
 import game.pieces.Square;
 import java.awt.Color;
@@ -9,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -23,7 +23,6 @@ public class BoardPanel extends JPanel {
     
     private Image offScreenImage;
     private Graphics offScreenGraphics;
-    private GameService gameService;
     private final int drawableWidth;
     private final int drawableHeight;
     
@@ -36,7 +35,6 @@ public class BoardPanel extends JPanel {
                                        BoardPanel.SPACE_FILLED_BY_BORDERS; 
                                     
     public BoardPanel() {
-        this.gameService = new GameService(this);
         this.drawableWidth  = BoardPanel.CANVAS_WIDTH - 
                               BoardPanel.SPACE_FILLED_BY_BORDERS;
         this.drawableHeight = BoardPanel.CANVAS_HEIGHT - 
@@ -69,7 +67,8 @@ public class BoardPanel extends JPanel {
         }
     }
     
-    private void drawObjectsInMemory() {
+    private void drawObjectsInMemory(Square boardSquares[][], 
+                                     ArrayList<Square> fallingSquares) {
         if(this.offScreenImage == null) {
             this.offScreenImage = this.createImage(this.drawableWidth, 
                                                    this.drawableHeight);
@@ -85,7 +84,8 @@ public class BoardPanel extends JPanel {
         this.offScreenGraphics.fillRect(0, 0, this.drawableWidth, 
                                               this.drawableHeight);
         this.drawBackgroundGrid();
-        this.gameService.drawObjects(this.offScreenGraphics);
+        this.drawSquares(this.offScreenGraphics, boardSquares);
+        this.drawSquares(this.offScreenGraphics, fallingSquares);
     }
       
     private void drawBackgroundGrid() {
@@ -110,16 +110,35 @@ public class BoardPanel extends JPanel {
         }
     }
     
-    /* Public methods */
-      
-    @Override
-    public void addNotify() {
-        super.addNotify();
-        this.gameService.start();
+    private void drawSquare(Graphics graphics, Square square) {
+        int xPixels = (square.getX() * Square.SIZE);
+        int yPixels = (square.getY() * Square.SIZE);
+        graphics.drawImage(square.getSquareColour().getImage(), 
+                           xPixels, yPixels, this);
     }
     
-    public void drawObjects() {
-        this.drawObjectsInMemory();
+    private void drawSquares(Graphics graphics, ArrayList<Square> squares) {
+        for(Square s : squares) {
+            this.drawSquare(graphics, s);
+        }
+    }
+    
+    private void drawSquares(Graphics graphics, Square squares[][]) {
+        for(Square[] row : squares) {
+            for(Square s : row) {
+                if(s == null)
+                    continue;
+                else
+                    this.drawSquare(graphics, s);
+            }
+        }
+    }
+    
+    /* Public methods */
+    
+    public void drawObjects(Square boardSquares[][], 
+                            ArrayList<Square> fallingSquares) {
+        this.drawObjectsInMemory(boardSquares, fallingSquares);
         this.drawObjectsOnScreen();
     }
     

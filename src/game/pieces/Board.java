@@ -66,8 +66,10 @@ public class Board {
         this.fallingSquares.add(square2);
     }
     
-    public void update() {
-        
+    public void updateSquares() {
+        for(Square s : this.fallingSquares) {
+            s.setY(s.getY() + 1);
+        }
     }
     
     public ArrayList<Square> getFallingSquares() {
