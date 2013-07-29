@@ -109,6 +109,14 @@ public abstract class Tetromino {
     public static int[][] performPatternMatching(int x, int y, 
                                                  SquaresMatrix squares) {
         /* TODO: add the logic for all the other shapes */
-        return TetrominoType.SQUARE.isPatternFound(x, y, squares);
+        int tetromino[][] = TetrominoType.SQUARE.isPatternFound(x, y, squares);
+        if(tetromino.length != 0)
+            return tetromino;
+        
+        tetromino = TetrominoType.S.isPatternFound(x, y, squares);
+        if(tetromino.length != 0)
+            return tetromino;
+        
+        return tetromino;
     }
 }
