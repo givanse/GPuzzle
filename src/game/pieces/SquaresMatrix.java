@@ -152,7 +152,8 @@ public class SquaresMatrix {
      * @param x
      * @param y 
      */
-    public void moveDownFlyingSquares(int x, int y) {
+    public boolean moveDownFlyingSquares(int x, int y) {
+        boolean squaresMoved = false;
         /* for each square in this column, from bottom to top */
         for(int currY = y; currY >= 1; currY--) {
             Square currentSquare = this.getSquare(x, currY);
@@ -166,11 +167,13 @@ public class SquaresMatrix {
                                 x, currY, upperSquare.getSquareColour());
                         /* Delete upper square */
                         this.squares[x][upperY] = null;
+                        squaresMoved = true;
                         break foundNotNullUpperSquare;
                     }
                 }
             }
         }
+        return squaresMoved;
     }
     
     public void moveDownFlyingSquares() {

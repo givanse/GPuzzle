@@ -4,7 +4,6 @@ import game.Utilery;
 import game.pieces.Square;
 import gui.model.GameModel;
 import gui.view.BoardPanel;
-import java.awt.Component;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -44,9 +43,9 @@ public class BoardMouseListener extends MouseAdapter {
     }
     
     private void swapSquare(int x, int y) {
-        boolean swapResult = this.gameModel.swapSquares(xBeingHold, yBeingHold, 
-                                                        x, y);
-        this.logTextArea.append("swap success: " + swapResult + "\n");
+        boolean swapResult = this.gameModel.swapSquares(
+                                        this.xBeingHold, this.yBeingHold, x, y);
+        this.logTextArea.append("swap completed: " + swapResult + "\n");
         
         /* Either the swap is successful or not, the cursor is changed back. */
         this.xBeingHold = -1;
@@ -58,6 +57,9 @@ public class BoardMouseListener extends MouseAdapter {
     
     @Override
     public void mouseClicked(MouseEvent evt) {
+        if(this.gameModel.getGameState() == GameModel.GameState.PAUSED)
+            return;
+        
         int pixelsX = evt.getX();
         int pixelsY = evt.getY();
         String str = "(" + pixelsX + ", " + pixelsY + ") px\n";

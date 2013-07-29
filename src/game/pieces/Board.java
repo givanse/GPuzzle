@@ -42,7 +42,10 @@ public class Board {
         int patternFound[][] = 
                      Tetromino.performPatternMatching(x, y, this.squaresMatrix);
         this.squaresMatrix.deleteSquares(patternFound);
-        this.squaresMatrix.moveDownFlyingSquares(x, y);
+        if(this.squaresMatrix.moveDownFlyingSquares(x, y)) {
+            for(int i = 0; i < this.squaresMatrix.getNumberOfColumns(); i++)
+                this.checkAndDeleteCompletedTetrisShape(i, y);
+        }
     }
     
     /* Public methods */
@@ -141,18 +144,17 @@ public class Board {
      */
     public boolean swapSquares(int x1, int y1, int x2, int y2) {
         SwapDirection swapDirection = null;
-        if(y1 == y2) {
+        if(y1 == y2)
             swapDirection = (x1 - x2) == 1 ? SwapDirection.LEFT : 
                                              SwapDirection.RIGHT;
-        }
-        if(x1 == x2) {
+        if(x1 == x2)
             swapDirection = (y1 - y2) == 1 ? SwapDirection.UP : 
                                              SwapDirection.DOWN;
-        }
         
         if(swapDirection == null)
             return false;
         
+        boolean swapCompleted = false;
         if(this.isValidSwap(x1, y1, swapDirection)) {
             Square s1 = this.squaresMatrix.getSquare(x1, y1);
             Square s2 = this.squaresMatrix.getSquare(x2, y2);
@@ -166,17 +168,18 @@ public class Board {
             /* add/overwrite to matrix */
             this.squaresMatrix.insertSquare(s1);
             this.squaresMatrix.insertSquare(s2);
+            
+            this.checkAndDeleteCompletedTetrisShape(s1.getX(), s1.getY());
+            this.checkAndDeleteCompletedTetrisShape(s2.getX(), s2.getY());
+            swapCompleted = true;
         }
-        this.checkAndDeleteCompletedTetrisShape(x1, y1);
-        this.checkAndDeleteCompletedTetrisShape(x2, y2);
-        return true;
+        return swapCompleted;
     }
     
     public void checkAndDeleteCompletedTetrisShapes() {
         for(int x = 0; x < this.squaresMatrix.getNumberOfColumns(); x++) {
             for(int y = 0; y < this.squaresMatrix.getNumberOfRows(); y++) {
                 this.checkAndDeleteCompletedTetrisShape(x, y);
-                this.squaresMatrix.moveDownFlyingSquares();
             }
         }
     }
