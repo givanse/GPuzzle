@@ -5,7 +5,6 @@ import game.patterns.Tetromino;
 import game.pieces.Square.SquareColour;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Random;
 
 /**
  *
@@ -24,9 +23,9 @@ public class Board {
         this(Board.WIDTH_IN_SQUARES, Board.HEIGHT_IN_SQUARES);
     }
     
-    public Board(int initialSquaresQuantity) {
+    public Board(int rowsQuantity) {
         this(Board.WIDTH_IN_SQUARES, Board.HEIGHT_IN_SQUARES);
-        this.squaresMatrix.insertRandomSquares(initialSquaresQuantity);
+        this.squaresMatrix.insertRandomSquares(rowsQuantity);
     }
     
     public Board(int widthInSquares, int heightInSquares) {

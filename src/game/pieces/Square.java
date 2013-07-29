@@ -33,10 +33,10 @@ public class Square {
         public Image getImage() { return this.image; }
         
         public static SquareColour getRandomColour() {
-            Square.SquareColour sqrColours[] = Square.SquareColour.values();
+            Square.SquareColour colourValues[] = Square.SquareColour.values();
             Random random = new Random(System.currentTimeMillis());
-            int randomColourNumber = random.nextInt(sqrColours.length);
-            return sqrColours[randomColourNumber];
+            int randomColourNumber = random.nextInt(colourValues.length);
+            return colourValues[randomColourNumber];
         }
     }
 

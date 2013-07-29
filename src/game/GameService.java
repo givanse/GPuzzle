@@ -23,7 +23,8 @@ public class GameService implements Runnable {
         
     public GameService(BoardPanel boardPanel) {
         this.boardPanel = boardPanel;
-        this.board = new Board();
+        int rowsWithRandomSquares = 4;
+        this.board = new Board(rowsWithRandomSquares);
     }
     
     private void updateObjects() {

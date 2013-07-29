@@ -1,7 +1,5 @@
 package game;
 
-import game.pieces.Square;
-import game.pieces.Square.SquareColour;
 import java.util.Random;
 
 /**
