@@ -18,6 +18,7 @@ public class SpeedController {
                 txtFieldSpeed.setText(Long.toString(speed));
             }
         };
+        
         gameModel.addListener(gameListener);
         gameModel.setSpeed(GameModel.FALLING_SPEED_INITIAL);
     }

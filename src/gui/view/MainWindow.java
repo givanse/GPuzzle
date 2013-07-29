@@ -50,7 +50,6 @@ public class MainWindow extends javax.swing.JFrame {
         textAreaLog = new javax.swing.JTextArea();
         scoreField = new javax.swing.JTextField();
         speedField = new javax.swing.JTextField();
-        panelNextPair = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Java Video Game");
@@ -64,6 +63,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         buttonNewGame.setFocusable(false);
         buttonNewGame.setLabel("<N>ew");
+        buttonNewGame.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonNewGameMouseClicked(evt);
+            }
+        });
 
         buttonPause.setText("<P>ause");
         buttonPause.setFocusable(false);
@@ -108,21 +112,6 @@ public class MainWindow extends javax.swing.JFrame {
         speedField.setBorder(javax.swing.BorderFactory.createTitledBorder("Speed"));
         speedField.setFocusable(false);
 
-        panelNextPair.setBackground(BoardPanel.BACKGROUND_COLOR);
-        panelNextPair.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Next pair", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, Color.LIGHT_GRAY));
-        panelNextPair.setFocusable(false);
-
-        javax.swing.GroupLayout panelNextPairLayout = new javax.swing.GroupLayout(panelNextPair);
-        panelNextPair.setLayout(panelNextPairLayout);
-        panelNextPairLayout.setHorizontalGroup(
-            panelNextPairLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        panelNextPairLayout.setVerticalGroup(
-            panelNextPairLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 59, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -136,7 +125,6 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(speedField)
                         .addComponent(scoreField, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                        .addComponent(panelNextPair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonNewGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -145,10 +133,8 @@ public class MainWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(panelNextPair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(speedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(scoreField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -156,10 +142,10 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(buttonPause)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonNewGame)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
                     .addComponent(panelBoard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -174,7 +160,13 @@ public class MainWindow extends javax.swing.JFrame {
         char keyTyped = evt.getKeyChar();
         if(keyTyped ==  'p' || keyTyped ==  'P')
             this.buttonPause.setSelected(!this.buttonPause.isSelected());
+        if(keyTyped ==  'n' || keyTyped ==  'N')
+            this.handleEventNewGame();
     }//GEN-LAST:event_handleKeyTyped
+
+    private void buttonNewGameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNewGameMouseClicked
+        this.handleEventNewGame();
+    }//GEN-LAST:event_buttonNewGameMouseClicked
 
     private void handleEventPauseGame() {
         boolean isPaused = this.buttonPause.isSelected();
@@ -185,6 +177,10 @@ public class MainWindow extends javax.swing.JFrame {
             this.gameModel.setGameState(GameState.RUNNING);
             this.textAreaLog.append("game resumed\n");
         }
+    }
+    
+    private void handleEventNewGame() {
+        
     }
     
     public void startGame() {
@@ -230,7 +226,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JToggleButton buttonPause;
     private javax.swing.JScrollPane jScrollPane1;
     private gui.view.BoardPanel panelBoard;
-    private javax.swing.JPanel panelNextPair;
     private javax.swing.JTextField scoreField;
     private javax.swing.JTextField speedField;
     private javax.swing.JTextArea textAreaLog;

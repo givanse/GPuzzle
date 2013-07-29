@@ -20,6 +20,7 @@ public class ScoreController {
         };
         
         gameModel.addListener(gameListener);
+        gameModel.setScore(0);
     }
     
 }
