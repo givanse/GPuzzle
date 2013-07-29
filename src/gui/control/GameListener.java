@@ -12,7 +12,7 @@ public interface GameListener {
     
     public void scoreChanged(int score);
     
-    public void speedChanged(int score);
+    public void speedChanged(long speed);
     
     public void gameStateChanged(GameState gameState);
     

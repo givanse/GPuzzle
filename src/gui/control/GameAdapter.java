@@ -14,13 +14,13 @@ public class GameAdapter implements GameListener {
     public void scoreChanged(int score) { }
     
     @Override
+    public void speedChanged(long speed) { }
+    
+    @Override
     public void gameStateChanged(GameModel.GameState gameState) { }
     
     @Override
     public void squaresChanged(Square boardSquares[][], 
                                ArrayList<Square> fallingSquares) { }
-
-    @Override
-    public void speedChanged(int score) { }
     
 }

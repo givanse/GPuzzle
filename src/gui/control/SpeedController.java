@@ -14,11 +14,10 @@ public class SpeedController {
         
         GameListener gameListener = new GameAdapter() {
             @Override
-            public void speedChanged(int score){
-                txtFieldSpeed.setText(Integer.toString(score));
+            public void speedChanged(long speed){
+                txtFieldSpeed.setText(Long.toString(speed));
             }
         };
-        
         gameModel.addListener(gameListener);
     }
     

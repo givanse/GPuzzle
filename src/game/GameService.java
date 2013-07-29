@@ -20,7 +20,6 @@ public class GameService implements Runnable {
     
     @Override
     public void run() {
-        long currentTime = System.nanoTime();
         while(this.gameModel.getGameState() != GameState.OVER) {  
             System.out.println("running");
             if(this.gameModel.getGameState() == GameState.PAUSED) {
@@ -28,19 +27,11 @@ public class GameService implements Runnable {
               continue;
             }
             
-            long initialTime = System.nanoTime();
-            long elapsedTime = System.nanoTime() - currentTime;
-            currentTime += elapsedTime;
             this.gameModel.updateSquares();
-            int nano = 1000000;
-            int totalElapsedTime = 
-                                 (int) (System.nanoTime() - initialTime) / nano;
-            /* Wait a little bit for the falling squares animation. */
+            
             try {
-                long sleepTime = 1000;
-                Thread.sleep(totalElapsedTime > 0 ? 
-                             sleepTime - totalElapsedTime :
-                             sleepTime);
+                long oneSec = 1000;
+                Thread.sleep(this.gameModel.getSpeed());
             } catch (InterruptedException ex) { }
         }
         System.exit(0);
@@ -49,6 +40,7 @@ public class GameService implements Runnable {
     public void start() {
         if (this.gameThread == null || 
             this.gameModel.getGameState() == GameState.OVER) {
+            this.gameModel.setGameState(GameState.RUNNING);
             this.gameThread = new Thread(this);
             this.gameThread.start();
         }
