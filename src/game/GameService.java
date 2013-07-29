@@ -31,12 +31,10 @@ public class GameService implements Runnable {
     }
     
     private void drawSquare(Graphics graphics, Square square) {
-        int xPixels = (square.getX() * Square.SIZE) - 
-                              BoardPanel.SPACE_FILLED_BY_BORDERS;
-                int yPixels = (square.getY() * Square.SIZE) - 
-                              BoardPanel.SPACE_FILLED_BY_BORDERS;
-                graphics.drawImage(square.getSquareColour().getImage(), 
-                                   xPixels, yPixels, this.boardPanel);
+        int xPixels = (square.getX() * Square.SIZE);
+        int yPixels = (square.getY() * Square.SIZE);
+        graphics.drawImage(square.getSquareColour().getImage(), 
+                           xPixels, yPixels, this.boardPanel);
     }
     
     /* Public methods */
