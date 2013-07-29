@@ -139,7 +139,7 @@ public class Board {
      * @param x2 swaping towards this x
      * @param y2 swaping towards this y
      */
-    public void swapSquares(int x1, int y1, int x2, int y2) {
+    public boolean swapSquares(int x1, int y1, int x2, int y2) {
         SwapDirection swapDirection = null;
         if(y1 == y2) {
             swapDirection = (x1 - x2) == 1 ? SwapDirection.LEFT : 
@@ -151,7 +151,7 @@ public class Board {
         }
         
         if(swapDirection == null)
-            return;
+            return false;
         
         if(this.isValidSwap(x1, y1, swapDirection)) {
             Square s1 = this.squaresMatrix.getSquare(x1, y1);
@@ -169,6 +169,7 @@ public class Board {
         }
         this.checkAndDeleteCompletedTetrisShape(x1, y1);
         this.checkAndDeleteCompletedTetrisShape(x2, y2);
+        return true;
     }
     
     public void checkAndDeleteCompletedTetrisShapes() {

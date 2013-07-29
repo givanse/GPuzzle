@@ -44,7 +44,9 @@ public class BoardMouseListener extends MouseAdapter {
     }
     
     private void swapSquare(int x, int y) {
-        this.gameModel.swapSquares(xBeingHold, yBeingHold, x, y);
+        boolean swapResult = this.gameModel.swapSquares(xBeingHold, yBeingHold, 
+                                                        x, y);
+        this.logTextArea.append("swap success: " + swapResult + "\n");
         
         /* Either the swap is successful or not, the cursor is changed back. */
         this.xBeingHold = -1;
@@ -58,13 +60,13 @@ public class BoardMouseListener extends MouseAdapter {
     public void mouseClicked(MouseEvent evt) {
         int pixelsX = evt.getX();
         int pixelsY = evt.getY();
-        String str = "(" + pixelsX + ", " + pixelsY + ")\n";
+        String str = "(" + pixelsX + ", " + pixelsY + ") px\n";
         this.logTextArea.append(str);
         int squareCoords[] = 
                      Utilery.convertPixelCoordsToSquareCoords(pixelsX, pixelsY);
         int x = squareCoords[0];
         int y = squareCoords[1];
-        str = "[" + x + ", " + y + "]\n";
+        str = "[" + x + ", " + y + "] sqr\n";
         this.logTextArea.append(str);
         
         this.handlePositionSelected(x, y);
