@@ -109,6 +109,11 @@ public class SquaresMatrix {
         return this;
     }
     
+    public SquaresMatrix insertSquare(Square square) {
+        this.squares[square.getX()][square.getY()] = square;
+        return this;
+    }
+    
     public void insertRandomSquares(int rowsQuantity) {
         int availableColumns[] = new int[this.getNumberOfColumns()];
         for(int i = 0; i < this.getNumberOfColumns(); i++) {

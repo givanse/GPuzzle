@@ -67,8 +67,17 @@ public class Board {
     }
     
     public void updateSquares() {
-        for(Square s : this.fallingSquares) {
-            s.setY(s.getY() + 1);
+        for(int i = 0; i < this.fallingSquares.size(); i++) {
+            Square s = this.fallingSquares.get(i);
+            int newX = s.getX();
+            int newY = s.getY() + 1;
+            if(isPositionAvailable(newX, newY)) {
+                s.setY(newY);
+            } else {
+                this.fallingSquares.remove(s);
+                i--;
+                this.squaresMatrix.insertSquare(s);
+            }
         }
     }
     

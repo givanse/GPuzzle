@@ -23,12 +23,12 @@ public class MainWindow extends javax.swing.JFrame {
         this.panelBoard.addMouseListener(this.boardMouseListener);
         
         this.gameModel = new GameModel();
+        this.gameService = new GameService(this.gameModel);
+
         ScoreController scoreController = 
                            new ScoreController(this.scoreField, this.gameModel);
         BoardController boardController = 
-                           new BoardController(this.panelBoard, this.gameModel);
-        GameService gameService = new GameService(this.gameModel);
-        gameService.start();
+                           new BoardController(this.panelBoard, this.gameModel);      
     }
 
     /**
@@ -70,7 +70,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        panelBoard.setBackground(new java.awt.Color(255, 255, 255));
+        panelBoard.setBackground(BoardPanel.BACKGROUND_COLOR);
         panelBoard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         panelBoard.setFocusable(false);
         panelBoard.setPreferredSize(new java.awt.Dimension(BoardPanel.CANVAS_WIDTH, BoardPanel.CANVAS_HEIGHT));
@@ -117,7 +117,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
         panelNextPairLayout.setVerticalGroup(
             panelNextPairLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 57, Short.MAX_VALUE)
+            .addGap(0, 59, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -184,6 +184,10 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     
+    public void startGame() {
+        this.gameService.start();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -212,7 +216,9 @@ public class MainWindow extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new MainWindow().setVisible(true);
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.setVisible(true);
+                mainWindow.startGame();
             }
         });
     }
@@ -228,4 +234,5 @@ public class MainWindow extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private BoardMouseListener boardMouseListener;
     private GameModel gameModel;
+    private GameService gameService;
 }
