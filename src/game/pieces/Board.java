@@ -38,16 +38,23 @@ public class Board {
             this.addRandomFallingPairOfSquares();
     }
     
+    private void deleteCompletedTetrisShape(int x, int y) {
+        int patternFound[][] = 
+                     Tetromino.performPatternMatching(x, y, this.squaresMatrix);
+        this.squaresMatrix.deleteSquares(patternFound);
+        this.squaresMatrix.moveDownFlyingSquares(x, y);
+    }
+    
     /* Public methods */
     
-    public final void addRandomFallingPairOfSquares() {
+    public final boolean addRandomFallingPairOfSquares() {
         /**
          * Produce an array with the same width of the board.
          */
         int availableColumns[] = this.squaresMatrix.getAvailableTopRowPairs();
         
         if(availableColumns.length < 2)
-            return;
+            return false;
         
         int shuffledColumns[] = Utilery.shuffleArray(availableColumns);
         
@@ -64,19 +71,32 @@ public class Board {
         
         this.fallingSquares.add(square1);
         this.fallingSquares.add(square2);
+        if(square1 instanceof Square && square2 instanceof Square)
+            return true;
+        else
+            return false;
     }
     
+    /**
+     * This is the "brain" of this class. It calculates the new position for
+     * the falling squares, validates and adds them to the board if they collide
+     * with a board square. It also check if a tetromino pattern is found once
+     * it has been made part of the board matrix.
+     */
     public void updateSquares() {
         for(int i = 0; i < this.fallingSquares.size(); i++) {
             Square s = this.fallingSquares.get(i);
             int newX = s.getX();
             int newY = s.getY() + 1;
             if(isPositionAvailable(newX, newY)) {
+                /* keep falling */
                 s.setY(newY);
             } else {
+                /* stop falling */
                 this.fallingSquares.remove(s);
                 i--;
                 this.squaresMatrix.insertSquare(s);
+                this.deleteCompletedTetrisShape(s.getX(), s.getY());
             }
         }
     }
@@ -115,16 +135,10 @@ public class Board {
     public void deleteCompletedTetrisShapes() {
         for(int x = 0; x < this.squaresMatrix.getNumberOfColumns(); x++) {
             for(int y = 0; y < this.squaresMatrix.getNumberOfRows(); y++) {
-                int patternFound[][] = 
-                      Tetromino.performPatternMatching(x, y, this.squaresMatrix);
-                this.squaresMatrix.deleteSquares(patternFound);
-                this.moveDownFlyingSquares();
+                this.deleteCompletedTetrisShape(x, y);
+                this.squaresMatrix.moveDownFlyingSquares();
             }
         }
-    }
-    
-    public void moveDownFlyingSquares() {
-        this.squaresMatrix.moveDownFlyingSquares();
     }
     
     public Square[][] getSquares() {

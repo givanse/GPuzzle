@@ -3,6 +3,7 @@ package gui.view;
 import gui.control.BoardMouseListener;
 import game.GameService;
 import gui.control.BoardController;
+import gui.control.GameStateController;
 import gui.control.ScoreController;
 import gui.control.SpeedController;
 import gui.model.GameModel;
@@ -28,6 +29,8 @@ public class MainWindow extends javax.swing.JFrame {
                            new ScoreController(this.scoreField, this.gameModel);
         SpeedController speedController = 
                            new SpeedController(this.speedField, this.gameModel);
+        GameStateController gameStateController = 
+                      new GameStateController(this.textAreaLog, this.gameModel);
         BoardController boardController = 
                            new BoardController(this.panelBoard, this.gameModel);      
     }
@@ -170,15 +173,12 @@ public class MainWindow extends javax.swing.JFrame {
         boolean isPaused = this.buttonPause.isSelected();
         if(isPaused) {
             this.gameModel.setGameState(GameState.PAUSED);
-            this.textAreaLog.append("game paused\n");
         } else {
             this.gameModel.setGameState(GameState.RUNNING);
-            this.textAreaLog.append("game resumed\n");
         }
     }
     
     private void startNewGame() {
-        this.textAreaLog.append("new game\n");
         if(this.gameModel == null) {
             this.gameModel = new GameModel();
             this.gameService = new GameService(this.gameModel);

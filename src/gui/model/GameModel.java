@@ -115,13 +115,14 @@ public final class GameModel{
         spawnTimer.schedule(new TimerTask(){
             @Override
             public void run() {
-                board.addRandomFallingPairOfSquares();
+                if(!board.addRandomFallingPairOfSquares())
+                    setGameState(gameState.OVER);
                 if(gameState ==  GameState.OVER)
                     this.cancel();
             }
         }, GameModel.SPAWN_TIME, GameModel.SPAWN_TIME);
         
-        this.gameState = GameState.RUNNING;
+        setGameState(gameState.RUNNING);
     }
     
 }

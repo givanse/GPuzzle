@@ -62,7 +62,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="buttonNewGame" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="241" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="237" max="32767" attributes="0"/>
                   </Group>
                   <Component id="panelBoard" min="-2" max="-2" attributes="0"/>
               </Group>

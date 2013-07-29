@@ -17,33 +17,6 @@ public class SquaresMatrix {
         this.squares = new Square[width][height];
     }
     
-    /**
-     * Defined as protected just for testing purposes, is should be private.
-     * 
-     * @param x
-     * @param y 
-     */
-    protected void packColumn(int x, int y) {
-        /* for each square in this column, from bottom to top */
-        for(int currY = y; currY >= 1; currY--) {
-            Square currentSquare = this.getSquare(x, currY);
-            if(!(currentSquare instanceof Square)) {
-                foundNotNullUpperSquare:/* iterate upwards until valid square */
-                for(int upperY = currY - 1; upperY >= 0; upperY--) {
-                    Square upperSquare = this.getSquare(x, upperY);
-                    if(upperSquare instanceof Square) {
-                        /* Update current with upper colour */
-                        this.insertSquare(
-                                x, currY, upperSquare.getSquareColour());
-                        /* Delete upper square */
-                        this.squares[x][upperY] = null;
-                        break foundNotNullUpperSquare;
-                    }
-                }
-            }
-        }
-    }
-    
     /* Public methods */
     
     public int[] getAvailableTopRowPairs() {
@@ -174,11 +147,37 @@ public class SquaresMatrix {
         }
     }
     
+    /**
+     * 
+     * @param x
+     * @param y 
+     */
+    public void moveDownFlyingSquares(int x, int y) {
+        /* for each square in this column, from bottom to top */
+        for(int currY = y; currY >= 1; currY--) {
+            Square currentSquare = this.getSquare(x, currY);
+            if(!(currentSquare instanceof Square)) {
+                foundNotNullUpperSquare:/* iterate upwards until valid square */
+                for(int upperY = currY - 1; upperY >= 0; upperY--) {
+                    Square upperSquare = this.getSquare(x, upperY);
+                    if(upperSquare instanceof Square) {
+                        /* Update current with upper colour */
+                        this.insertSquare(
+                                x, currY, upperSquare.getSquareColour());
+                        /* Delete upper square */
+                        this.squares[x][upperY] = null;
+                        break foundNotNullUpperSquare;
+                    }
+                }
+            }
+        }
+    }
+    
     public void moveDownFlyingSquares() {
         /* Start from the bottom */
         int lastRow = this.getNumberOfRows() - 1;
         for(int colNum = 0; colNum < this.getNumberOfColumns(); colNum++) {
-            this.packColumn(colNum, lastRow);
+            this.moveDownFlyingSquares(colNum, lastRow);
         }
     }
 
