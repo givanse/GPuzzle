@@ -20,7 +20,7 @@ public final class GameModel{
     private long speed;
     
     private ArrayList<GameListener> listeners;
-    private static long FALLING_SPEED_INITIAL = 1 * 1000; /* 1 second */
+    public static long FALLING_SPEED_INITIAL = 1 * 1000; /* 1 second */
     private static long FALLING_SPEED_MAX = 100; /* 100 milliseconds */
     private static long FALLING_SPEED_INCREASE = 100; /* 100 milliseconds */
     /* Interval at wich a new pair of squares will appear. */
@@ -29,8 +29,8 @@ public final class GameModel{
     public static long SPAWN_TIME_DECREASE = 200; /* 0.5 seconds */
     /**
      * Interval at which:
-     *   SPAWN_TIME decreased
-     *   speed      increased
+     *   SPAWN_TIME is decreased
+     *   speed      is increased
      * The interval lasts 2 minutes. 
      */
     private static long LEVEL_DURATION = (2 * 60 * 1000); 
@@ -43,8 +43,8 @@ public final class GameModel{
         
         this.listeners = new ArrayList();
         
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask(){
+        Timer levelTimer = new Timer();
+        levelTimer.schedule(new TimerTask(){
             @Override
             public void run() {
                 if(getSpeed() > GameModel.FALLING_SPEED_MAX)
@@ -52,8 +52,15 @@ public final class GameModel{
                 if(GameModel.SPAWN_TIME > GameModel.SPAWN_TIME_MIN)
                     GameModel.SPAWN_TIME -= GameModel.SPAWN_TIME_DECREASE;
             }
-        }, GameModel.LEVEL_DURATION,
-           GameModel.LEVEL_DURATION);
+        }, 0, GameModel.LEVEL_DURATION);
+        
+        Timer spawnTimer = new Timer();
+        spawnTimer.schedule(new TimerTask(){
+            @Override
+            public void run() {
+                board.addRandomFallingPairOfSquares();
+            }
+        }, GameModel.SPAWN_TIME, GameModel.SPAWN_TIME);
     }
     
     public void removeListener(GameListener listener){

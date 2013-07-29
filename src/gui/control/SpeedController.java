@@ -19,6 +19,7 @@ public class SpeedController {
             }
         };
         gameModel.addListener(gameListener);
+        gameModel.setSpeed(GameModel.FALLING_SPEED_INITIAL);
     }
     
 }
