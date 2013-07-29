@@ -2,11 +2,8 @@ package game;
 
 import game.pieces.Board;
 import game.pieces.Square;
-import game.pieces.Square.SquareColour;
 import gui.view.BoardPanel;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.util.ArrayList;
 
 /**
  *
@@ -31,6 +28,15 @@ public class GameService implements Runnable {
     
     private void updateObjects() {
         this.board.update();
+    }
+    
+    private void drawSquare(Graphics graphics, Square square) {
+        int xPixels = (square.getX() * Square.SIZE) - 
+                              BoardPanel.SPACE_FILLED_BY_BORDERS;
+                int yPixels = (square.getY() * Square.SIZE) - 
+                              BoardPanel.SPACE_FILLED_BY_BORDERS;
+                graphics.drawImage(square.getSquareColour().getImage(), 
+                                   xPixels, yPixels, this.boardPanel);
     }
     
     /* Public methods */
@@ -72,19 +78,14 @@ public class GameService implements Runnable {
             for(Square s : row) {
                 if(s == null)
                     continue;
-                int xPixels = (s.getX() * Square.SIZE) - 
-                              BoardPanel.SPACE_FILLED_BY_BORDERS;
-                int yPixels = (s.getY() * Square.SIZE) - 
-                              BoardPanel.SPACE_FILLED_BY_BORDERS;
-                graphics.drawImage(s.getSquareColour().getImage(), 
-                                   xPixels, yPixels, this.boardPanel);
+                else
+                    this.drawSquare(graphics, s);
             }
         }
         
         /* Draw falling squares. */
         for(Square s : this.board.getFallingSquares()) {
-            graphics.drawImage(s.getSquareColour().getImage(), 
-                               s.getX(), s.getY(), this.boardPanel);
+            this.drawSquare(graphics, s);
         }
     }
 }

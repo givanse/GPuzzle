@@ -45,22 +45,37 @@ public class SquaresMatrix {
     
     /* Public methods */
     
-    public int[] getAvailableTopColumns() {
-        if(this.getNumberOfColumns() < 1)
-            return null;
+    public int[] getAvailableTopRowPairs() {
         
+        /* Only pairs of columns are valid. */
+        if(this.getNumberOfColumns() < 2)
+            return new int[0];
+        
+        /* filter available columns */
         int row = 0;
-        ArrayList<Integer> columnsList = 
-                                       new ArrayList(this.getNumberOfRows());
-        for(int column = 0; column < this.getNumberOfColumns(); column++) {
-            if(this.isPositionAvailable(column, row))
-                columnsList.add(column);
+        ArrayList<Integer> colsList = new ArrayList(this.getNumberOfRows());
+        for(int col = 0; col < this.getNumberOfColumns() - 1; col++) {
+            if(this.isPositionAvailable(col, row)) {
+                int adjacentCol = col + 1;
+                if(this.isPositionAvailable(adjacentCol, row)) {
+                    colsList.add(col);
+                    colsList.add(adjacentCol);
+                    col = adjacentCol + 1;
+                }
+            }
+        }
+        if(this.getNumberOfColumns() % 2 == 1) {
+            int lastColumn = this.getNumberOfColumns() - 1;
+            if(this.isPositionAvailable(lastColumn, row)) {
+                if(this.isPositionAvailable(lastColumn - 1, row))
+                    colsList.add(lastColumn);
+            }
         }
         
-        /* ArrayList to Array */
-        int availableColumns[] = new int[columnsList.size()];
+        /* Convert final ArrayList to Array */
+        int availableColumns[] = new int[colsList.size()];
         int i = 0;
-        for(Integer columnNumber : columnsList) {
+        for(Integer columnNumber : colsList) {
             availableColumns[i++] = columnNumber;
         }
         

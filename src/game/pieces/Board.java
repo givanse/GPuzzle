@@ -1,5 +1,6 @@
 package game.pieces;
 
+import game.Utilery;
 import game.patterns.Tetromino;
 import game.pieces.Square.SquareColour;
 import java.util.ArrayList;
@@ -39,38 +40,19 @@ public class Board {
         /**
          * Produce an array with the same width of the board.
          */
-        int availableColumns[] = this.squaresMatrix.getAvailableTopColumns();
-        if(availableColumns.length < 1)
+        int availableColumns[] = this.squaresMatrix.getAvailableTopRowPairs();
+        
+        if(availableColumns.length < 2)
             return;
         
-        Random randomGenerator = new Random(System.currentTimeMillis());
-        /**
-         * Shuffle the available columns. 
-         * Fisher-Yates shuffle a.k.a. the Knuth shuffle, modern version.
-         */
-        for(int i = availableColumns.length - 1; i >= 1; i--) {
-             /* +1 because the n argument is exclusive */
-            int j = randomGenerator.nextInt(i + 1);
-            // swap a[j] and a[i]
-            int tmp = availableColumns[j];
-            availableColumns[j] = availableColumns[i];
-            availableColumns[i] = tmp;
-        }
+        int shuffledColumns[] = Utilery.shuffleArray(availableColumns);
         
-        /* Use the first two columns. */
-        int col1Indx = 0, col2Indx = 0;
-        col2Indx = (availableColumns.length == 1) ? col2Indx : 1;
-        int x1 = availableColumns[col1Indx];
-        int x2 = availableColumns[col2Indx];
+        int xCoords[] = Utilery.getTwoConsecutiveNumbers(shuffledColumns);
+        int x1 = xCoords[0];
+        int x2 = xCoords[1];
         
-        /**
-         * Produce two random colours, that may be repeated.
-         */
-        SquareColour sqrColours[] = SquareColour.values();
-        int randomColourNumber = randomGenerator.nextInt(sqrColours.length);
-        SquareColour randomColour1 = sqrColours[randomColourNumber];
-        randomColourNumber = randomGenerator.nextInt(sqrColours.length);
-        SquareColour randomColour2 = sqrColours[randomColourNumber];
+        SquareColour randomColour1 = Utilery.getRandomColour();
+        SquareColour randomColour2 = Utilery.getRandomColour();
         
         int yConstant = 0;
         Square square1 = new Square(x1, yConstant, randomColour1);

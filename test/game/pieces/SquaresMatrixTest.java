@@ -503,43 +503,49 @@ public class SquaresMatrixTest {
     public void getAvailableTopColumns() {
         /* 0x0 */
         SquaresMatrix squaresMatrix = new SquaresMatrix(0, 0);
-        assertNull(squaresMatrix.getAvailableTopColumns());
+        int actuals[] = squaresMatrix.getAvailableTopRowPairs();
+        int expecteds[] = new int[0];
+        assertArrayEquals(expecteds, actuals);
         
         /* 1x1 */
         squaresMatrix = new SquaresMatrix(1, 1);
-        int actuals[] = squaresMatrix.getAvailableTopColumns();
-        int expecteds[] = new int[]{0};
-        assertArrayEquals("1x1 empty", expecteds, actuals);
-        
-        /* 1x1 populated */
-        squaresMatrix = new SquaresMatrix(1, 1)
-                .insertSquare(0, 0, Square.SquareColour.BLUE);
-        actuals = squaresMatrix.getAvailableTopColumns();
+        actuals = squaresMatrix.getAvailableTopRowPairs();
         expecteds = new int[0];
-        assertArrayEquals("1x1 populated", expecteds, actuals);
+        assertArrayEquals(expecteds, actuals);
+        
+        /* 2x2 */
+        squaresMatrix = new SquaresMatrix(2, 2);
+        actuals = squaresMatrix.getAvailableTopRowPairs();
+        expecteds = new int[]{0, 1};
+        assertArrayEquals(expecteds, actuals);
         
         /* 3x1 */
         squaresMatrix = new SquaresMatrix(3, 1);
-        actuals = squaresMatrix.getAvailableTopColumns();
+        actuals = squaresMatrix.getAvailableTopRowPairs();
         expecteds = new int[]{0, 1, 2};
         assertArrayEquals(expecteds, actuals);
         
-        /* 3x1 populated */
+        /**
+         * 3x1
+         *  012
+         * [ B ]
+         */
         squaresMatrix = new SquaresMatrix(3, 1)
                 .insertSquare(1, 0, Square.SquareColour.BLUE);
-        actuals = squaresMatrix.getAvailableTopColumns();
-        expecteds = new int[]{0, 2};
+        actuals = squaresMatrix.getAvailableTopRowPairs();
+        expecteds = new int[0];
         assertArrayEquals(expecteds, actuals);
         
         /**
-         * 7x1 populated 
-         * [B 1 2 B 4 5 B]
+         * 7x1 populated
+         *  0 1 2 3 4 5 6
+         * [B     B     B]
          */
         squaresMatrix = new SquaresMatrix(7, 1)
                 .insertSquare(0, 0, Square.SquareColour.BLUE)
                 .insertSquare(3, 0, Square.SquareColour.BLUE)
                 .insertSquare(6, 0, Square.SquareColour.BLUE);
-        actuals = squaresMatrix.getAvailableTopColumns();
+        actuals = squaresMatrix.getAvailableTopRowPairs();
         expecteds = new int[]{1, 2, 4, 5};
         assertArrayEquals(expecteds, actuals);
     }
