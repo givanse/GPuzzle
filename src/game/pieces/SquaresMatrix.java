@@ -92,13 +92,20 @@ public class SquaresMatrix {
         for(int i = 0; i < this.getNumberOfColumns(); i++) {
             availableColumns[i] = i;
         }
+        
+        /* Calculate the range of rows that will be filled. */
         int bottomRow = this.getNumberOfRows() - 1;
         int lastRow = this.getNumberOfRows() - rowsQuantity;
+        
+        int missingSquaresPerRow = 0; /* So there aren't empty spaces. */
+        
         for(int row = bottomRow; row >= lastRow; row--) {
+            /* This many squares will be added per row. */
+            int totalCols = this.getNumberOfColumns() - missingSquaresPerRow;
+            
+            /* Add random squares */
             int shuffledColumns[] = Utility.shuffleArray(availableColumns);
-            int missingSquaresPerRow = 3;
-            int lastCol = this.getNumberOfColumns() - missingSquaresPerRow;
-            for(int col = 0; col < lastCol; col++) {
+            for(int col = 0; col < totalCols; col++) {
                 SquareColour sc = SquareColour.getRandomColour();
                 this.insertSquare(shuffledColumns[col], row, sc);
             }

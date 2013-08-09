@@ -23,11 +23,6 @@ public class Board {
         this(Board.WIDTH_IN_SQUARES, Board.HEIGHT_IN_SQUARES);
     }
     
-    public Board(int rowsFilledWithSquares) {
-        this(Board.WIDTH_IN_SQUARES, Board.HEIGHT_IN_SQUARES);
-        this.squaresMatrix.insertRandomSquares(rowsFilledWithSquares);
-    }
-    
     public Board(int widthInSquares, int heightInSquares) {
         this(new SquaresMatrix(widthInSquares, heightInSquares));
     }
@@ -36,6 +31,11 @@ public class Board {
         this.squaresMatrix = squares;
         if(this.squaresMatrix.getNumberOfRows() > 0)
             this.addRandomFallingPairOfSquares();
+    }
+    
+    public Board(int rowsFilledWithSquares) {
+        this(Board.WIDTH_IN_SQUARES, Board.HEIGHT_IN_SQUARES);
+        this.squaresMatrix.insertRandomSquares(rowsFilledWithSquares);
     }
     
     /* Public methods */
@@ -93,7 +93,7 @@ public class Board {
             }
         }
     }
-    
+        
     public ArrayList<Square> getFallingSquares() {
         return this.fallingSquares;
     }
@@ -156,34 +156,57 @@ public class Board {
         return swapCompleted;
     }
     
-    public boolean checkAndDeleteCompletedTetrisShape(int x, int y) {
-        boolean deletedPattern = false;
+    public int checkAndDeleteCompletedTetrisShape(int x, int y) {
+        int deletedPatternsCount = 0;
         int patternFound[][] = 
                      Tetromino.performPatternMatching(x, y, this.squaresMatrix);
-        deletedPattern = this.squaresMatrix.deleteSquares(patternFound);
+        boolean successDelete = this.squaresMatrix.deleteSquares(patternFound);
+        if(successDelete)
+            deletedPatternsCount += 1;
+        
         /* Pack the empty spaces left by the deleted tetromino */
         for(int i = 0; i < patternFound.length; i++) {
             int delX = patternFound[i][0];
             int delY = patternFound[i][1];
             if(this.squaresMatrix.moveDownFlyingSquares(delX, delY)) {
-                this.checkAndDeleteCompletedTetrisShapes();
+                deletedPatternsCount += 
+                                     this.checkAndDeleteCompletedTetrisShapes();
             }
         }
-        return deletedPattern;
+        return deletedPatternsCount;
     }
     
-    public void checkAndDeleteCompletedTetrisShapes() {
+    public int checkAndDeleteCompletedTetrisShapes() {
+        int deletedPatternsCount = 0;
         for(int x = 0; x < this.squaresMatrix.getNumberOfColumns(); x++) {
             for(int y = 0; y < this.squaresMatrix.getNumberOfRows(); y++) {
-                this.checkAndDeleteCompletedTetrisShape(x, y);
+                deletedPatternsCount += 
+                                  this.checkAndDeleteCompletedTetrisShape(x, y);
             }
         }
+        return deletedPatternsCount;
+    }
+    
+    public void deleteSquare(int x, int y) {
+        int coordinates[][] = new int[][]{{x, y}};
+        this.squaresMatrix.deleteSquares(coordinates);
+        
+        /* Pack the empty space left by the deleted tetromino */
+        this.squaresMatrix.moveDownFlyingSquares(x, y);
     }
     
     public Square[][] getSquares() {
         return this.squaresMatrix.getSquares();
     }
 
+    public int getWidth() {
+        return this.squaresMatrix.getNumberOfColumns();
+    }
+    
+    public int getHeight() {
+        return this.squaresMatrix.getNumberOfRows();
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

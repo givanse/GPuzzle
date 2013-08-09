@@ -22,7 +22,8 @@ public class GameLoopService implements Runnable {
     public void run() {
         while(true) {
             if(this.gameModel.getGameState() == GameState.RUNNING) {
-                this.gameModel.updateSquares();
+                /*TODO: redesign the way the timers are used. */
+                this.gameModel.updateGameState();
                 try {
                     Thread.sleep(this.gameModel.getSpeed());
                 } catch (InterruptedException ex) { }

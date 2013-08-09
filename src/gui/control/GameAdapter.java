@@ -2,6 +2,7 @@ package gui.control;
 
 import game.pieces.Square;
 import gui.model.GameModel;
+import gui.view.SmartCursor;
 import java.util.ArrayList;
 
 /**
@@ -14,6 +15,9 @@ public class GameAdapter implements GameListener {
     public void scoreChanged(int score) { }
     
     @Override
+    public void timeChanged(long time) { }
+    
+    @Override
     public void speedChanged(long speed) { }
     
     @Override
@@ -21,6 +25,7 @@ public class GameAdapter implements GameListener {
     
     @Override
     public void squaresChanged(Square boardSquares[][], 
-                               ArrayList<Square> fallingSquares) { }
+                               ArrayList<Square> fallingSquares,
+                               SmartCursor smartCursor) { }
     
 }

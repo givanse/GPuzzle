@@ -2,6 +2,7 @@ package gui.control;
 
 import game.pieces.Square;
 import gui.model.GameModel.GameState;
+import gui.view.SmartCursor;
 import java.util.ArrayList;
 
 /**
@@ -14,9 +15,12 @@ public interface GameListener {
     
     public void speedChanged(long speed);
     
+    public void timeChanged(long time);
+    
     public void gameStateChanged(GameState gameState);
     
     public void squaresChanged(Square boardSquares[][], 
-                               ArrayList<Square> fallingSquares);
+                               ArrayList<Square> fallingSquares,
+                               SmartCursor smartCursor);
         
 }

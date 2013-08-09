@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -23,8 +24,10 @@ public final class BoardView extends JPanel {
     
     private Image offScreenImage;
     private Graphics offScreenGraphics;
+    
     /**
-     * Canvas is the drawable area of this view. 
+     * Canvas is the drawable area of this view.
+     * The units for this values are pixels.
      */
     private final int canvasWidth;
     private final int canvasHeight;
@@ -66,7 +69,8 @@ public final class BoardView extends JPanel {
     }
     
     private void drawObjectsInMemory(Square boardSquares[][], 
-                                     ArrayList<Square> fallingSquares) {
+                                     ArrayList<Square> fallingSquares,
+                                     SmartCursor smartCursor) {
         if(this.offScreenImage == null) {
             this.offScreenImage = this.createImage(this.canvasWidth, 
                                                    this.canvasHeight);
@@ -84,6 +88,20 @@ public final class BoardView extends JPanel {
         this.drawBackgroundGrid();
         this.drawSquares(this.offScreenGraphics, boardSquares);
         this.drawSquares(this.offScreenGraphics, fallingSquares);
+        
+        /* Draw smart cursor. */
+        int xPixels = (smartCursor.getX() * Square.SIZE) + Square.SIZE / 6;
+        int yPixels = (smartCursor.getY() * Square.SIZE) + Square.SIZE / 6;
+        Image smartCursorImage = smartCursor.getCursorImage();
+        this.offScreenGraphics.drawImage(
+                                      smartCursorImage, xPixels, yPixels, this);
+        
+        /**
+         * Artificially fire the event that will start with the swap process.
+         */
+        this.getParent().dispatchEvent(
+                new KeyEvent(this.getParent(), KeyEvent.KEY_PRESSED, 1000, 0,
+                             KeyEvent.VK_SPACE, ' '));
     }
       
     private void drawBackgroundGrid() {
@@ -134,6 +152,18 @@ public final class BoardView extends JPanel {
     
     /* Public methods */
     
+    public void drawObjects(Square boardSquares[][], 
+                            ArrayList<Square> fallingSquares,
+                            SmartCursor smartCursor) {
+        this.drawObjectsInMemory(boardSquares, fallingSquares, smartCursor);
+        this.drawObjectsOnScreen();
+    }
+    
+    public void drawSmartCursor(Image image, int x, int y) {
+        this.offScreenGraphics.drawImage(image, x, y, this);
+        this.drawObjectsOnScreen();
+    }
+     
     public void changeCursor(Image cursorImage) {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         int x = cursorImage.getWidth(this) / 2; 
@@ -148,10 +178,18 @@ public final class BoardView extends JPanel {
         this.changeCursor(this.sightCursorImage);
     }
     
-    public void drawObjects(Square boardSquares[][], 
-                            ArrayList<Square> fallingSquares) {
-        this.drawObjectsInMemory(boardSquares, fallingSquares);
-        this.drawObjectsOnScreen();
+    /**
+     * 
+     * @param x coordinate of the selected square
+     * @param y coordinate of the selected square
+     */
+    public void changeCursorToSelectedSquare(Square square) {
+        Image squareImage = square.getSquareColour().getImage();
+        this.changeCursor(squareImage);
+    }
+    
+    public Graphics getOffscreenGraphics() {
+        return this.offScreenGraphics;
     }
     
 }

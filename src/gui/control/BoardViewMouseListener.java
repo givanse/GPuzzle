@@ -4,7 +4,6 @@ import game.Utility;
 import game.pieces.Square;
 import gui.model.GameModel;
 import gui.view.BoardView;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTextArea;
@@ -18,7 +17,7 @@ public class BoardViewMouseListener extends MouseAdapter {
     private BoardView boardView;
     private JTextArea logTextArea;
     private GameModel gameModel;
-    private enum CursorState {HOLDING, NOT_HOLDING};
+    public enum CursorState {HOLDING, NOT_HOLDING};
     private CursorState IS_CURSOR_HOLDING_A_SQUARE = CursorState.NOT_HOLDING;
     private int xHeldByCursor;
     private int yHeldByCursor;
@@ -35,21 +34,11 @@ public class BoardViewMouseListener extends MouseAdapter {
      * @param x coordinate of the selected square
      * @param y coordinate of the selected square
      */
-    private void changeCursorToSelectedSquare(int x, int y) {
-        Square s = this.gameModel.getSquare(x, y);
-        Image squareImage = s.getSquareColour().getImage();
-        this.boardView.changeCursor(squareImage);
-    }
-    
-    /**
-     * 
-     * @param x coordinate of the selected square
-     * @param y coordinate of the selected square
-     */
     private void holdSquare(int x, int y) {
         this.xHeldByCursor = x;
         this.yHeldByCursor = y;
-        this.changeCursorToSelectedSquare(x, y);
+        Square square = this.gameModel.getSquare(x, y);
+        this.boardView.changeCursorToSelectedSquare(square);
     }
     
     /**
@@ -62,16 +51,14 @@ public class BoardViewMouseListener extends MouseAdapter {
     private void swapSquare(int x, int y) {
         boolean swapResult = this.gameModel.swapSquares(
                                   this.xHeldByCursor, this.yHeldByCursor, x, y);
-        boolean square1DeletedPattern = 
+        int delPatternCount1 = 
                this.gameModel.checkAndDeleteCompletedTetrisShape(
                                         this.xHeldByCursor, this.yHeldByCursor);
-        boolean square2DeletePattern = 
+        int delPatternCount2 = 
                         this.gameModel.checkAndDeleteCompletedTetrisShape(x, y);
         
-        if(square1DeletedPattern)
-            this.gameModel.incrementScore();
-        if(square2DeletePattern)
-            this.gameModel.incrementScore();
+        this.gameModel.incrementScore(delPatternCount1);
+        this.gameModel.incrementScore(delPatternCount2);
      
         this.logTextArea.append("swap completed: " + swapResult + "\n");
         
@@ -94,6 +81,15 @@ public class BoardViewMouseListener extends MouseAdapter {
          * data structure (Board.getFallingSquares()).
          */
         
+        /* Warning: hardcoded switch. */
+        boolean swapSquares = false;
+        if(swapSquares)
+            this.handleAsASwap(x, y);
+        else
+            this.handleAsADelete(x, y);
+    }
+    
+    private void handleAsASwap(int x, int y) {
         switch(this.IS_CURSOR_HOLDING_A_SQUARE) {
             case HOLDING:
                 this.logTextArea.append("swap square\n");
@@ -108,6 +104,18 @@ public class BoardViewMouseListener extends MouseAdapter {
             default:
                 throw new Error("Invalid cursor state.");
         }
+    }
+    
+        
+    private void handleAsADelete(int x, int y) {
+        this.gameModel.deleteSquare(x, y);
+        
+        int delPatternCount = 
+                        this.gameModel.checkAndDeleteCompletedTetrisShape(x, y);
+        
+        this.gameModel.incrementScore(delPatternCount);
+     
+        this.logTextArea.append("delete completed: (" + x + ", " + y + ") \n");
     }
     
     /* Public Methods */
@@ -134,7 +142,7 @@ public class BoardViewMouseListener extends MouseAdapter {
         str = "[" + x + ", " + y + "] sqr\n";
         this.logTextArea.append(str);
         
-        this.handleSelectedBoardViewPosition(x, y);
+        this.handleSelectedBoardViewPosition(x, y);    
     }
-    
+
 }

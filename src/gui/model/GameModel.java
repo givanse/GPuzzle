@@ -3,6 +3,7 @@ package gui.model;
 import game.pieces.Board;
 import game.pieces.Square;
 import gui.control.GameListener;
+import gui.view.SmartCursor;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,7 +21,10 @@ public final class GameModel{
     private int completedShapesCount = 0;
     private int multiplier = 1;
     private long speed;
+    private long time;
     private Board board;
+    private int currKeyPosX;
+    private int currKeyPosY;
     /* properties */
     
     private static int MULTIPLIER_INCREMENTS = 1;
@@ -39,9 +43,11 @@ public final class GameModel{
      *   speed      is increased
      * The interval lasts 2 minutes. 
      */
-    private static long LEVEL_DURATION = (2 * 60 * 1000);
+    private static long LEVEL_DURATION = (2 * 60 * 1000); /* Two minutes. */
+    private SmartCursor smartCursor;
     
-    public GameModel() {
+    public GameModel(SmartCursor smartCursor) {
+        this.smartCursor =  smartCursor;
         this.listeners = new ArrayList();
         this.startNewGame();
     }
@@ -84,16 +90,25 @@ public final class GameModel{
     public long getSpeed() {
         return this.speed;
     }
-    
-    public void updateSquares() {
-        this.board.updateSquares();
-        for(int i = 0; i < listeners.size(); i++) {
-            this.listeners.get(i).squaresChanged(
-                    this.board.getSquares(), this.board.getFallingSquares()
-            );
+
+    public void setTime(long time){
+        this.time = time;
+        for(int i = 0; i < this.listeners.size(); i++) {
+            this.listeners.get(i).timeChanged(this.time);
         }
     }
-    
+        
+    public void updateGameState() {
+        this.board.updateSquares();
+        this.smartCursor.update();
+        
+        for(int i = 0; i < listeners.size(); i++) {
+            this.listeners.get(i).squaresChanged(this.board.getSquares(), 
+                                                 this.board.getFallingSquares(),
+                                                 this.smartCursor);
+        }
+    }
+  
     public final void startNewGame() {
         if(this.board != null) {
             /**
@@ -103,14 +118,23 @@ public final class GameModel{
              */
             this.setGameState(GameState.OVER);
         }
-        int rowsFilledWithSquares = 5;
+        
+        int rowsFilledWithSquares = 3;
         this.board = new Board(rowsFilledWithSquares);
         this.speed = GameModel.FALLING_SPEED_INITIAL;
+        this.currKeyPosX = 0;
+        this.currKeyPosY = 0;
         
+        /* TODOD: Too many timers! Fix it. */
+        
+        /**
+         * Level loop.
+         */
         Timer levelTimer = new Timer("levelTimer");
         levelTimer.schedule(new TimerTask(){ 
             @Override
             public void run() {
+                
                 if(getSpeed() > GameModel.FALLING_SPEED_MAX)
                     setSpeed(getSpeed() - GameModel.FALLING_SPEED_INCREASE);
                 if(GameModel.SPAWN_TIME > GameModel.SPAWN_TIME_MIN)
@@ -120,19 +144,30 @@ public final class GameModel{
                 /* Check if this timer should keep running. */
                 if(gameState ==  GameState.OVER)
                     this.cancel();
+                
             }
         }, 0, GameModel.LEVEL_DURATION);
         
+        /**
+         * Spawn loop.
+         */
         Timer spawnTimer = new Timer("spawnTimer");
         spawnTimer.schedule(new TimerTask(){
             @Override
             public void run() {
+                long initialT = System.currentTimeMillis();
+                
                 if(!board.addRandomFallingPairOfSquares())
                     setGameState(GameState.OVER);
                 
                 /* Check if this timer should keep running. */
                 if(gameState ==  GameState.OVER)
                     this.cancel();
+                
+                long finalT = System.currentTimeMillis();
+                long elapsedT = finalT - initialT;
+                long totalElapsedT = time + elapsedT + GameModel.SPAWN_TIME;
+                setTime(totalElapsedT);
             }
         }, GameModel.SPAWN_TIME, GameModel.SPAWN_TIME);
         
@@ -159,7 +194,11 @@ public final class GameModel{
         return this.board.swapSquares(x1, y1, x2, y2);
     }
     
-    public boolean checkAndDeleteCompletedTetrisShape(int x, int y) {
+    public void deleteSquare(int x, int y) {
+        this.board.deleteSquare(x, y);
+    }
+    
+    public int checkAndDeleteCompletedTetrisShape(int x, int y) {
         return this.board.checkAndDeleteCompletedTetrisShape(x, y);
     }
     
@@ -167,9 +206,33 @@ public final class GameModel{
      * The score increment is a combination of the number of tetrominos
      * deleted and the time the player has lasted.
      */
-    public void incrementScore() {
-        this.completedShapesCount++;
+    public void incrementScore(int increment) {
+        this.completedShapesCount += increment;
         this.setScore(this.completedShapesCount * this.multiplier);
+    }
+    
+    public void addCurrentX(int increment) {
+        int x = this.currKeyPosX + increment;
+        if(x < 0 || x >= this.board.getWidth())
+            return;
+        
+        this.currKeyPosX = x;
+    }
+
+    public void addCurrentY(int increment) {
+        int y = this.currKeyPosY + increment;
+        if(y < 0 || y >= this.board.getHeight())
+            return;
+        
+        this.currKeyPosY = y;
+    }
+
+    public int getCurrKeyPosX() {
+        return this.currKeyPosX;
+    }
+
+    public int getCurrKeyPosY() {
+        return this.currKeyPosY;
     }
     
 }
