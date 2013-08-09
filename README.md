@@ -1,4 +1,4 @@
 jConsoleApp
 ===========
 
-Java Console Application - video game
+Puzzle video game, based on Tetris.
