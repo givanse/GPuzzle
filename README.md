@@ -1,4 +1,4 @@
-jConsoleApp
+GPuzzle
 ===========
 
-Puzzle video game, based on Tetris.
+Tile matching puzzle video game.
